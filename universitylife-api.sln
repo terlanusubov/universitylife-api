@@ -5,6 +5,18 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "universitylife-api", "universitylife-api\universitylife-api.csproj", "{BD283731-C781-47F9-A0C8-D233B8FCA263}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{091A1C80-81B0-430F-B1EF-674411B42550}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{51EA27B9-4189-4EA4-ADD7-F27485238E4B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{4E2266DA-E589-4887-90EC-62C55C611FCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "universitylife-api.Application", "universitylife-api.Application\universitylife-api.Application.csproj", "{B91834AF-2D0D-4246-802B-F8CA9C5F4AE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "universitylife-api.Domain", "universitylife-api.Domain\universitylife-api.Domain.csproj", "{D37E5518-8C2B-4AB9-BFE4-D7A79395EB2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "universitylife-api.Infrastructure", "universitylife-api.Infrastructure\universitylife-api.Infrastructure.csproj", "{2CE04E66-1D80-4C16-A6DE-60B8B125AEDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +27,27 @@ Global
 		{BD283731-C781-47F9-A0C8-D233B8FCA263}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD283731-C781-47F9-A0C8-D233B8FCA263}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD283731-C781-47F9-A0C8-D233B8FCA263}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B91834AF-2D0D-4246-802B-F8CA9C5F4AE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B91834AF-2D0D-4246-802B-F8CA9C5F4AE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B91834AF-2D0D-4246-802B-F8CA9C5F4AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B91834AF-2D0D-4246-802B-F8CA9C5F4AE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D37E5518-8C2B-4AB9-BFE4-D7A79395EB2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D37E5518-8C2B-4AB9-BFE4-D7A79395EB2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D37E5518-8C2B-4AB9-BFE4-D7A79395EB2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D37E5518-8C2B-4AB9-BFE4-D7A79395EB2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CE04E66-1D80-4C16-A6DE-60B8B125AEDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CE04E66-1D80-4C16-A6DE-60B8B125AEDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CE04E66-1D80-4C16-A6DE-60B8B125AEDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CE04E66-1D80-4C16-A6DE-60B8B125AEDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BD283731-C781-47F9-A0C8-D233B8FCA263} = {51EA27B9-4189-4EA4-ADD7-F27485238E4B}
+		{B91834AF-2D0D-4246-802B-F8CA9C5F4AE5} = {51EA27B9-4189-4EA4-ADD7-F27485238E4B}
+		{D37E5518-8C2B-4AB9-BFE4-D7A79395EB2A} = {51EA27B9-4189-4EA4-ADD7-F27485238E4B}
+		{2CE04E66-1D80-4C16-A6DE-60B8B125AEDE} = {51EA27B9-4189-4EA4-ADD7-F27485238E4B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5730BA85-5603-4AC4-88A1-089BB0DDDC48}
