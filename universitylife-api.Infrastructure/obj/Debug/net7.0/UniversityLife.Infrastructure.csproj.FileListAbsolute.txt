@@ -1,0 +1,14 @@
+C:\Users\nurla\source\repos\universitylife-api\universitylife-api.Infrastructure\bin\Debug\net7.0\UniversityLife.Infrastructure.deps.json
+C:\Users\nurla\source\repos\universitylife-api\universitylife-api.Infrastructure\bin\Debug\net7.0\UniversityLife.Infrastructure.runtimeconfig.json
+C:\Users\nurla\source\repos\universitylife-api\universitylife-api.Infrastructure\bin\Debug\net7.0\UniversityLife.Infrastructure.dll
+C:\Users\nurla\source\repos\universitylife-api\universitylife-api.Infrastructure\bin\Debug\net7.0\UniversityLife.Infrastructure.pdb
+C:\Users\nurla\source\repos\universitylife-api\universitylife-api.Infrastructure\obj\Debug\net7.0\UniversityLife.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\nurla\source\repos\universitylife-api\universitylife-api.Infrastructure\obj\Debug\net7.0\UniversityLife.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nurla\source\repos\universitylife-api\universitylife-api.Infrastructure\obj\Debug\net7.0\UniversityLife.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\nurla\source\repos\universitylife-api\universitylife-api.Infrastructure\obj\Debug\net7.0\UniversityLife.Infrastructure.AssemblyInfo.cs
+C:\Users\nurla\source\repos\universitylife-api\universitylife-api.Infrastructure\obj\Debug\net7.0\UniversityLife.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\nurla\source\repos\universitylife-api\universitylife-api.Infrastructure\obj\Debug\net7.0\UniversityLife.Infrastructure.dll
+C:\Users\nurla\source\repos\universitylife-api\universitylife-api.Infrastructure\obj\Debug\net7.0\refint\UniversityLife.Infrastructure.dll
+C:\Users\nurla\source\repos\universitylife-api\universitylife-api.Infrastructure\obj\Debug\net7.0\UniversityLife.Infrastructure.pdb
+C:\Users\nurla\source\repos\universitylife-api\universitylife-api.Infrastructure\obj\Debug\net7.0\UniversityLife.Infrastructure.genruntimeconfig.cache
+C:\Users\nurla\source\repos\universitylife-api\universitylife-api.Infrastructure\obj\Debug\net7.0\ref\UniversityLife.Infrastructure.dll

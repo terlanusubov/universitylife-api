@@ -1,4 +1,4 @@
-namespace universitylife_api
+namespace UniversityLife.API
 {
     public class WeatherForecast
     {

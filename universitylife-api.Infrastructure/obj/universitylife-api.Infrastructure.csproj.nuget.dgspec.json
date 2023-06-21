@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nurla\\Desktop\\roma\\romanage\\universitylife-api\\universitylife-api.Infrastructure\\universitylife-api.Infrastructure.csproj": {}
+    "C:\\Users\\nurla\\source\\repos\\universitylife-api\\universitylife-api.Infrastructure\\universitylife-api.Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nurla\\Desktop\\roma\\romanage\\universitylife-api\\universitylife-api.Infrastructure\\universitylife-api.Infrastructure.csproj": {
+    "C:\\Users\\nurla\\source\\repos\\universitylife-api\\universitylife-api.Infrastructure\\universitylife-api.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nurla\\Desktop\\roma\\romanage\\universitylife-api\\universitylife-api.Infrastructure\\universitylife-api.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\nurla\\source\\repos\\universitylife-api\\universitylife-api.Infrastructure\\universitylife-api.Infrastructure.csproj",
         "projectName": "universitylife-api.Infrastructure",
-        "projectPath": "C:\\Users\\nurla\\Desktop\\roma\\romanage\\universitylife-api\\universitylife-api.Infrastructure\\universitylife-api.Infrastructure.csproj",
+        "projectPath": "C:\\Users\\nurla\\source\\repos\\universitylife-api\\universitylife-api.Infrastructure\\universitylife-api.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\nurla\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nurla\\Desktop\\roma\\romanage\\universitylife-api\\universitylife-api.Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\nurla\\source\\repos\\universitylife-api\\universitylife-api.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nurla\\AppData\\Roaming\\NuGet\\NuGet.Config",

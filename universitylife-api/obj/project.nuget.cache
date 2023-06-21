@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Jz0aFYR2qCBLvzVByH+TX5xfGQcoY8WRD+iNlPUl7krr5v8RajpW/zHQCViQ8QzUIvCM1VQ01Mw/auD2d5SiFQ==",
+  "dgSpecHash": "0R7SWA29U0QyAuFDJMKuH8ZcPsuGuL4cZSvLYHlVVJi1B+hfwMKf8s2UrYCSyuLQQCWH8hIuTJdZEU1pD643kA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\nurla\\Desktop\\roma\\romanage\\universitylife-api\\universitylife-api\\universitylife-api.csproj",
+  "projectFilePath": "C:\\Users\\nurla\\source\\repos\\universitylife-api\\universitylife-api\\UniversityLife.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nurla\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\nurla\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.5\\microsoft.aspnetcore.openapi.7.0.5.nupkg.sha512",

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace universitylife_api.Controllers
+namespace UniversityLife.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]

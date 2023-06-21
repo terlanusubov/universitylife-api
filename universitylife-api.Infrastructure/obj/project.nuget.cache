@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bWc4ZTllk/u2ti1lHolFjJwrPlIrW4v08Q0oz88LD16jOHI1VoA/CskCvedmNt6YgjV4NG1xXkbKHfKLJ8ghrg==",
+  "dgSpecHash": "tNvs3DmttiQI36nZugPv8r9X2jJjBcMmeZRv2HDB08xp+XYH6G7RQ+Zs75jXQLGkv8Ihqzx1sj30uyxeoegLlA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\nurla\\Desktop\\roma\\romanage\\universitylife-api\\universitylife-api.Infrastructure\\universitylife-api.Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\nurla\\source\\repos\\universitylife-api\\universitylife-api.Infrastructure\\UniversityLife.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nurla\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\nurla\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

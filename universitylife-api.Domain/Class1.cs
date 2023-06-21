@@ -1,4 +1,4 @@
-﻿namespace universitylife_api.Domain
+﻿namespace UniversityLife.Domain
 {
     public class Class1
     {

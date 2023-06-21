@@ -1,4 +1,4 @@
-﻿namespace universitylife_api.Infrastructure
+﻿namespace UniversityLife.Infrastructure
 {
     public class Class1
     {

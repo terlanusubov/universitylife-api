@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lCUCflX0HgmlVCINIxCnOb8Bz/zdYsButaYPtI8uF8rBzeaZd5IlWGqOsEm9IIjsZap1b4OpvJAtsHntn607hA==",
+  "dgSpecHash": "LyzDP/2AWKY6XGsrM/lNiPTqnJqUa+rmiwGEiwJCDhdat93PGdgyWiG1+eZrwBg5FWD2nUB2wK6dX8iKm+E/6g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\nurla\\Desktop\\roma\\romanage\\universitylife-api\\universitylife-api.Application\\universitylife-api.Application.csproj",
+  "projectFilePath": "C:\\Users\\nurla\\source\\repos\\universitylife-api\\universitylife-api.Application\\UniversityLife.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nurla\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\nurla\\.nuget\\packages\\mediatr\\12.0.1\\mediatr.12.0.1.nupkg.sha512",

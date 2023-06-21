@@ -1004,11 +1004,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nurla\\Desktop\\roma\\romanage\\universitylife-api\\universitylife-api.Application\\universitylife-api.Application.csproj",
-      "projectName": "universitylife-api.Application",
-      "projectPath": "C:\\Users\\nurla\\Desktop\\roma\\romanage\\universitylife-api\\universitylife-api.Application\\universitylife-api.Application.csproj",
+      "projectUniqueName": "C:\\Users\\nurla\\source\\repos\\universitylife-api\\universitylife-api.Application\\UniversityLife.Application.csproj",
+      "projectName": "UniversityLife.Application",
+      "projectPath": "C:\\Users\\nurla\\source\\repos\\universitylife-api\\universitylife-api.Application\\UniversityLife.Application.csproj",
       "packagesPath": "C:\\Users\\nurla\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nurla\\Desktop\\roma\\romanage\\universitylife-api\\universitylife-api.Application\\obj\\",
+      "outputPath": "C:\\Users\\nurla\\source\\repos\\universitylife-api\\universitylife-api.Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\nurla\\AppData\\Roaming\\NuGet\\NuGet.Config",

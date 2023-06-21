@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace universitylife_api.Infrastructure.Services
+namespace UniversityLife.Infrastructure.Services
 {
     internal class Class1
     {

@@ -916,11 +916,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nurla\\Desktop\\roma\\romanage\\universitylife-api\\universitylife-api.Domain\\universitylife-api.Domain.csproj",
-      "projectName": "universitylife-api.Domain",
-      "projectPath": "C:\\Users\\nurla\\Desktop\\roma\\romanage\\universitylife-api\\universitylife-api.Domain\\universitylife-api.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\nurla\\source\\repos\\universitylife-api\\universitylife-api.Domain\\UniversityLife.Domain.csproj",
+      "projectName": "UniversityLife.Domain",
+      "projectPath": "C:\\Users\\nurla\\source\\repos\\universitylife-api\\universitylife-api.Domain\\UniversityLife.Domain.csproj",
       "packagesPath": "C:\\Users\\nurla\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nurla\\Desktop\\roma\\romanage\\universitylife-api\\universitylife-api.Domain\\obj\\",
+      "outputPath": "C:\\Users\\nurla\\source\\repos\\universitylife-api\\universitylife-api.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\nurla\\AppData\\Roaming\\NuGet\\NuGet.Config",
