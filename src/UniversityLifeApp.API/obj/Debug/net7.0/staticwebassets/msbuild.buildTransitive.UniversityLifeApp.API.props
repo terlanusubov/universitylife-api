@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\UniversityLifeApp.API.props" />
+</Project>

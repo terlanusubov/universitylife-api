@@ -1,0 +1,12 @@
+C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Domain\bin\Debug\net7.0\UniversityLifeApp.Domain.deps.json
+C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Domain\bin\Debug\net7.0\UniversityLifeApp.Domain.dll
+C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Domain\bin\Debug\net7.0\UniversityLifeApp.Domain.pdb
+C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Domain\obj\Debug\net7.0\UniversityLifeApp.Domain.csproj.AssemblyReference.cache
+C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Domain\obj\Debug\net7.0\UniversityLifeApp.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Domain\obj\Debug\net7.0\UniversityLifeApp.Domain.AssemblyInfoInputs.cache
+C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Domain\obj\Debug\net7.0\UniversityLifeApp.Domain.AssemblyInfo.cs
+C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Domain\obj\Debug\net7.0\UniversityLifeApp.Domain.csproj.CoreCompileInputs.cache
+C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Domain\obj\Debug\net7.0\UniversityLifeApp.Domain.dll
+C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Domain\obj\Debug\net7.0\refint\UniversityLifeApp.Domain.dll
+C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Domain\obj\Debug\net7.0\UniversityLifeApp.Domain.pdb
+C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Domain\obj\Debug\net7.0\ref\UniversityLifeApp.Domain.dll
