@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace UniversityLifeApp.Infrastructure.Data
 {
-    internal class ApplicationContext
+    public class ApplicationContext
     {
+
     }
 }
