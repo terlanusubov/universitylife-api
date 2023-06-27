@@ -1,28 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nurla\\source\\repos\\UniversityLifeApp\\src\\UniversityLifeApp.Infrastructure\\UniversityLifeApp.Infrastructure.csproj": {}
+    "/Users/tarlanusubov/Projects/universitylife-api/src/UniversityLifeApp.Infrastructure/UniversityLifeApp.Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nurla\\source\\repos\\UniversityLifeApp\\src\\UniversityLifeApp.Infrastructure\\UniversityLifeApp.Infrastructure.csproj": {
+    "/Users/tarlanusubov/Projects/universitylife-api/src/UniversityLifeApp.Infrastructure/UniversityLifeApp.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nurla\\source\\repos\\UniversityLifeApp\\src\\UniversityLifeApp.Infrastructure\\UniversityLifeApp.Infrastructure.csproj",
+        "projectUniqueName": "/Users/tarlanusubov/Projects/universitylife-api/src/UniversityLifeApp.Infrastructure/UniversityLifeApp.Infrastructure.csproj",
         "projectName": "UniversityLifeApp.Infrastructure",
-        "projectPath": "C:\\Users\\nurla\\source\\repos\\UniversityLifeApp\\src\\UniversityLifeApp.Infrastructure\\UniversityLifeApp.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\nurla\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nurla\\source\\repos\\UniversityLifeApp\\src\\UniversityLifeApp.Infrastructure\\obj\\",
+        "projectPath": "/Users/tarlanusubov/Projects/universitylife-api/src/UniversityLifeApp.Infrastructure/UniversityLifeApp.Infrastructure.csproj",
+        "packagesPath": "/Users/tarlanusubov/.nuget/packages/",
+        "outputPath": "/Users/tarlanusubov/Projects/universitylife-api/src/UniversityLifeApp.Infrastructure/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\nurla\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/tarlanusubov/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.pkg.github.com/AZE-DPC-SXM-DEV/index.json": {}
         },
         "frameworks": {
           "net7.0": {
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.302/RuntimeIdentifierGraph.json"
         }
       }
     }

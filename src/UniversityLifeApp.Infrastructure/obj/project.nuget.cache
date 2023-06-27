@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0rMDwlFRnb4zYzppPq6G6W+L08RFiK792cfWDdvlpBVDTunTB4NA3LDTPkHQgpaSZpsOgMHlyBjyy35Qn/wMeA==",
+  "dgSpecHash": "OsZa5j88MVsgMJfSCGvU5pvc0sAU1SMtHYJAFp8fZnJbQ5IBfC+dMBGDv2q2Z+T6NiFCLJGbfPeaz60DrTCbng==",
   "success": true,
-  "projectFilePath": "C:\\Users\\nurla\\source\\repos\\UniversityLifeApp\\src\\UniversityLifeApp.Infrastructure\\UniversityLifeApp.Infrastructure.csproj",
+  "projectFilePath": "/Users/tarlanusubov/Projects/universitylife-api/src/UniversityLifeApp.Infrastructure/UniversityLifeApp.Infrastructure.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

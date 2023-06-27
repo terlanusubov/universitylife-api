@@ -36,12 +36,12 @@
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Microsoft.OpenApi.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.OpenApi.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -64,12 +64,12 @@
         },
         "compile": {
           "lib/net6.0/Swashbuckle.AspNetCore.Swagger.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net6.0/Swashbuckle.AspNetCore.Swagger.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "frameworkReferences": [
@@ -83,12 +83,12 @@
         },
         "compile": {
           "lib/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         }
       },
@@ -96,12 +96,12 @@
         "type": "package",
         "compile": {
           "lib/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "runtime": {
           "lib/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {
-            "related": ".xml;.pdb"
+            "related": ".pdb;.xml"
           }
         },
         "frameworkReferences": [
@@ -460,28 +460,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\nurla\\.nuget\\packages\\": {}
+    "/Users/tarlanusubov/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nurla\\source\\repos\\UniversityLifeApp\\src\\UniversityLifeApp.API\\UniversityLifeApp.API.csproj",
+      "projectUniqueName": "/Users/tarlanusubov/Projects/universitylife-api/src/UniversityLifeApp.API/UniversityLifeApp.API.csproj",
       "projectName": "UniversityLifeApp.API",
-      "projectPath": "C:\\Users\\nurla\\source\\repos\\UniversityLifeApp\\src\\UniversityLifeApp.API\\UniversityLifeApp.API.csproj",
-      "packagesPath": "C:\\Users\\nurla\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nurla\\source\\repos\\UniversityLifeApp\\src\\UniversityLifeApp.API\\obj\\",
+      "projectPath": "/Users/tarlanusubov/Projects/universitylife-api/src/UniversityLifeApp.API/UniversityLifeApp.API.csproj",
+      "packagesPath": "/Users/tarlanusubov/.nuget/packages/",
+      "outputPath": "/Users/tarlanusubov/Projects/universitylife-api/src/UniversityLifeApp.API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\nurla\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/tarlanusubov/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "/usr/local/share/dotnet/library-packs": {},
+        "/usr/local/share/dotnet/sdk/7.0.302/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
+        "https://api.nuget.org/v3/index.json": {},
+        "https://nuget.pkg.github.com/AZE-DPC-SXM-DEV/index.json": {}
       },
       "frameworks": {
         "net7.0": {
@@ -527,7 +527,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.302/RuntimeIdentifierGraph.json"
       }
     }
   }
