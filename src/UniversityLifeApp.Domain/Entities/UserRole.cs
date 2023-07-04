@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace UniversityLifeApp.Domain.Entities
 {
-    internal class Class1
+    public class UserRole:BaseEntity
     {
+        public string Name { get; set; }
+        
+        //User
+        public ICollection<User> Users { get; set; }
     }
 }
