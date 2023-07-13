@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\UniversityLifeApp.Domain\UniversityLifeApp.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

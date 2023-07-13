@@ -22,5 +22,8 @@ namespace UniversityLifeApp.Domain.Entities
 
         //User wishlist
         public ICollection<UserWishlist> UserWishLists { get; set; }
+
+        //Bedroomroom apply
+        public ICollection<BedRoomRoomApply> BedRoomRoomApplies { get; set; }
     }
 }

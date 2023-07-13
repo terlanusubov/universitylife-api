@@ -1,4 +1,5 @@
 using Serilog;
+using UniversityLifeApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ var logger = new LoggerConfiguration()
   .CreateLogger();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
+
+builder.Services.AddInfrastructure(builder.Configuration);
 
 
 builder.Services.AddControllers();

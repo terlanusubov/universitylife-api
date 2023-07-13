@@ -22,5 +22,8 @@ namespace UniversityLifeApp.Domain.Entities
 
         //Bedroomroom photos
         public ICollection<BedRoomRoomPhoto> BedRoomRoomPhotos { get; set; }
+
+        //Bedroomroom apply
+        public ICollection<BedRoomRoomApply> BedRoomRoomApplies { get; set; }
     }
 }
