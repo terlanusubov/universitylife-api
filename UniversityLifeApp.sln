@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityLifeApp.Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityLifeApp.API", "src\UniversityLifeApp.API\UniversityLifeApp.API.csproj", "{D732F7FC-88D3-4EC3-8FA5-A847A0FAC56D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniveristyLifeApp.Models", "src\UniveristyLifeApp.Models\UniveristyLifeApp.Models.csproj", "{84EED860-AC9E-46B6-9CC6-1F1C435B41A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D732F7FC-88D3-4EC3-8FA5-A847A0FAC56D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D732F7FC-88D3-4EC3-8FA5-A847A0FAC56D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D732F7FC-88D3-4EC3-8FA5-A847A0FAC56D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84EED860-AC9E-46B6-9CC6-1F1C435B41A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84EED860-AC9E-46B6-9CC6-1F1C435B41A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84EED860-AC9E-46B6-9CC6-1F1C435B41A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84EED860-AC9E-46B6-9CC6-1F1C435B41A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +54,7 @@ Global
 		{6F69798B-D1F5-4D35-884A-6E02D6F6CDEE} = {51EA27B9-4189-4EA4-ADD7-F27485238E4B}
 		{CC27A31F-9D5E-40C0-9A65-55FECA2302ED} = {51EA27B9-4189-4EA4-ADD7-F27485238E4B}
 		{D732F7FC-88D3-4EC3-8FA5-A847A0FAC56D} = {51EA27B9-4189-4EA4-ADD7-F27485238E4B}
+		{84EED860-AC9E-46B6-9CC6-1F1C435B41A3} = {51EA27B9-4189-4EA4-ADD7-F27485238E4B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5730BA85-5603-4AC4-88A1-089BB0DDDC48}

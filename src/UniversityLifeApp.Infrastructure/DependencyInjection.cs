@@ -19,6 +19,7 @@ namespace UniversityLifeApp.Infrastructure
                 opt.UseMySql(configuration.GetConnectionString("Default"), ServerVersion.AutoDetect(configuration.GetConnectionString("Default")));
             });
 
+
             return services;
         }
     }
