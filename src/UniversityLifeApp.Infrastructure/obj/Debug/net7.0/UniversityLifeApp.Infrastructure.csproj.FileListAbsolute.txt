@@ -10,3 +10,15 @@ C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Infrastructu
 C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Infrastructure\obj\Debug\net7.0\refint\UniversityLifeApp.Infrastructure.dll
 C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Infrastructure\obj\Debug\net7.0\UniversityLifeApp.Infrastructure.pdb
 C:\Users\nurla\source\repos\UniversityLifeApp\src\UniversityLifeApp.Infrastructure\obj\Debug\net7.0\ref\UniversityLifeApp.Infrastructure.dll
+C:\Users\99470\Desktop\New folder\universitylife-api\src\UniversityLifeApp.Infrastructure\bin\Debug\net7.0\UniversityLifeApp.Infrastructure.deps.json
+C:\Users\99470\Desktop\New folder\universitylife-api\src\UniversityLifeApp.Infrastructure\bin\Debug\net7.0\UniversityLifeApp.Infrastructure.dll
+C:\Users\99470\Desktop\New folder\universitylife-api\src\UniversityLifeApp.Infrastructure\bin\Debug\net7.0\UniversityLifeApp.Infrastructure.pdb
+C:\Users\99470\Desktop\New folder\universitylife-api\src\UniversityLifeApp.Infrastructure\obj\Debug\net7.0\UniversityLifeApp.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\99470\Desktop\New folder\universitylife-api\src\UniversityLifeApp.Infrastructure\obj\Debug\net7.0\UniversityLifeApp.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\99470\Desktop\New folder\universitylife-api\src\UniversityLifeApp.Infrastructure\obj\Debug\net7.0\UniversityLifeApp.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\99470\Desktop\New folder\universitylife-api\src\UniversityLifeApp.Infrastructure\obj\Debug\net7.0\UniversityLifeApp.Infrastructure.AssemblyInfo.cs
+C:\Users\99470\Desktop\New folder\universitylife-api\src\UniversityLifeApp.Infrastructure\obj\Debug\net7.0\UniversityLifeApp.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\99470\Desktop\New folder\universitylife-api\src\UniversityLifeApp.Infrastructure\obj\Debug\net7.0\UniversityLifeApp.Infrastructure.dll
+C:\Users\99470\Desktop\New folder\universitylife-api\src\UniversityLifeApp.Infrastructure\obj\Debug\net7.0\refint\UniversityLifeApp.Infrastructure.dll
+C:\Users\99470\Desktop\New folder\universitylife-api\src\UniversityLifeApp.Infrastructure\obj\Debug\net7.0\UniversityLifeApp.Infrastructure.pdb
+C:\Users\99470\Desktop\New folder\universitylife-api\src\UniversityLifeApp.Infrastructure\obj\Debug\net7.0\ref\UniversityLifeApp.Infrastructure.dll
