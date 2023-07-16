@@ -23,26 +23,26 @@ namespace UniversityLifeApp.Application.Behaviours
         {
             //Request
 
-            var ipAddress = _httpContext.Connection.RemoteIpAddress?.ToString();
+            //var ipAddress = _httpContext.Connection.RemoteIpAddress?.ToString();
 
-            Log.Information("Request started {0} time and {1} ip address", DateTime.Now, ipAddress);
+            //Log.Information("Request started {0} time and {1} ip address", DateTime.Now, ipAddress);
 
-            Log.Information($"Handling {typeof(TRequest).Name}");
+            //Log.Information($"Handling {typeof(TRequest).Name}");
 
-            Type myType = request.GetType();
+            //Type myType = request.GetType();
 
-            IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
+            //IList<PropertyInfo> props = new List<PropertyInfo>(myType.GetProperties());
 
-            foreach (PropertyInfo prop in props)
-            {
-                object propValue = prop.GetValue(request, null);
-                Log.Information("{Property} : {@Value}", prop.Name, propValue);
-            }
+            //foreach (PropertyInfo prop in props)
+            //{
+            //    object propValue = prop.GetValue(request, null);
+            //    Log.Information("{Property} : {@Value}", prop.Name, propValue);
+            //}
 
-            var response = await next();
+            //var response = await next();
 
-            //Response
-            Log.Information($"Handled {typeof(TResponse).Name}");
+            ////Response
+            //Log.Information($"Handled {typeof(TResponse).Name}");
 
             return await next();
 

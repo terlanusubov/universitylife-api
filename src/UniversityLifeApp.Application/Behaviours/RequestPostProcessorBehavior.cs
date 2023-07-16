@@ -13,9 +13,11 @@ namespace UniversityLifeApp.Application.Behaviours
     {
         public async Task Process(TRequest request, TResponse response, CancellationToken cancellationToken)
         {
-            var responseAsString = JsonConvert.SerializeObject(response);
-            Log.Information("Response is : " + responseAsString);
-            Log.Information("---Request Ended---");
+
+            //TODO: Transaction commit
+            //var responseAsString = JsonConvert.SerializeObject(response);
+            //Log.Information("Response is : " + responseAsString);
+            //Log.Information("---Request Ended---");
         }
     }
 }
