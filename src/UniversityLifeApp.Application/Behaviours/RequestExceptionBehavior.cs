@@ -11,7 +11,7 @@ namespace UniversityLifeApp.Application.Behaviours
     {
         public async Task Handle(TRequest request, TException exception, RequestExceptionHandlerState<TResponse> state, CancellationToken cancellationToken)
         {
-            //throw new NotImplementedException();
+            //TODO: Exception logs to database
         }
     }
 }
