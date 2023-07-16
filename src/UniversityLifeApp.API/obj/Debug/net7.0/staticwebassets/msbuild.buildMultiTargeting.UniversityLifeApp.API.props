@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\UniversityLifeApp.API.props" />
-</Project>
