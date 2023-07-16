@@ -1,0 +1,12 @@
+/Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/bin/Debug/net7.0/UniveristyLifeApp.Models.deps.json
+/Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/bin/Debug/net7.0/UniveristyLifeApp.Models.dll
+/Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/bin/Debug/net7.0/UniveristyLifeApp.Models.pdb
+/Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/obj/Debug/net7.0/UniveristyLifeApp.Models.csproj.AssemblyReference.cache
+/Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/obj/Debug/net7.0/UniveristyLifeApp.Models.GeneratedMSBuildEditorConfig.editorconfig
+/Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/obj/Debug/net7.0/UniveristyLifeApp.Models.AssemblyInfoInputs.cache
+/Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/obj/Debug/net7.0/UniveristyLifeApp.Models.AssemblyInfo.cs
+/Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/obj/Debug/net7.0/UniveristyLifeApp.Models.csproj.CoreCompileInputs.cache
+/Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/obj/Debug/net7.0/UniveristyLifeApp.Models.dll
+/Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/obj/Debug/net7.0/refint/UniveristyLifeApp.Models.dll
+/Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/obj/Debug/net7.0/UniveristyLifeApp.Models.pdb
+/Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/obj/Debug/net7.0/ref/UniveristyLifeApp.Models.dll

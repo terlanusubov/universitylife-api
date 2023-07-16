@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
@@ -12,5 +12,24 @@
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
+		<ProjectReference Include="..\UniveristyLifeApp.Models\UniveristyLifeApp.Models.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="CQRS\" />
+	  <None Remove="CQRS\v1\" />
+	  <None Remove="CQRS\v1\Users\" />
+	  <None Remove="CQRS\v1\Users\Commands\" />
+	  <None Remove="CQRS\v1\Users\Queries\" />
+	  <None Remove="CQRS\v1\Users\Commands\AddUser\" />
+	  <None Remove="Interfaces\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="CQRS\" />
+	  <Folder Include="CQRS\v1\" />
+	  <Folder Include="CQRS\v1\Users\" />
+	  <Folder Include="CQRS\v1\Users\Commands\" />
+	  <Folder Include="CQRS\v1\Users\Queries\" />
+	  <Folder Include="CQRS\v1\Users\Commands\AddUser\" />
+	  <Folder Include="Interfaces\" />
 	</ItemGroup>
 </Project>
