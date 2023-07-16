@@ -45,5 +45,6 @@ namespace UniversityLifeApp.Infrastructure.Data
         public virtual DbSet<University> Universities { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<UserWishlist> UserWishlists { get; set; }
+        public virtual DbSet<Logs> Logs { get; set; }
     }
 }
