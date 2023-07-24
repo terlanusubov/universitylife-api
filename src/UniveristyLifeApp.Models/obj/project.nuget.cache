@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5UzNkKKIgyIYIE9BjMnxU8wjJlPesBE1muxkyMEErFGmlWa3knQO0OWmdi3m7kcWrVYahOEqXw1+U8WYklBDtQ==",
+  "dgSpecHash": "WEUnoGM++VJ9UxEZcUCIXa9kvR9JiGixUWOTM9INimXmW9AexBryz3LXCxPgg2qhUixxzaQ80wbAPfKzk9qJIA==",
   "success": true,
-  "projectFilePath": "/Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/UniveristyLifeApp.Models.csproj",
+  "projectFilePath": "C:\\Users\\elnur\\OneDrive\\Desktop\\universitylife-api\\src\\UniveristyLifeApp.Models\\UniveristyLifeApp.Models.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

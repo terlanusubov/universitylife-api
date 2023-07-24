@@ -6,6 +6,9 @@ using Serilog;
 using UniversityLifeApp.Infrastructure;
 using Microsoft.Extensions.Hosting;
 using UniversityLifeApp.Application;
+using UniversityLifeApp.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using UniversityLifeApp.Application.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +20,8 @@ var logger = new LoggerConfiguration()
   .CreateLogger();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
+
+
 
 
 //versioning
@@ -34,10 +39,15 @@ builder.Services.AddVersionedApiExplorer(setup =>
     setup.SubstituteApiVersionInUrl = true;
 });
 
+
+
 builder.Services.AddApplication(builder.Configuration);
 
 
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddHttpContextAccessor();
+
 
 
 builder.Services.AddControllers();
@@ -72,6 +82,11 @@ builder.Services.AddSwaggerGen(c =>
 
 
 var app = builder.Build();
+
+app.UseMiddleware<InputLoggingMiddleware>();
+app.UseMiddleware<OutputLoggingMiddleware>();
+
+app.UseHttpLogging();
 
 app.UseSwagger();
 
