@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using UniveristyLifeApp.Models.v1.Users.AddUser;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.Users.Commands.AddUser;
@@ -24,7 +25,7 @@ namespace UniversityLifeApp.API.Controllers.v1
         [HttpPost]
         public async Task<ActionResult<ApiResult<AddUserResponse>>> Get(AddUserRequest request)
         {
-            _logger.LogInformation("test");
+            Log.Information("salam");
              await Mediator.Send(new AddUserCommand(request));
             return Ok();
         }

@@ -44,15 +44,10 @@ builder.Services.AddVersionedApiExplorer(setup =>
 builder.Services.AddApplication(builder.Configuration);
 
 
+
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
-
-builder.Services.AddLogging(i =>
-{
-    i.AddConsole();
-});
-
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
