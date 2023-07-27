@@ -19,11 +19,9 @@ namespace UniversityLifeApp.API.Controllers.v1
         {
             _context = context;
             _logger = logger;
-
         }
-        [HttpPost]
-         
 
+        [HttpPost]
         public async Task<ActionResult<ApiResult<AddUserResponse>>> Get(AddUserRequest request)
         {
             _logger.LogInformation("test");

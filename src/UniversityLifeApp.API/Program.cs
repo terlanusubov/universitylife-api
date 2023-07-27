@@ -48,6 +48,10 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddLogging(i =>
+{
+    i.AddConsole();
+});
 
 
 builder.Services.AddControllers();
@@ -83,8 +87,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-app.UseMiddleware<InputLoggingMiddleware>();
-app.UseMiddleware<OutputLoggingMiddleware>();
+
 
 app.UseHttpLogging();
 
@@ -100,6 +103,9 @@ app.UseSwaggerUI(c =>
         c.RoutePrefix = string.Empty;
     }
 });
+
+app.UseMiddleware<LoggingMiddleware>();
+
 
 app.UseHttpsRedirection();
 
