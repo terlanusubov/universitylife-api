@@ -10,3 +10,15 @@
 /Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/obj/Debug/net7.0/refint/UniveristyLifeApp.Models.dll
 /Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/obj/Debug/net7.0/UniveristyLifeApp.Models.pdb
 /Users/tarlanusubov/Projects/universitylife-api/src/UniveristyLifeApp.Models/obj/Debug/net7.0/ref/UniveristyLifeApp.Models.dll
+C:\Users\elnur\OneDrive\Desktop\universitylife-api\src\UniveristyLifeApp.Models\bin\Debug\net7.0\UniveristyLifeApp.Models.deps.json
+C:\Users\elnur\OneDrive\Desktop\universitylife-api\src\UniveristyLifeApp.Models\bin\Debug\net7.0\UniveristyLifeApp.Models.dll
+C:\Users\elnur\OneDrive\Desktop\universitylife-api\src\UniveristyLifeApp.Models\bin\Debug\net7.0\UniveristyLifeApp.Models.pdb
+C:\Users\elnur\OneDrive\Desktop\universitylife-api\src\UniveristyLifeApp.Models\obj\Debug\net7.0\UniveristyLifeApp.Models.csproj.AssemblyReference.cache
+C:\Users\elnur\OneDrive\Desktop\universitylife-api\src\UniveristyLifeApp.Models\obj\Debug\net7.0\UniveristyLifeApp.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\elnur\OneDrive\Desktop\universitylife-api\src\UniveristyLifeApp.Models\obj\Debug\net7.0\UniveristyLifeApp.Models.AssemblyInfoInputs.cache
+C:\Users\elnur\OneDrive\Desktop\universitylife-api\src\UniveristyLifeApp.Models\obj\Debug\net7.0\UniveristyLifeApp.Models.AssemblyInfo.cs
+C:\Users\elnur\OneDrive\Desktop\universitylife-api\src\UniveristyLifeApp.Models\obj\Debug\net7.0\UniveristyLifeApp.Models.csproj.CoreCompileInputs.cache
+C:\Users\elnur\OneDrive\Desktop\universitylife-api\src\UniveristyLifeApp.Models\obj\Debug\net7.0\UniveristyLifeApp.Models.dll
+C:\Users\elnur\OneDrive\Desktop\universitylife-api\src\UniveristyLifeApp.Models\obj\Debug\net7.0\refint\UniveristyLifeApp.Models.dll
+C:\Users\elnur\OneDrive\Desktop\universitylife-api\src\UniveristyLifeApp.Models\obj\Debug\net7.0\UniveristyLifeApp.Models.pdb
+C:\Users\elnur\OneDrive\Desktop\universitylife-api\src\UniveristyLifeApp.Models\obj\Debug\net7.0\ref\UniveristyLifeApp.Models.dll
