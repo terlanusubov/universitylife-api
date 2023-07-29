@@ -12,6 +12,9 @@ namespace UniversityLifeApp.Domain.Enums
         [Description("User is already exist.")]
         USER_IS_ALREADY_EXIST = 1_0_0,
 
+        [Description("There are some validations error.")]
+        VALIDATION_ERROR = 2_0_0
+
 
     }
 }

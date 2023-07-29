@@ -47,7 +47,7 @@ builder.Services.AddVersionedApiExplorer(setup =>
 
 
 
-builder.Services.AddApplication(builder.Configuration);
+builder.Services.AddApplication();
 
 
 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using UniversityLifeApp.Domain.Enums;
 
 namespace UniversityLifeApp.Application.Behaviours
 {
@@ -40,11 +41,11 @@ namespace UniversityLifeApp.Application.Behaviours
                     (TResponse)
                     typeof(TResponse)
                     .GetMethod(
-                        "ERROR",
-                        new[] { typeof(Dictionary<string, string>), typeof(HttpStatusCode) })
+                        "Error",
+                        new[] {typeof(ErrorCodes) ,typeof(Dictionary<string,string>) })
                     ?.Invoke(
                         Activator.CreateInstance(typeof(TResponse)),
-                        new object[] { errors, HttpStatusCode.BadRequest }));
+                        new object[] { ErrorCodes.VALIDATION_ERROR, errors }));
             }
             return await next();
         }
