@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using UniveristyLifeApp.Models.v1.Account.Register;
 using UniversityLifeApp.Application.Core;
+using UniversityLifeApp.Application.CQRS.v1.Account.Commands.Register;
 
 namespace UniversityLifeApp.API.Controllers.v1
 {
@@ -9,22 +11,16 @@ namespace UniversityLifeApp.API.Controllers.v1
     [ApiVersion("1.0")]
     public class AccountController : BaseController
     {
-        //[HttpGet]
-        //public async Task<IActionResult> Login()
-        //{
-        //    return View();
-        //}
-
-        //[HttpGet]
-        //public async Task<IActionResult> Register()
-        //{
-        //    return View();
-        //}
+        private readonly IMediator _mediator;
+        public AccountController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
         [HttpPost("register")]
-        public async Task<ActionResult<ApiResult<RegisterResponse>>> Register(RegisterRequest request)
-        {
+        public async Task<ActionResult<ApiResult<RegisterResponse>>> Register([FromBody]RegisterRequest request)
+            => await _mediator.Send(new RegisterCommand(request));
 
-        }
+
     }
 }

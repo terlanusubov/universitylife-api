@@ -28,6 +28,5 @@
 	  <Folder Include="CQRS\v1\Users\Commands\" />
 	  <Folder Include="CQRS\v1\Users\Queries\" />
 	  <Folder Include="CQRS\v1\Users\Commands\AddUser\" />
-	  <Folder Include="Interfaces\" />
 	</ItemGroup>
 </Project>

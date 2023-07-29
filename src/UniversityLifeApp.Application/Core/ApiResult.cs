@@ -4,42 +4,38 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using UniversityLifeApp.Domain.Enums;
+using UniversityLifeApp.Domain.Extensions;
 
 namespace UniversityLifeApp.Application.Core
 {
-    public class ApiResult<TResponse>
+    public class ApiResult<TOutput>
     {
-        public TResponse Response { get; set; }
-        public Dictionary<string, string> Errors { get; set; }
+        public TOutput Response { get; set; }
         public int StatusCode { get; set; }
+        public int ErrorCode { get; set; }
+        public string Description { get; set; }
 
-        public static ApiResult<TResponse> Ok(TResponse response)
+
+        public static ApiResult<TOutput> OK(TOutput response)
         {
-            return new ApiResult<TResponse>
+            return new ApiResult<TOutput>()
             {
                 Response = response,
-                Errors = null,
-                StatusCode = (int)HttpStatusCode.OK
-            };
-        }
-        public static ApiResult<TResponse> ERROR(Dictionary<string, string> errors, HttpStatusCode statusCode)
-        {
-            return new ApiResult<TResponse>
-            {
-                Errors = errors,
-                Response = default,
-                StatusCode = (int)statusCode
+                StatusCode = (int)HttpStatusCode.OK,
+                Description = "The operation has finished successfully.",
             };
         }
 
-        public static ApiResult<TResponse> ERROR(string key, string value)
+
+        public static ApiResult<TOutput> Error(ErrorCodes errorCode, int statusCode = (int)HttpStatusCode.BadRequest)
         {
-            return new ApiResult<TResponse>
+            return new ApiResult<TOutput>()
             {
                 Response = default,
-                StatusCode = (int)HttpStatusCode.BadRequest,
-                Errors = new Dictionary<string, string> { { key, value } },
-
+                StatusCode = statusCode,
+                ErrorCode = (int)errorCode,
+                Description = errorCode.GetEnumDescription(),
             };
         }
     }
