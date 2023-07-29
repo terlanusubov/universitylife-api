@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.JsonWebTokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using UniveristyLifeApp.Models.v1.Account.Login;
 using UniveristyLifeApp.Models.v1.Account.Register;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.Interfaces;
@@ -18,10 +20,31 @@ namespace UniversityLifeApp.Infrastructure.Services
     public class AccountService : IAccountService
     {
         private readonly ApplicationContext _context;
-        public AccountService(ApplicationContext context)
+        private readonly IJWTService _jwtService;
+        public AccountService(ApplicationContext context, IJWTService jwtService)
         {
             _context = context;
+            _jwtService = jwtService;
         }
+
+        public async Task<ApiResult<LoginResponse>> Login(LoginRequest request)
+        {
+            var user = await _context.Users.Where(x => x.Email == request.Email).FirstOrDefaultAsync();
+
+            if (user == null)
+                return ApiResult<LoginResponse>.Error(ErrorCodes.USERNAME_OR_PASSWORD_IS_NOT_CORRECT);
+
+            string token = _jwtService.GenerateJwtToken(user);
+
+            var response = new LoginResponse
+            {
+                Token = token
+            };
+
+            return ApiResult<LoginResponse>.OK(response);
+
+        }
+
         public async Task<ApiResult<RegisterResponse>> Register(RegisterRequest request)
         {
             var users = await _context.Users.Where(x => x.Email == request.Email).FirstOrDefaultAsync();

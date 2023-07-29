@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using UniveristyLifeApp.Models.v1.Account.Login;
 using UniveristyLifeApp.Models.v1.Account.Register;
 using UniversityLifeApp.Application.Core;
+using UniversityLifeApp.Application.CQRS.v1.Account.Commands.Login;
 using UniversityLifeApp.Application.CQRS.v1.Account.Commands.Register;
 
 namespace UniversityLifeApp.API.Controllers.v1
@@ -21,6 +23,9 @@ namespace UniversityLifeApp.API.Controllers.v1
         public async Task<ActionResult<ApiResult<RegisterResponse>>> Register([FromBody]RegisterRequest request)
             => await _mediator.Send(new RegisterCommand(request));
 
+        [HttpPost("login")]
+        public async Task<ActionResult<ApiResult<LoginResponse>>> Login([FromBody] LoginRequest request)
+            => await _mediator.Send(new LoginCommand(request));
 
     }
 }
