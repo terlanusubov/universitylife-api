@@ -15,7 +15,7 @@ namespace UniversityLifeApp.Application.Core
         public int StatusCode { get; set; }
         public int ErrorCode { get; set; }
         public string Description { get; set; }
-        public Dictionary<string , string> ErrorList { get; set; }
+        public Dictionary<string, string> ErrorList { get; set; }
 
 
         public static ApiResult<TOutput> OK(TOutput response)
@@ -30,7 +30,7 @@ namespace UniversityLifeApp.Application.Core
         }
 
 
-        public static ApiResult<TOutput> Error(ErrorCodes errorCode, Dictionary<string, string> errorList = null ,int statusCode = (int)HttpStatusCode.BadRequest)
+        public static ApiResult<TOutput> Error(ErrorCodes errorCode, Dictionary<string, string> errorList = null, int statusCode = (int)HttpStatusCode.BadRequest)
         {
             return new ApiResult<TOutput>()
             {
@@ -43,6 +43,6 @@ namespace UniversityLifeApp.Application.Core
             };
         }
 
-        
+
     }
 }

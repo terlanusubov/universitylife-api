@@ -32,22 +32,34 @@ namespace UniversityLifeApp.Application.Behaviours
 
             foreach (var error in failures)
             {
-                errors.Add(error.PropertyName, error.ErrorMessage);
+                errors.Add(TakePropName(error.PropertyName), error.ErrorMessage);
             }
 
             if (failures.Count > 0)
             {
+                var response = typeof(TResponse);
+                var method = typeof(TResponse)
+                    .GetMethod(
+                        "Error",
+                        new[] { typeof(ErrorCodes), typeof(Dictionary<string, string>), typeof(int) });
+
                 return await Task.FromResult(
                     (TResponse)
                     typeof(TResponse)
                     .GetMethod(
                         "Error",
-                        new[] {typeof(ErrorCodes) ,typeof(Dictionary<string,string>) })
+                        new[] { typeof(ErrorCodes), typeof(Dictionary<string, string>), typeof(int) })
                     ?.Invoke(
                         Activator.CreateInstance(typeof(TResponse)),
-                        new object[] { ErrorCodes.VALIDATION_ERROR, errors }));
+                        new object[] { ErrorCodes.VALIDATION_ERROR, errors, (int)HttpStatusCode.BadRequest }));
             }
             return await next();
+        }
+
+
+        private string TakePropName(string fullPropName)
+        {
+            return fullPropName.Split(".").TakeLast(1).FirstOrDefault();
         }
     }
 }
