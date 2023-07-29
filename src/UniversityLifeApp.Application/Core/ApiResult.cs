@@ -34,6 +34,7 @@ namespace UniversityLifeApp.Application.Core
         {
             return new ApiResult<TOutput>()
             {
+                //test
                 Response = default,
                 StatusCode = statusCode,
                 ErrorCode = (int)errorCode,
