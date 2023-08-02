@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,5 +27,23 @@ namespace UniversityLifeApp.Domain.Entities
 
         //Bedroomroom apply
         public ICollection<BedRoomRoomApply> BedRoomRoomApplies { get; set; }
+
+        public void AddPassword(string password)
+        {
+            Guid guid = Guid.NewGuid();
+
+            using(SHA256 sha256 = SHA256.Create())
+            {
+                var salt = sha256.ComputeHash(Encoding.UTF8.GetBytes(guid.ToString()));
+
+                using(HMACSHA256 hmacsha256 = new HMACSHA256(salt))
+                {
+                    var buffer = hmacsha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+                    Salt = salt;
+                    Password = buffer;
+                }
+            }
+        }
     }
 }

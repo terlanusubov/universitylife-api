@@ -12,7 +12,6 @@
     <None Remove="v1\Users\AddUser\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="v1\" />
     <Folder Include="v1\Users\" />
     <Folder Include="v1\Users\AddUser\" />
   </ItemGroup>

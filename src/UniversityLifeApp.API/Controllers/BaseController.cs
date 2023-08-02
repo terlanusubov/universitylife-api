@@ -11,6 +11,7 @@ namespace UniversityLifeApp.API.Controllers
         private readonly IMediator _mediator;
 
 
+
     }
 }
 
