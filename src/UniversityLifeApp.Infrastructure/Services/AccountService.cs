@@ -34,6 +34,19 @@ namespace UniversityLifeApp.Infrastructure.Services
             if (user == null)
                 return ApiResult<LoginResponse>.Error(ErrorCodes.USERNAME_OR_PASSWORD_IS_NOT_CORRECT);
 
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                var salt = user.Salt;
+
+                using (HMACSHA256 hmacsha256 = new HMACSHA256(salt))
+                {
+                    var buffer = hmacsha256.ComputeHash(Encoding.UTF8.GetBytes(request.Password));
+
+                    if (!user.Password.SequenceEqual(buffer))
+                        return ApiResult<LoginResponse>.Error(ErrorCodes.USERNAME_OR_PASSWORD_IS_NOT_CORRECT);
+                }
+            }
+
             string token = _jwtService.GenerateJwtToken(user);
 
             var response = new LoginResponse
@@ -51,6 +64,8 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             if (users != null)
                 return ApiResult<RegisterResponse>.Error(ErrorCodes.USER_IS_ALREADY_EXIST);
+
+
 
             User newUser = new User
             {
