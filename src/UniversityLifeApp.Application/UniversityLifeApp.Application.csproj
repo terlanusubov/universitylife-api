@@ -24,12 +24,9 @@
 	  <None Remove="Interfaces\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="CQRS\" />
-	  <Folder Include="CQRS\v1\" />
 	  <Folder Include="CQRS\v1\Users\" />
 	  <Folder Include="CQRS\v1\Users\Commands\" />
 	  <Folder Include="CQRS\v1\Users\Queries\" />
 	  <Folder Include="CQRS\v1\Users\Commands\AddUser\" />
-	  <Folder Include="Interfaces\" />
 	</ItemGroup>
 </Project>
