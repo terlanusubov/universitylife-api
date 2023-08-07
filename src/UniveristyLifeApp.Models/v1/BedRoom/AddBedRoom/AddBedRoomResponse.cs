@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniversityLifeApp.Domain.Entities
+namespace UniveristyLifeApp.Models.v1.BedRoom.AddBedRoom
 {
-    public class BedRoom:BaseEntity
+    public class AddBedRoomResponse
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -18,18 +18,6 @@ namespace UniversityLifeApp.Domain.Entities
 
         //City
         public int CityId { get; set; }
-        public City City { get; set; }
 
-        //Bedroom types
-        public ICollection<BedRoomRoomType> BedRoomRoomTypes { get; set; }
-
-        //Bedroomrooms
-        public ICollection<BedRoomRoom> BedRoomRooms { get; set; }
-
-        //Bedroom photos
-        public ICollection<BedRoomPhoto> BedRoomPhotos { get; set; }
-
-        //User wishlist
-        public ICollection<UserWishlist> UserWishLists { get; set; }
     }
 }
