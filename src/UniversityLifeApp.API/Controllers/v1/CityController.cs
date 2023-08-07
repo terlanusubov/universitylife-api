@@ -1,10 +1,16 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UniveristyLifeApp.Models.v1.Cities.AddCity;
+using UniveristyLifeApp.Models.v1.Cities.DeleteCity;
 using UniveristyLifeApp.Models.v1.Cities.GetCity;
+using UniveristyLifeApp.Models.v1.Cities.GetCityById;
+using UniveristyLifeApp.Models.v1.Cities.UpdateCity;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.AddCity;
+using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.DeleteCity;
+using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.UpdateCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Queries.GetCity;
+using UniversityLifeApp.Application.CQRS.v1.Cities.Queries.GetCityById;
 
 namespace UniversityLifeApp.API.Controllers.v1
 {
@@ -26,5 +32,16 @@ namespace UniversityLifeApp.API.Controllers.v1
         public async Task<ActionResult<List<GetCityResponse>>> GetCity()
             => (await _mediator.Send(new GetCityQuery())).Response;
 
+        [HttpGet("getcity/{cityId}")]
+        public async Task<ActionResult<GetCityByIdResponse>> GetCity(int cityId)
+            => (await _mediator.Send(new GetCityByIdQuery(cityId))).Response;
+
+        [HttpPut("{cityId}/update")]
+        public async Task<ApiResult<UpdateCityResponse>> UpdateCity(UpdateCityRequest request, int cityId)
+            => await _mediator.Send(new UpdateCityCommand(request, cityId));
+
+        [HttpDelete("{cityId}")]
+        public async Task<ApiResult<DeleteCityResponse>> DeleteCity(int cityId)
+            => await _mediator.Send(new DeleteCityCommand(cityId));
     }
 }
