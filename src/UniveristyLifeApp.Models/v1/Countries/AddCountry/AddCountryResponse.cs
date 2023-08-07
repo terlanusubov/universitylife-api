@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace UniveristyLifeApp.Models.v1.Countries.AddCountry
 {
-    public class CountryRequest
+    public class AddCountryResponse
     {
         public string Name { get; set; }
-        public int CountryStatusId { get; set; }
+        public int CountryStatisId { get; set; }
+        public ICollection<string> CiytEs { get; set; }
 
-        public ICollection<string> Cities { get; set; }
     }
 }

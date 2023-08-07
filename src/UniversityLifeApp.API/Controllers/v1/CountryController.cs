@@ -1,31 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Serilog;
-using UniveristyLifeApp.Models.v1.Users.AddUser;
-using UniversityLifeApp.Application.CQRS.v1.Users.Commands.AddUser;
-using UniversityLifeApp.Application.Core;
-using UniversityLifeApp.Infrastructure.Data;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using UniveristyLifeApp.Models.v1.Countries.AddCountry;
-using UniversityLifeApp.Application.CQRS.v1.Countries.Commands.CreateCountry;
+using UniversityLifeApp.Application.Core;
+using UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.AddCountry;
 
 namespace UniversityLifeApp.API.Controllers.v1
 {
     [ApiController]
+    [Route("api/v{version:apiVersion}/countries")]
     [ApiVersion("1.0")]
-
     public class CountryController : BaseController
     {
-        private readonly ApplicationContext _context;
+        private readonly IMediator _mediator;
+        public CountryController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
-        public CountryController(ApplicationContext context)
-        {
-            _context = context;
-        }
-        [HttpPost]
-        public async Task<ActionResult<ApiResult<CountryResponse>>> Get(CountryRequest request)
-        {
-            Log.Information("salam");
-            await Mediator.Send(new CreateCountryCommand(request));
-            return Ok();
-        }
+        [HttpPost("addCountry")]
+        public async Task<ApiResult<AddCountryResponse>> AddCity(AddCountryRequest request)
+            => await _mediator.Send(new AddCountryCommand(request));
     }
 }
