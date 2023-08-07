@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniveristyLifeApp.Models.v1.BedRoom.AddBedRoom
+namespace UniveristyLifeApp.Models.v1.BedRoom.CreateBedRoom
 {
-    public class AddBedRoomResponse
+    public class CreateBedRoomResponse
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -14,7 +14,6 @@ namespace UniveristyLifeApp.Models.v1.BedRoom.AddBedRoom
         public string Longitude { get; set; }
         public int Rating { get; set; }
         public float DistanceToCenter { get; set; }
-        public int BedRoomStatusId { get; set; }
 
         //City
         public int CityId { get; set; }
