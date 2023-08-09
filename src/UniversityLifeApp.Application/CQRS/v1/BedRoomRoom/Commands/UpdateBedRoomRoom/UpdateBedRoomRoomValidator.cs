@@ -12,13 +12,13 @@ namespace UniversityLifeApp.Application.CQRS.v1.BedRoomRoom.Commands.UpdateBedRo
         public UpdateBedRoomRoomValidator()
         {
             RuleFor(x => x.Request.Name)
-                //.NotNull().WithMessage("The Name field cannot be empty.")
-                .MinimumLength(3).WithMessage("The name must contain at least 3 letters.")
+                .NotEmpty().WithMessage("The Name field cannot be empty.")
+                //.MinimumLength(3).WithMessage("The name must contain at least 3 letters.")
                 .MaximumLength(30).WithMessage("The name can contain up to 30 characters.");
 
             RuleFor(x => x.Request.Description)
-                //.NotNull().WithMessage("The description field cannot be empty.")
-                .MinimumLength(10).WithMessage("The name must contain at least 10 letters.")
+                .NotEmpty().WithMessage("The description field cannot be empty.")
+                //.MinimumLength(10).WithMessage("The name must contain at least 10 letters.")
                 .MaximumLength(500).WithMessage("The name can contain up to 500 characters.");
 
             RuleFor(x => x.Request.Price)
