@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,10 @@ using UniversityLifeApp.Application.Interfaces;
 
 namespace UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.UpdateCountry
 {
-    public class UpdateCountryCommandHnadler
+    public class UpdateCountryCommandHandler:IRequestHandler<UpdateCountryCommand,ApiResult<UpdateCountryResponse>>
     {
         private readonly ICountryService _cityService;
-        public UpdateCountryCommandHnadler(ICountryService cityService)
+        public UpdateCountryCommandHandler(ICountryService cityService)
         {
             _cityService = cityService;
         }

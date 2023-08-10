@@ -26,8 +26,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             Country country = new Country
             {
                 Name = request.Request.Name,
-                CountryStatusId = request.Request.CountryStatisId,
-                Cities = (ICollection<City>)request.Request.CiytEs,
+                CountryStatusId = (int)CountryStatusEnum.Active,
             };
             await _applicationContext.Countries.AddAsync(country);
             await _applicationContext.SaveChangesAsync();
@@ -36,10 +35,9 @@ namespace UniversityLifeApp.Infrastructure.Services
             {
                 Name = country.Name,
                 CountryStatisId = country.CountryStatusId,
-                CiytEs = (ICollection<string>)country.Cities,
             };
 
-            return ApiResult<AddCountryResponse>.Ok(response);
+            return ApiResult<AddCountryResponse>.OK(response);
         }
 
 
@@ -49,26 +47,21 @@ namespace UniversityLifeApp.Infrastructure.Services
             {
                 Name = x.Name,
                 CountryStatisId = x.CountryStatusId,
-                CiytEs = (ICollection<string>)x.Cities
             }).ToListAsync();
-            return ApiResult<List<GetCountryResponse>>.Ok(country);
+            return ApiResult<List<GetCountryResponse>>.OK(country);
         }
 
         public async Task<ApiResult<UpdateCountryResponse>> UpdateCountry(UpdateCountryCommand request, int cityId)
         {
             var country = await _applicationContext.Countries.Where(x => x.Id == cityId).FirstOrDefaultAsync();
             country.Name = request.Request.Name;
-            country.CountryStatusId = request.Request.CountryStatisId;
-            country.Cities = (ICollection<City>)request.Request.CiytEs;
             await _applicationContext.SaveChangesAsync();
 
             var response = new UpdateCountryResponse
             {
                 Name = country.Name,
-                CountryStatisId = country.CountryStatusId,
-                CiytEs = (ICollection<string>)country.Cities
             };
-            return ApiResult<UpdateCountryResponse>.Ok(response);
+            return ApiResult<UpdateCountryResponse>.OK(response);
         }
         public async Task<ApiResult<DeleteCountryResponse>> DeleteCountry(int countryId)
         {
@@ -83,7 +76,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CountryId = country.Id
             };
 
-            return ApiResult<DeleteCountryResponse>.Ok(response);
+            return ApiResult<DeleteCountryResponse>.OK(response);
         }
     }
 }
