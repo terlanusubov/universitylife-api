@@ -27,11 +27,11 @@ namespace UniversityLifeApp.API.Controllers.v1
         public async Task<ApiResult<AddCountryResponse>> AddCity(AddCountryRequest request)
             => await _mediator.Send(new AddCountryCommand(request));
 
-        [HttpGet("getcity")]
+        [HttpGet("getCountry")]
         public async Task<ActionResult<List<GetCountryResponse>>> GetCity()
            => (await _mediator.Send(new GetCountryQuery())).Response;
 
-        [HttpPut("{cityId}/update")]
+        [HttpPut("{countryId}/update")]
         public async Task<ApiResult<UpdateCountryResponse>> UpdateCity(UpdateCountryRequest request, int countryId)
           => await _mediator.Send(new UpdateCountryCommand(request, countryId));
 
@@ -40,4 +40,4 @@ namespace UniversityLifeApp.API.Controllers.v1
             => await _mediator.Send(new DeleteCountryCommand(countryId));
 
     }
-}
+}   
