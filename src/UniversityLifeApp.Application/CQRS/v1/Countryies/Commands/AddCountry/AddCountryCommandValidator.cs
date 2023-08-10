@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.AddCountry
 {
-    public class AddCountryCommandValidator:AbstractValidator<AddCountryCommand>
+    public class AddCountryCommandValidator : AbstractValidator<AddCountryCommand>
     {
         public AddCountryCommandValidator()
         {

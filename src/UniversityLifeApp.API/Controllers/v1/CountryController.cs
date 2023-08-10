@@ -9,6 +9,7 @@ using UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.AddCountry;
 using UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.DeleteCountry;
 using UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.UpdateCountry;
 using UniversityLifeApp.Application.CQRS.v1.Countryies.Query.GetCountry;
+using UniversityLifeApp.Application.Interfaces;
 
 namespace UniversityLifeApp.API.Controllers.v1
 {
@@ -18,6 +19,7 @@ namespace UniversityLifeApp.API.Controllers.v1
     public class CountryController : BaseController
     {
         private readonly IMediator _mediator;
+       
         public CountryController(IMediator mediator)
         {
             _mediator = mediator;
