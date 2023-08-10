@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.Countries.AddCountry;
+using UniveristyLifeApp.Models.v1.Countries.DeleteCountry;
 using UniveristyLifeApp.Models.v1.Countries.GetCountry;
 using UniveristyLifeApp.Models.v1.Countries.UpdateCountrt;
 using UniversityLifeApp.Application.Core;
@@ -12,6 +13,7 @@ using UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.AddCountry;
 using UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.UpdateCountry;
 using UniversityLifeApp.Application.Interfaces;
 using UniversityLifeApp.Domain.Entities;
+using UniversityLifeApp.Domain.Enums;
 using UniversityLifeApp.Infrastructure.Data;
 
 namespace UniversityLifeApp.Infrastructure.Services
@@ -45,6 +47,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             return ApiResult<AddCountryResponse>.Ok(response);
         }
 
+
         public async Task<ApiResult<List<GetCountryResponse>>> GetCountry()
         {
             var country = await _applicationContext.Countries.Where(x => x.CountryStatusId == 10).Select(x => new GetCountryResponse
@@ -71,6 +74,21 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CiytEs = (ICollection<string>)country.Cities
             };
             return ApiResult<UpdateCountryResponse>.Ok(response);
+        }
+        public async Task<ApiResult<DeleteCountryResponse>> DeleteCountry(int countryId)
+        {
+            var country = await _applicationContext.Countries.Where(x => x.Id == countryId).FirstOrDefaultAsync();
+
+            country.CountryStatusId = (int)CountryStatusEnum.Deactive;
+
+            await _applicationContext.SaveChangesAsync();
+
+            var response = new DeleteCountryResponse
+            {
+                CountryId = country.Id
+            };
+
+            return ApiResult<DeleteCountryResponse>.Ok(response);
         }
     }
 }

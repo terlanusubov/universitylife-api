@@ -1,10 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UniveristyLifeApp.Models.v1.Countries.AddCountry;
+using UniveristyLifeApp.Models.v1.Countries.DeleteCountry;
 using UniveristyLifeApp.Models.v1.Countries.GetCountry;
 using UniveristyLifeApp.Models.v1.Countries.UpdateCountrt;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.AddCountry;
+using UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.DeleteCountry;
 using UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.UpdateCountry;
 using UniversityLifeApp.Application.CQRS.v1.Countryies.Query.GetCountry;
 
@@ -32,5 +34,10 @@ namespace UniversityLifeApp.API.Controllers.v1
         [HttpPut("{cityId}/update")]
         public async Task<ApiResult<UpdateCountryResponse>> UpdateCity(UpdateCountryRequest request, int countryId)
           => await _mediator.Send(new UpdateCountryCommand(request, countryId));
+
+        [HttpDelete("{countryId}")]
+        public async Task<ApiResult<DeleteCountryResponse>> DeleteCity(int countryId)
+            => await _mediator.Send(new DeleteCountryCommand(countryId));
+
     }
 }
