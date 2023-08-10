@@ -32,19 +32,13 @@ namespace UniversityLifeApp.Infrastructure.Services
             var user = await _context.Users.Where(x => x.Email == request.Email).FirstOrDefaultAsync();
 
             if (user == null)
-                return ApiResult<LoginResponse>.Error(ErrorCodes.USERNAME_OR_PASSWORD_IS_NOT_CORRECT);
+                return ApiResult<LoginResponse>.Error(ErrorCodes.EMAIL_OR_PASSWORD_IS_NOT_CORRECT);
 
-            using (SHA256 sha256 = SHA256.Create())
+            bool check = user.CheckPassword(request.Password);
+
+            if(!check)
             {
-                var salt = user.Salt;
-
-                using (HMACSHA256 hmacsha256 = new HMACSHA256(salt))
-                {
-                    var buffer = hmacsha256.ComputeHash(Encoding.UTF8.GetBytes(request.Password));
-
-                    if (!user.Password.SequenceEqual(buffer))
-                        return ApiResult<LoginResponse>.Error(ErrorCodes.USERNAME_OR_PASSWORD_IS_NOT_CORRECT);
-                }
+                return ApiResult<LoginResponse>.Error(ErrorCodes.EMAIL_OR_PASSWORD_IS_NOT_CORRECT);
             }
 
             string token = _jwtService.GenerateJwtToken(user);
