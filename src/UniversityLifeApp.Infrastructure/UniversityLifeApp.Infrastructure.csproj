@@ -18,7 +18,4 @@
 	<ItemGroup>
 		<ProjectReference Include="..\UniversityLifeApp.Application\UniversityLifeApp.Application.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Services\" />
-	</ItemGroup>
 </Project>

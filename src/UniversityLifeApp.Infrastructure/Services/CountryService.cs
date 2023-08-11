@@ -39,7 +39,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CiytEs = (ICollection<string>)country.Cities,
             };
 
-            return ApiResult<AddCountryResponse>.Ok(response);
+            return ApiResult<AddCountryResponse>.OK(response);
         }
 
 
@@ -51,7 +51,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CountryStatisId = x.CountryStatusId,
                 CiytEs = (ICollection<string>)x.Cities
             }).ToListAsync();
-            return ApiResult<List<GetCountryResponse>>.Ok(country);
+            return ApiResult<List<GetCountryResponse>>.OK(country);
         }
 
         public async Task<ApiResult<UpdateCountryResponse>> UpdateCountry(UpdateCountryCommand request, int cityId)
@@ -68,7 +68,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CountryStatisId = country.CountryStatusId,
                 CiytEs = (ICollection<string>)country.Cities
             };
-            return ApiResult<UpdateCountryResponse>.Ok(response);
+            return ApiResult<UpdateCountryResponse>.OK(response);
         }
         public async Task<ApiResult<DeleteCountryResponse>> DeleteCountry(int countryId)
         {
@@ -83,7 +83,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CountryId = country.Id
             };
 
-            return ApiResult<DeleteCountryResponse>.Ok(response);
+            return ApiResult<DeleteCountryResponse>.OK(response);
         }
     }
 }

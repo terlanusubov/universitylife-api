@@ -9,6 +9,7 @@ namespace UniversityLifeApp.Domain.Entities
     public class BedRoomRoomType:BaseEntity
     {
         public string Name { get; set; }
+        public int BedRoomRoomTypeStatusId { get; set; }
 
         //Bedroom
         public int BedRoomId { get; set; }
