@@ -20,8 +20,8 @@ namespace UniversityLifeApp.Infrastructure
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IBedRoomService, BedRoomService>();
             services.AddTransient<IJWTService, JWTService>();
+            services.AddTransient<IBedRoomRoomService, BedRoomRoomService>();
             services.AddTransient<IUniversityService, UniversityService>();
-            services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<ICountryService, CountryService>();
             services.AddDbContext<ApplicationContext>(opt =>
             {
