@@ -9,9 +9,6 @@ namespace UniversityLifeApp.API.Controllers
     {
         public IMediator Mediator { get => _mediator ?? HttpContext.RequestServices.GetRequiredService<IMediator>(); }
         private readonly IMediator _mediator;
-
-
-
     }
 }
 

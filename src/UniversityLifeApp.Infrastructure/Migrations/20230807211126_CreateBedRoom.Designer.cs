@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniversityLifeApp.Infrastructure.Data;
 
@@ -10,9 +11,11 @@ using UniversityLifeApp.Infrastructure.Data;
 namespace UniversityLifeApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230807211126_CreateBedRoom")]
+    partial class CreateBedRoom
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -340,9 +343,6 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<int>("UniversityStatusId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime(6)");
