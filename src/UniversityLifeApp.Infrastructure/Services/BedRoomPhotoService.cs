@@ -9,6 +9,7 @@ using UniveristyLifeApp.Models.v1.BedRoomPhoto.AddBedRoomPhoto;
 using UniveristyLifeApp.Models.v1.Countries.AddCountry;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.BedRoomPhoto.Commands.AddBedRoomPhoto;
+using UniversityLifeApp.Application.CQRS.v1.BedRoomPhoto.Commands.UpdateBedRoomPhoto;
 using UniversityLifeApp.Application.Interfaces;
 using UniversityLifeApp.Domain.Entities;
 using UniversityLifeApp.Infrastructure.Data;
@@ -48,5 +49,11 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             return ApiResult<AddBedRoomPhotoResponse>.OK(response);
         }
+
+        //public async Task<ApiResult<AddBedRoomPhotoResponse>> UpdateBedRoomPhoto(UpdateBedRoomPhotoCommand requset, int id)
+        //{
+        //    var result = await _applicationContext.BedRoomPhotos.FindAsync(id);
+        //    result.IsMain = requset.Req
+        //}
     }
 }
