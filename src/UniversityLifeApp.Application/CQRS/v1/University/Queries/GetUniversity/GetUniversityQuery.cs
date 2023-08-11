@@ -1,13 +1,17 @@
-﻿using System;
+﻿using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniveristyLifeApp.Models.v1.University.GetUniversity;
+using UniversityLifeApp.Application.Core;
 
-namespace UniversityLifeApp.Domain.Entities
+namespace UniversityLifeApp.Application.CQRS.v1.University.Queries.GetUniversity
 {
-    public class University:BaseEntity
+    public class GetUniversityQuery:IRequest<ApiResult<List<GetUniversityResponse>>>
     {
+        public int UniversityId { get; set; }
         public string Name { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
@@ -15,6 +19,5 @@ namespace UniversityLifeApp.Domain.Entities
 
         //City
         public int CityId { get; set; }
-        public City City { get; set; }
     }
 }

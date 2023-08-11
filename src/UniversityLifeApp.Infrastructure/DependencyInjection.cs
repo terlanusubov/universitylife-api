@@ -17,11 +17,8 @@ namespace UniversityLifeApp.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IBedRoomPhotoService, BedRoomPhotoService>();
-            services.AddTransient<IFileService, FileService>();
-            services.AddTransient<IJWTService, JWTService>();
-            services.AddTransient<IAccountService, AccountService>();
-            services.AddTransient<ICountryService, CountryService>();
+            services.AddTransient<IUniversityService, UniversityService>();
+
 
             services.AddDbContext<ApplicationContext>(opt =>
             {
