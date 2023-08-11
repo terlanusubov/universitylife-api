@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EEWF.Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,9 +17,9 @@ namespace UniversityLifeApp.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IUniversityService, UniversityService>();
-            services.AddTransient<IJWTService, JWTService>();
+
+
             services.AddDbContext<ApplicationContext>(opt =>
             {
                 opt.UseMySql(configuration.GetConnectionString("Default"), ServerVersion.AutoDetect(configuration.GetConnectionString("Default")));
