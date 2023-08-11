@@ -11,6 +11,7 @@ namespace UniversityLifeApp.Domain.Entities
         public string Name { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
+        public int UniversityStatusId { get; set; }
 
         //City
         public int CityId { get; set; }
