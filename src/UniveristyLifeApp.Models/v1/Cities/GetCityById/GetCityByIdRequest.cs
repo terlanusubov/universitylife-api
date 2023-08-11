@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniveristyLifeApp.Models.v1.Countries.AddCountry
+namespace UniveristyLifeApp.Models.v1.Cities.GetCityById
 {
-    public class AddCountryRequest
+    public class GetCityByIdRequest
     {
-        public string Name { get; set; }
+        public int CityId { get; set; }
     }
 }

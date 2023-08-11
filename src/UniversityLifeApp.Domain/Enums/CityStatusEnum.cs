@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniveristyLifeApp.Models.v1.Countries.AddCountry
+namespace UniversityLifeApp.Domain.Enums
 {
-    public class AddCountryRequest
+    public enum CityStatusEnum
     {
-        public string Name { get; set; }
+        Active = 10,
+        Deactive = 20,
     }
 }
