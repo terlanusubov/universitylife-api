@@ -87,7 +87,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<GetUniversityByIdResponse>> GetById(int universityId)
         {
-            var university = await _context.Universities.Select(x => new GetUniversityByIdResponse
+            var university = await _context.Universities.Where(x => x.Id == universityId).Select(x => new GetUniversityByIdResponse
             {
                 Name = x.Name,
                 Latitude = x.Latitude,
