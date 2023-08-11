@@ -32,7 +32,14 @@ namespace UniversityLifeApp.Infrastructure.Services
             var user = await _context.Users.Where(x => x.Email == request.Email).FirstOrDefaultAsync();
 
             if (user == null)
-                return ApiResult<LoginResponse>.Error(ErrorCodes.USERNAME_OR_PASSWORD_IS_NOT_CORRECT);
+                return ApiResult<LoginResponse>.Error(ErrorCodes.EMAIL_OR_PASSWORD_IS_NOT_CORRECT);
+
+            bool check = user.CheckPassword(request.Password);
+
+            if(!check)
+            {
+                return ApiResult<LoginResponse>.Error(ErrorCodes.EMAIL_OR_PASSWORD_IS_NOT_CORRECT);
+            }
 
             string token = _jwtService.GenerateJwtToken(user);
 
@@ -51,6 +58,8 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             if (users != null)
                 return ApiResult<RegisterResponse>.Error(ErrorCodes.USER_IS_ALREADY_EXIST);
+
+
 
             User newUser = new User
             {
