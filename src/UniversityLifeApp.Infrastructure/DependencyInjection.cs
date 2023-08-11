@@ -22,6 +22,7 @@ namespace UniversityLifeApp.Infrastructure
             services.AddTransient<IJWTService, JWTService>();
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<ICountryService, CountryService>();
+
             services.AddDbContext<ApplicationContext>(opt =>
             {
                 opt.UseMySql(configuration.GetConnectionString("Default"), ServerVersion.AutoDetect(configuration.GetConnectionString("Default")));
