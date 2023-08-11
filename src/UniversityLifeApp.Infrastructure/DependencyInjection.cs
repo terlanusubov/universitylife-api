@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniversityLifeApp.Application.Interfaces;
 using UniversityLifeApp.Infrastructure.Data;
+using UniversityLifeApp.Infrastructure.Services;
 
 namespace UniversityLifeApp.Infrastructure
 {
@@ -14,6 +16,11 @@ namespace UniversityLifeApp.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IJWTService, JWTService>();
+            services.AddTransient<ICityService, CityService>();
+            services.AddTransient<ICountryService,CountryService>();
+
             services.AddDbContext<ApplicationContext>(opt =>
             {
                 opt.UseMySql(configuration.GetConnectionString("Default"), ServerVersion.AutoDetect(configuration.GetConnectionString("Default")));

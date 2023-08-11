@@ -6,6 +6,12 @@ using Serilog;
 using UniversityLifeApp.Infrastructure;
 using Microsoft.Extensions.Hosting;
 using UniversityLifeApp.Application;
+using UniversityLifeApp.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using UniversityLifeApp.Application.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +23,11 @@ var logger = new LoggerConfiguration()
   .CreateLogger();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
+
+builder.Services.AddLogging(i =>
+{
+    i.AddConsole();
+});
 
 
 //versioning
@@ -34,13 +45,38 @@ builder.Services.AddVersionedApiExplorer(setup =>
     setup.SubstituteApiVersionInUrl = true;
 });
 
-builder.Services.AddApplication(builder.Configuration);
 
 
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 
+
+
+builder.Services.AddInfrastructure(builder.Configuration); 
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(o =>
+{
+    o.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = builder.Configuration["JWTSettings:Issuer"],
+        ValidAudience = builder.Configuration["JWTSettings:Audience"],
+        IssuerSigningKey = new SymmetricSecurityKey
+        (Encoding.UTF8.GetBytes(builder.Configuration["JWTSettings:Key"])),
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = false,
+        ValidateIssuerSigningKey = true
+    };
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -73,6 +109,10 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+
+
+app.UseHttpLogging();
+
 app.UseSwagger();
 
 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
@@ -85,6 +125,9 @@ app.UseSwaggerUI(c =>
         c.RoutePrefix = string.Empty;
     }
 });
+
+app.UseMiddleware<LoggingMiddleware>();
+
 
 app.UseHttpsRedirection();
 

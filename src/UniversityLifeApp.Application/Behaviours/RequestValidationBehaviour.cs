@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using UniversityLifeApp.Domain.Enums;
 
 namespace UniversityLifeApp.Application.Behaviours
 {
@@ -31,22 +32,34 @@ namespace UniversityLifeApp.Application.Behaviours
 
             foreach (var error in failures)
             {
-                errors.Add(error.PropertyName, error.ErrorMessage);
+                errors.Add(TakePropName(error.PropertyName), error.ErrorMessage);
             }
 
             if (failures.Count > 0)
             {
+                var response = typeof(TResponse);
+                var method = typeof(TResponse)
+                    .GetMethod(
+                        "Error",
+                        new[] { typeof(ErrorCodes), typeof(Dictionary<string, string>), typeof(int) });
+
                 return await Task.FromResult(
                     (TResponse)
                     typeof(TResponse)
                     .GetMethod(
-                        "ERROR",
-                        new[] { typeof(Dictionary<string, string>), typeof(HttpStatusCode) })
+                        "Error",
+                        new[] { typeof(ErrorCodes), typeof(Dictionary<string, string>), typeof(int) })
                     ?.Invoke(
                         Activator.CreateInstance(typeof(TResponse)),
-                        new object[] { errors, HttpStatusCode.BadRequest }));
+                        new object[] { ErrorCodes.VALIDATION_ERROR, errors, (int)HttpStatusCode.BadRequest }));
             }
             return await next();
+        }
+
+
+        private string TakePropName(string fullPropName)
+        {
+            return fullPropName.Split(".").TakeLast(1).FirstOrDefault();
         }
     }
 }

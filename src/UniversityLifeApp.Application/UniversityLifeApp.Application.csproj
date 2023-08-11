@@ -8,6 +8,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\UniversityLifeApp.Domain\UniversityLifeApp.Domain.csproj" />
 		<PackageReference Include="FluentValidation" Version="11.5.2" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
 		<PackageReference Include="MediatR" Version="12.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -24,12 +25,9 @@
 	  <None Remove="Interfaces\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="CQRS\" />
-	  <Folder Include="CQRS\v1\" />
 	  <Folder Include="CQRS\v1\Users\" />
 	  <Folder Include="CQRS\v1\Users\Commands\" />
 	  <Folder Include="CQRS\v1\Users\Queries\" />
 	  <Folder Include="CQRS\v1\Users\Commands\AddUser\" />
-	  <Folder Include="Interfaces\" />
 	</ItemGroup>
 </Project>

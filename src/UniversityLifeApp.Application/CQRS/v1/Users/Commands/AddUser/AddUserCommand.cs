@@ -16,11 +16,11 @@ namespace UniversityLifeApp.Application.CQRS.v1.Users.Commands.AddUser
 
         public class AddUserCommandHandler : IRequestHandler<AddUserCommand, ApiResult<AddUserResponse>>
         {
-
+            
 
             public async Task<ApiResult<AddUserResponse>> Handle(AddUserCommand request, CancellationToken cancellationToken)
             {
-                return ApiResult<AddUserResponse>.Ok(new AddUserResponse
+                return ApiResult<AddUserResponse>.OK(new AddUserResponse
                 {
                     UserId = 1
                 });
