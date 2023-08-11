@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.University.CreateUniversity;
 using UniveristyLifeApp.Models.v1.University.DeleteUniversity;
 using UniveristyLifeApp.Models.v1.University.GetUniversity;
+using UniveristyLifeApp.Models.v1.University.GetUniversityById;
 using UniveristyLifeApp.Models.v1.University.UpdateUniversity;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.University.Commands.CreateUniversity;
@@ -18,6 +19,7 @@ namespace UniversityLifeApp.Application.Interfaces
         Task<ApiResult<CreateUniversityResponse>> Create(CreateUniversityCommand request);
         Task<ApiResult<UpdateUniversityResponse>> Update(UpdateUniversityCommand request, int universityId);
         Task<ApiResult<List<GetUniversityResponse>>> Get();
+        Task<ApiResult<GetUniversityByIdResponse>> GetById(int universityId);
         Task<ApiResult<DeleteUniversityResponse>> Delete(int universityId);
     }
 }

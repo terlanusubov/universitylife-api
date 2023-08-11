@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.University.CreateUniversity;
 using UniveristyLifeApp.Models.v1.University.DeleteUniversity;
 using UniveristyLifeApp.Models.v1.University.GetUniversity;
+using UniveristyLifeApp.Models.v1.University.GetUniversityById;
 using UniveristyLifeApp.Models.v1.University.UpdateUniversity;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.University.Commands.CreateUniversity;
@@ -82,6 +83,21 @@ namespace UniversityLifeApp.Infrastructure.Services
             }).ToListAsync();
 
             return ApiResult<List<GetUniversityResponse>>.OK(universities);
+        }
+
+        public async Task<ApiResult<GetUniversityByIdResponse>> GetById(int universityId)
+        {
+            var university = await _context.Universities.Select(x => new GetUniversityByIdResponse
+            {
+                Name = x.Name,
+                Latitude = x.Latitude,
+                Longitude = x.Longitude,
+                CityId = x.CityId,
+                UniversityId = x.Id,
+                UniversityStatusId = x.UniversityStatusId,
+            }).FirstOrDefaultAsync();
+
+            return ApiResult<GetUniversityByIdResponse>.OK(university);
         }
 
         public async Task<ApiResult<UpdateUniversityResponse>> Update(UpdateUniversityCommand request, int universityId)
