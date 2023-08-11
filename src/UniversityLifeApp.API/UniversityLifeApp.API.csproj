@@ -31,4 +31,8 @@
   <ItemGroup>
     <None Remove="Controllers\v1\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\bedroomPhoto\" />
+  </ItemGroup>
 </Project>
