@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniversityLifeApp.Domain.Enums
+namespace UniveristyLifeApp.Models.v1.UserRole.CreateRole
 {
-    public enum UserRoleEnum
+    public class UserRoleRequest
     {
-        User = 1,
-        Admin = 2,
+        public string Name { get; set; }
     }
 }
