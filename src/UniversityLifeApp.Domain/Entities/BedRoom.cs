@@ -14,6 +14,7 @@ namespace UniversityLifeApp.Domain.Entities
         public string Longitude { get; set; }
         public int Rating { get; set; }
         public float DistanceToCenter { get; set; }
+        public int BedRoomStatusId { get; set; }
 
         //City
         public int CityId { get; set; }

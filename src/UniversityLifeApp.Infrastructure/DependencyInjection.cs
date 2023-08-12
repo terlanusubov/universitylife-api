@@ -17,12 +17,15 @@ namespace UniversityLifeApp.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient<IBedRoomPhotoService, BedRoomPhotoService>();
-            services.AddTransient<IFileService, FileService>();
-            services.AddTransient<IJWTService, JWTService>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IBedRoomService, BedRoomService>();
+            services.AddTransient<IJWTService, JWTService>();
+            services.AddTransient<IBedRoomPhotoService, BedRoomPhotoService>();
+            services.AddTransient<IBedRoomRoomService, BedRoomRoomService>();
+            services.AddTransient<IUniversityService, UniversityService>();
             services.AddTransient<ICountryService, CountryService>();
-
+            services.AddTransient<ICityService, CityService>();
+            services.AddTransient<IFileService, FileService>();
             services.AddDbContext<ApplicationContext>(opt =>
             {
                 opt.UseMySql(configuration.GetConnectionString("Default"), ServerVersion.AutoDetect(configuration.GetConnectionString("Default")));

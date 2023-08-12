@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniversityLifeApp.Domain.Entities
+namespace UniveristyLifeApp.Models.v1.BedRoomRoom.DeleteBedRoomRoom
 {
-    public class BedRoomRoom:BaseEntity
+    public class DeleteBedRoomRoomResponse
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -15,16 +15,8 @@ namespace UniversityLifeApp.Domain.Entities
 
         //Bedroom
         public int BedRoomId { get; set; }
-        public BedRoom BedRoom { get; set; }
 
         //Bedroomroom type
         public int BedRoomRoomTypeId { get; set; }
-        public BedRoomRoomType BedRoomRoomType { get; set; }
-
-        //Bedroomroom photos
-        public ICollection<BedRoomRoomPhoto> BedRoomRoomPhotos { get; set; }
-
-        //Bedroomroom apply
-        public ICollection<BedRoomRoomApply> BedRoomRoomApplies { get; set; }
     }
 }

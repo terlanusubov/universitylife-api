@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniversityLifeApp.Domain.Entities
+namespace UniveristyLifeApp.Models.v1.University.DeleteUniversity
 {
-    public class University:BaseEntity
+    public class DeleteUniversityResponse
     {
+        public int UniversityId { get; set; }
         public string Name { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
@@ -15,6 +16,5 @@ namespace UniversityLifeApp.Domain.Entities
 
         //City
         public int CityId { get; set; }
-        public City City { get; set; }
     }
 }
