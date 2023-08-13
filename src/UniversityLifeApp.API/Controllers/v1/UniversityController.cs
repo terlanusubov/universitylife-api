@@ -23,23 +23,23 @@ namespace UniversityLifeApp.API.Controllers.v1
         public UniversityController(IMediator mediator)
             => _mediator = mediator;
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<ApiResult<CreateUniversityResponse>> Create(CreateUniversityRequest request)
             => await _mediator.Send(new CreateUniversityCommand(request));
 
-        [HttpPut("{universityId}/update")]
+        [HttpPut("{universityId}")]
         public async Task<ApiResult<UpdateUniversityResponse>> Update(UpdateUniversityRequest request, int universityId)
             => await _mediator.Send(new UpdateUniversityCommand(request, universityId));
 
-        [HttpGet("get")]
+        [HttpGet]
         public async Task<ApiResult<List<GetUniversityResponse>>> Get()
             => await _mediator.Send(new GetUniversityQuery());
 
-        [HttpDelete("{universityId}/delete")]
+        [HttpDelete("{universityId}")]
         public async Task<ApiResult<DeleteUniversityResponse>> Delete(int universityId)
             => await _mediator.Send(new DeleteUniversityCommand(universityId));
 
-        [HttpGet("{universityId}/getbyid")]
+        [HttpGet("{universityId}")]
         public async Task<ApiResult<GetUniversityByIdResponse>> GetById(int universityId)
             => await _mediator.Send(new GetUniversityByIdQuery(universityId));
     }

@@ -21,19 +21,19 @@ namespace UniversityLifeApp.API.Controllers.v1
         public BedRoomRoomController(IMediator mediator)
             => _mediator = mediator;
 
-        [HttpPost("create")]
+        [HttpPost]
         public async Task<ApiResult<CreateBedRoomRoomResponse>> Create(CreateBedRoomRoomRequest request)
             => await _mediator.Send(new CreateBedRoomRoomCommand(request));
 
-        [HttpGet("get")]
+        [HttpGet]
         public async Task<ActionResult<List<GetBedRoomRoomResponse>>> Get()
             => (await _mediator.Send(new GetBedRoomRoomQuery())).Response;
 
-        [HttpPut("{bedRoomRoomId}/update")]
+        [HttpPut("{bedRoomRoomId}")]
         public async Task<ApiResult<UpdateBedRoomRoomResponse>> Update(UpdateBedRoomRoomRequest request, int bedRoomRoomId)
             => await _mediator.Send(new UpdateBedRoomRoomCommand(request, bedRoomRoomId));
 
-        [HttpDelete("{bedRoomRoomId}/delete")]
+        [HttpDelete("{bedRoomRoomId}")]
         public async Task<ApiResult<DeleteBedRoomRoomResponse>> Delete(int bedRoomRoomId)
             => await _mediator.Send(new DeleteBedRoomRoomCommand(bedRoomRoomId));
     }
