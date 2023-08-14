@@ -15,6 +15,11 @@ namespace UniveristyLifeApp.Models.v1.BedRoom.CreateBedRoom
         public int Rating { get; set; }
         public float DistanceToCenter { get; set; }
 
+        //Image
+        public string Image { get; set; }
+        public bool IsMain { get; set; }
+        public bool IsActive { get; set; }
+
         //City
         public int CityId { get; set; }
 

@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure.Core;
+using EEWF.Infrastructure.Services;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +26,13 @@ namespace UniversityLifeApp.Infrastructure.Services
     public class BedRoomService : IBedRoomService
     {
         private readonly ApplicationContext _context;
-        public BedRoomService(ApplicationContext context)
+        private readonly IFileService _fileService;
+        private readonly IWebHostEnvironment _env;
+        public BedRoomService(ApplicationContext context, IFileService fileService, IWebHostEnvironment env)
         {
             _context = context;
+            _fileService = fileService;
+            _env = env;
         }
 
         public async Task<ApiResult<CreateBedRoomResponse>> CreateBedRoom(CreateBedRoomCommand createBedRoom)
@@ -44,6 +52,16 @@ namespace UniversityLifeApp.Infrastructure.Services
             await _context.AddAsync(bedRoom);
             await _context.SaveChangesAsync();
 
+            BedRoomPhoto bedRoomPhoto = new BedRoomPhoto()
+            {
+                BedroomId = bedRoom.Id,
+                IsMain = createBedRoom.Request.IsMain,
+                IsActive = createBedRoom.Request.IsActive,
+            };
+            bedRoomPhoto.Name = await _fileService.SaveImage(_env.WebRootPath, "uploads/bedroomPhoto", createBedRoom.Request.ImageFile[0]);
+            await _context.BedRoomPhotos.AddAsync(bedRoomPhoto);
+            await _context.SaveChangesAsync();
+
             var response = new CreateBedRoomResponse
             {
                 Name = bedRoom.Name,
@@ -53,7 +71,9 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude = bedRoom.Latitude,    
                 Longitude = bedRoom.Longitude,
                 Rating = bedRoom.Rating,
-
+                Image = bedRoomPhoto.Name,
+                IsMain = bedRoomPhoto.IsMain,
+                IsActive = bedRoomPhoto.IsActive,
             };
 
             return ApiResult<CreateBedRoomResponse>.OK(response);
