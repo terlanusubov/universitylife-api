@@ -58,9 +58,13 @@ namespace UniversityLifeApp.Infrastructure.Services
                 IsMain = createBedRoom.Request.IsMain,
                 IsActive = createBedRoom.Request.IsActive,
             };
-            bedRoomPhoto.Name = await _fileService.SaveImage(_env.WebRootPath, "uploads/bedroomPhoto", createBedRoom.Request.ImageFile[0]);
-            await _context.BedRoomPhotos.AddAsync(bedRoomPhoto);
-            await _context.SaveChangesAsync();
+            foreach (var item in createBedRoom.Request.ImageFile)
+            {
+                bedRoomPhoto.Name = await _fileService.SaveImage(_env.WebRootPath, "uploads/bedroomPhoto", item);
+
+                await _context.BedRoomPhotos.AddAsync(bedRoomPhoto);
+            }
+                await _context.SaveChangesAsync();
 
             var response = new CreateBedRoomResponse
             {
@@ -68,7 +72,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CityId = bedRoom.CityId,
                 Description = bedRoom.Description,
                 DistanceToCenter = bedRoom.DistanceToCenter,
-                Latitude = bedRoom.Latitude,    
+                Latitude = bedRoom.Latitude,
                 Longitude = bedRoom.Longitude,
                 Rating = bedRoom.Rating,
                 Image = bedRoomPhoto.Name,
@@ -81,7 +85,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<DeleteBedRoomResponse>> DeleteBedRoom(int bedroomId)
         {
-            var bedroom = await _context.BedRooms.Where(x=>x.Id == bedroomId).FirstOrDefaultAsync();
+            var bedroom = await _context.BedRooms.Where(x => x.Id == bedroomId).FirstOrDefaultAsync();
             bedroom.BedRoomStatusId = (int)BedRoomStatusEnum.Deactive;
 
             await _context.SaveChangesAsync();
@@ -101,13 +105,13 @@ namespace UniversityLifeApp.Infrastructure.Services
             var bedRooms = await _context.BedRooms.Select(x => new GetBedRoomResponse
             {
                 Name = x.Name,
-                BedRoomStatusId= x.BedRoomStatusId,
-                Description= x.Description,
-                DistanceToCenter= x.DistanceToCenter,
-                CityId= x.CityId,
-                Latitude= x.Latitude,
-                Longitude= x.Longitude, 
-                Rating= x.Rating,
+                BedRoomStatusId = x.BedRoomStatusId,
+                Description = x.Description,
+                DistanceToCenter = x.DistanceToCenter,
+                CityId = x.CityId,
+                Latitude = x.Latitude,
+                Longitude = x.Longitude,
+                Rating = x.Rating,
 
             }).ToListAsync();
 
@@ -117,7 +121,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<GetBedRoomByIdResponse>> GetBedRoomById(int bedroomId)
         {
-            var bedroom = await _context.BedRooms.Where(x=>x.Id==bedroomId).Select(x => new GetBedRoomByIdResponse
+            var bedroom = await _context.BedRooms.Where(x => x.Id == bedroomId).Select(x => new GetBedRoomByIdResponse
             {
                 Name = x.Name,
                 BedRoomStatusId = x.BedRoomStatusId,
