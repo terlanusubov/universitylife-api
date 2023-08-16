@@ -35,6 +35,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CountryId = request.Request.CountryId,
                 Latitude = request.Request.Latitude,
                 Longitude = request.Request.Longitude,
+                IsTop = request.Request.IsTop
             };
 
             await _context.Cities.AddAsync(city);
@@ -47,6 +48,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude = city.Latitude,
                 Longitude = city.Longitude,
                 CityStatusId = city.CityStatusId,
+                IsTop = city.IsTop,
             };
 
             return ApiResult<AddCityResponse>.OK(response);
@@ -68,14 +70,15 @@ namespace UniversityLifeApp.Infrastructure.Services
             return ApiResult<DeleteCityResponse>.OK(response);
         }
 
-        public async Task<ApiResult<List<GetCityResponse>>> GetCity()
+        public async Task<ApiResult<List<GetCityResponse>>> GetCity(bool? isTop)
         {
-            var cities = await _context.Cities.Where(x => x.CityStatusId == (int)CityStatusEnum.Active).Select(x => new GetCityResponse
+            var cities = await _context.Cities.Where(x => x.CityStatusId == (int)CityStatusEnum.Active && isTop != null ? x.IsTop == true : x.IsTop == false).Select(x => new GetCityResponse
             {
                 Name = x.Name,
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
                 CountryId = x.CountryId,
+                
             }).ToListAsync();
 
             return ApiResult<List<GetCityResponse>>.OK(cities);
@@ -102,6 +105,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             city.Latitude = request.Request.Latitude;
             city.Longitude = request.Request.Longitude;
             city.CountryId = request.Request.CountryId;
+            city.IsTop = request.Request.IsTop;
 
             await _context.SaveChangesAsync();
 
@@ -111,6 +115,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude = city.Latitude,
                 Longitude = city.Longitude,
                 CountryId = city.CountryId,
+                IsTop = city.IsTop,
             };
 
             return ApiResult<UpdateCityResponse>.OK(response);

@@ -13,5 +13,6 @@ namespace UniveristyLifeApp.Models.v1.Cities.AddCity
         public string Longitude { get; set; }
         public int CountryId { get; set; }
         public int CityStatusId { get; set; }
+        public bool IsTop { get; set; }
     }
 }
