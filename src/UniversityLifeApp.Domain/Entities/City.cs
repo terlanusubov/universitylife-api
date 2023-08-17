@@ -13,6 +13,7 @@ namespace UniversityLifeApp.Domain.Entities
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public bool IsTop { get; set; }
+        public string Image { get; set; }
 
         //Country
         public int CountryId { get; set; }

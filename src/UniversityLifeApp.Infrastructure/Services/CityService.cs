@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,13 @@ namespace UniversityLifeApp.Infrastructure.Services
     public class CityService : ICityService
     {
         private readonly ApplicationContext _context;
-        public CityService(ApplicationContext context)
+        private readonly IFileService _fileService;
+        private readonly IWebHostEnvironment _env;
+        public CityService(ApplicationContext context, IWebHostEnvironment env, IFileService fileService)
         {
             _context = context;
+            _fileService = fileService;
+            _env = env;
         }
         public async Task<ApiResult<AddCityResponse>> AddCity(AddCityCommand request)
         {
@@ -37,6 +42,8 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Longitude = request.Request.Longitude,
                 IsTop = request.Request.IsTop
             };
+
+            city.Image = await _fileService.SaveImage(_env.WebRootPath, "uploads/city", request.Request.ImageFile);
 
             await _context.Cities.AddAsync(city);
             await _context.SaveChangesAsync();
@@ -79,6 +86,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Longitude = x.Longitude,
                 CountryId = x.CountryId,
                 BedRoomCount = x.BedRooms.Count(),
+                Image = x.Image,
                 
             }).ToListAsync();
 
@@ -93,6 +101,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CountryId= x.CountryId,
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
+                Image = x.Image,
             }).FirstOrDefaultAsync();
 
             return ApiResult<GetCityByIdResponse>.OK(city);

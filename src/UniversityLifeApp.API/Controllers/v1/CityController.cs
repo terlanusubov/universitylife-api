@@ -25,7 +25,7 @@ namespace UniversityLifeApp.API.Controllers.v1
             _mediator = mediator;
         }
         [HttpPost]
-        public async Task<ApiResult<AddCityResponse>> AddCity(AddCityRequest request)
+        public async Task<ApiResult<AddCityResponse>> AddCity([FromForm]AddCityRequest request)
             => await _mediator.Send(new AddCityCommand(request));
 
         [HttpGet]
