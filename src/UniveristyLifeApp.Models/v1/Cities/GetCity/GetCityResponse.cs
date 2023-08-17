@@ -12,5 +12,6 @@ namespace UniveristyLifeApp.Models.v1.Cities.GetCity
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public int CountryId { get; set; }
+        public int BedRoomCount { get; set; }
     }
 }
