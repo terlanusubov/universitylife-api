@@ -72,12 +72,13 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetCityResponse>>> GetCity(bool? isTop)
         {
-            var cities = await _context.Cities.Where(x => x.CityStatusId == (int)CityStatusEnum.Active && isTop != null ? x.IsTop == true : x.IsTop == false).Select(x => new GetCityResponse
+            var cities = await _context.Cities.Where(x => x.CityStatusId == (int)CityStatusEnum.Active && isTop == true ? x.IsTop == true : (x.IsTop == true || x.IsTop == false)).Select(x => new GetCityResponse
             {
                 Name = x.Name,
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
                 CountryId = x.CountryId,
+                BedRoomCount = x.BedRooms.Count(),
                 
             }).ToListAsync();
 
