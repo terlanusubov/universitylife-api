@@ -86,7 +86,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Longitude = x.Longitude,
                 CountryId = x.CountryId,
                 BedRoomCount = x.BedRooms.Count(),
-                Image = _env.WebRootPath + x.Image,
+                Image = "http://elnurhz-001-site1.itempurl.com/uploads/city/" + x.Image,
             }).ToListAsync();   
 
             return ApiResult<List<GetCityResponse>>.OK(cities);
