@@ -86,9 +86,8 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Longitude = x.Longitude,
                 CountryId = x.CountryId,
                 BedRoomCount = x.BedRooms.Count(),
-                Image = x.Image,
-                
-            }).ToListAsync();
+                Image = _env.WebRootPath + x.Image,
+            }).ToListAsync();   
 
             return ApiResult<List<GetCityResponse>>.OK(cities);
         }
