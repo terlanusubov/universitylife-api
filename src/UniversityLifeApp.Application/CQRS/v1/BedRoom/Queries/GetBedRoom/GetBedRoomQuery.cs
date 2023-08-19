@@ -11,6 +11,10 @@ namespace UniversityLifeApp.Application.CQRS.v1.BedRoom.Queries.GetBedRoom
 {
     public class GetBedRoomQuery : IRequest<ApiResult<List<GetBedRoomResponse>>>
     {
+        public GetBedRoomQuery(int? cityId)
+        {
+            CityId = cityId;
+        }
         public int BedRoomStatusId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -20,6 +24,6 @@ namespace UniversityLifeApp.Application.CQRS.v1.BedRoom.Queries.GetBedRoom
         public float DistanceToCenter { get; set; }
 
         //City
-        public int CityId { get; set; }
+        public int? CityId { get; set; }
     }
 }
