@@ -8,6 +8,8 @@ namespace UniversityLifeApp.Domain.Enums
 {
     public enum BedRoomRoomApplyStatusEnum
     {
-        
+        Pending = 10,
+        Accepted = 20,
+        Rejected = 30,
     }
 }
