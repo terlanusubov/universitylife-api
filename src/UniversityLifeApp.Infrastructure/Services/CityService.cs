@@ -77,9 +77,9 @@ namespace UniversityLifeApp.Infrastructure.Services
             return ApiResult<DeleteCityResponse>.OK(response);
         }
 
-        public async Task<ApiResult<List<GetCityResponse>>> GetCity(bool? isTop, int? countryId)
+        public async Task<ApiResult<List<GetCityResponse>>> GetCity(GetCityRequest request)
         {
-            var cities = await _context.Cities.Where(x => x.CityStatusId == (int)CityStatusEnum.Active && isTop == true ? x.IsTop == true : (x.IsTop == true || x.IsTop == false) && countryId != null ? x.CountryId == countryId : countryId != null).Select(x => new GetCityResponse
+            var cities = await _context.Cities.Where(x => x.CityStatusId == (int)CityStatusEnum.Active && request.IsTop == true ? x.IsTop == true : (x.IsTop == true || x.IsTop == false) && request.CountryId != null ? x.CountryId == request.CountryId : request.CountryId != null).Select(x => new GetCityResponse
             {
                 Name = x.Name,
                 Latitude = x.Latitude,

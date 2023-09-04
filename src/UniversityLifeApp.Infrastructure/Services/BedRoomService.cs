@@ -76,9 +76,9 @@ namespace UniversityLifeApp.Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        public async Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom(int? cityId)
+        public async Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom(GetBedRoomRequest request)
         {
-            var bedRooms = await _context.BedRooms.Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && cityId != null ? x.CityId == cityId : cityId != null).Select(x => new GetBedRoomResponse
+            var bedRooms = await _context.BedRooms.Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && request.CityId != null ? x.CityId == request.CityId : request.CityId != null).Select(x => new GetBedRoomResponse
             {
                 Name = x.Name,
                 BedRoomStatusId = x.BedRoomStatusId,
