@@ -29,8 +29,8 @@ namespace UniversityLifeApp.API.Controllers.v1
             => await _mediator.Send(new AddCityCommand(request));
 
         [HttpGet]
-        public async Task<ActionResult<List<GetCityResponse>>> GetCity([FromQuery]bool? isTop, int? countryId)
-            => (await _mediator.Send(new GetCityQuery(isTop, countryId))).Response;
+        public async Task<ActionResult<List<GetCityResponse>>> GetCity([FromQuery]GetCityRequest request)
+            => (await _mediator.Send(new GetCityQuery(request))).Response;
 
         [HttpGet("{cityId}")]
         public async Task<ActionResult<GetCityByIdResponse>> GetCity(int cityId)

@@ -19,7 +19,7 @@ namespace UniversityLifeApp.Application.CQRS.v1.Cities.Queries.GetCity
         }
         public async Task<ApiResult<List<GetCityResponse>>> Handle(GetCityQuery request, CancellationToken cancellationToken)
         {
-            var result = await _cityService.GetCity(request.IsTop, request.CountryId);
+            var result = await _cityService.GetCity(request.Request);
 
             return result;
         }
