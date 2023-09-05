@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniversityLifeApp.Infrastructure.Data;
 
@@ -10,9 +11,11 @@ using UniversityLifeApp.Infrastructure.Data;
 namespace UniversityLifeApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230905061905_ContactTableAdded")]
+    partial class ContactTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -284,9 +287,6 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<int>("ContactStatusId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Country")
                         .IsRequired()
