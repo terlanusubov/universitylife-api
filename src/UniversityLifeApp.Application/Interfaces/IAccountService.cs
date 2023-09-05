@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.Account.Login;
 using UniveristyLifeApp.Models.v1.Account.Register;
+using UniveristyLifeApp.Models.v1.Account.Update;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.Account.Commands.Register;
+using UniversityLifeApp.Application.CQRS.v1.Account.Commands.Update;
 
 namespace UniversityLifeApp.Application.Interfaces
 {
@@ -14,5 +16,6 @@ namespace UniversityLifeApp.Application.Interfaces
     {
         Task<ApiResult<RegisterResponse>> Register(RegisterRequest request);
         Task<ApiResult<LoginResponse>> Login(LoginRequest request);
+        Task<ApiResult<UpdateResponse>> Update(UpdateCommand request);
     }
 }

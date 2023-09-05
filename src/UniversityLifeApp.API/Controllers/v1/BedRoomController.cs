@@ -30,8 +30,8 @@ namespace UniversityLifeApp.API.Controllers.v1
 
 
         [HttpGet]
-        public async Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom()
-            => await _mediator.Send(new GetBedRoomQuery());
+        public async Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom([FromQuery] GetBedRoomRequest request)
+            => await _mediator.Send(new GetBedRoomQuery(request));
 
         [HttpGet("{bedroomId}")]
         public async Task<ApiResult<GetBedRoomByIdResponse>> GetBedRoomById(int bedroomId)

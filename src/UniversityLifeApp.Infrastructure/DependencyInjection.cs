@@ -26,7 +26,11 @@ namespace UniversityLifeApp.Infrastructure
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<ICityService, CityService>();
             services.AddTransient<IFileService, FileService>();
+
             services.AddTransient<IContactService, ContactService>();
+
+            services.AddTransient<IOurServiceService, OurServiceService>();
+
             services.AddDbContext<ApplicationContext>(opt =>
             {
                 opt.UseMySql(configuration.GetConnectionString("Default"), ServerVersion.AutoDetect(configuration.GetConnectionString("Default")));

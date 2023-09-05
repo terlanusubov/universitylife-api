@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniveristyLifeApp.Models.v1.Account.Login
+namespace UniveristyLifeApp.Models.v1.Account.Update
 {
-    public class LoginResponse
+    public class UpdateRequest
     {
-        public string Token { get; set; }
+        public int UserId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
