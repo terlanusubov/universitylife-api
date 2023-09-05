@@ -30,7 +30,11 @@ namespace UniversityLifeApp.Infrastructure.Data
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
             modelBuilder.ApplyConfiguration(new UserWishlistConfiguration());
+
+            modelBuilder.ApplyConfiguration(new ContactConfiguration());
+
             modelBuilder.ApplyConfiguration(new OurServiceConfiguration());
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -47,6 +51,10 @@ namespace UniversityLifeApp.Infrastructure.Data
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public virtual DbSet<UserWishlist> UserWishlists { get; set; }
         public virtual DbSet<Logs> Logs { get; set; }
+
+        public virtual DbSet<Contact> Contacts { get; set; }
+
         public virtual DbSet<OurService> OurServices { get; set; }
+
     }
 }
