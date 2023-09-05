@@ -47,7 +47,10 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             var response = new LoginResponse
             {
-                Token = token
+                Token = token,
+                Name = user.Name,
+                Surname = user.Surname,
+                PhoneNumber = user.PhoneNumber,
             };
 
             return ApiResult<LoginResponse>.OK(response);
