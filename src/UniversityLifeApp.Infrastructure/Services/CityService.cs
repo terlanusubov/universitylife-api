@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,13 @@ namespace UniversityLifeApp.Infrastructure.Services
     public class CityService : ICityService
     {
         private readonly ApplicationContext _context;
-        public CityService(ApplicationContext context)
+        private readonly IFileService _fileService;
+        private readonly IWebHostEnvironment _env;
+        public CityService(ApplicationContext context, IWebHostEnvironment env, IFileService fileService)
         {
             _context = context;
+            _fileService = fileService;
+            _env = env;
         }
         public async Task<ApiResult<AddCityResponse>> AddCity(AddCityCommand request)
         {
@@ -37,6 +42,8 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Longitude = request.Request.Longitude,
                 IsTop = request.Request.IsTop
             };
+
+            city.Image = await _fileService.SaveImage(_env.WebRootPath, "uploads/city", request.Request.ImageFile);
 
             await _context.Cities.AddAsync(city);
             await _context.SaveChangesAsync();
@@ -70,17 +77,17 @@ namespace UniversityLifeApp.Infrastructure.Services
             return ApiResult<DeleteCityResponse>.OK(response);
         }
 
-        public async Task<ApiResult<List<GetCityResponse>>> GetCity(bool? isTop)
+        public async Task<ApiResult<List<GetCityResponse>>> GetCity(GetCityRequest request)
         {
-            var cities = await _context.Cities.Where(x => x.CityStatusId == (int)CityStatusEnum.Active && isTop == true ? x.IsTop == true : (x.IsTop == true || x.IsTop == false)).Select(x => new GetCityResponse
+            var cities = await _context.Cities.Where(x => x.CityStatusId == (int)CityStatusEnum.Active && request.IsTop == true ? x.IsTop == true : (x.IsTop == true || x.IsTop == false) && request.CountryId != null ? x.CountryId == request.CountryId : request.CountryId != null).Select(x => new GetCityResponse
             {
                 Name = x.Name,
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
                 CountryId = x.CountryId,
                 BedRoomCount = x.BedRooms.Count(),
-                
-            }).ToListAsync();
+                Image = "http://elnurhz-001-site1.itempurl.com/uploads/city/" + x.Image,
+            }).ToListAsync();   
 
             return ApiResult<List<GetCityResponse>>.OK(cities);
         }
@@ -93,6 +100,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CountryId= x.CountryId,
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
+                Image = x.Image,
             }).FirstOrDefaultAsync();
 
             return ApiResult<GetCityByIdResponse>.OK(city);
