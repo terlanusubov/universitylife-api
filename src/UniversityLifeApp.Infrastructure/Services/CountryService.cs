@@ -45,6 +45,7 @@ namespace UniversityLifeApp.Infrastructure.Services
         {
             var country = await _applicationContext.Countries.Where(x => x.CountryStatusId == 10).Select(x => new GetCountryResponse
             {
+                Id = x.Id,
                 Name = x.Name,
                 CountryStatisId = x.CountryStatusId,
             }).ToListAsync();
