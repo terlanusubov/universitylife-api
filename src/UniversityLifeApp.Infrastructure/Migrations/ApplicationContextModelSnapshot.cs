@@ -246,6 +246,10 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<bool>("IsTop")
                         .HasColumnType("tinyint(1)");
 

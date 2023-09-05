@@ -28,7 +28,9 @@ namespace UniversityLifeApp.Infrastructure.Services
                 {
                 new Claim("id", user.Id.ToString()),
                 new Claim("name", user.Name),
-                    new Claim("Email", user.Email),
+                new Claim("Surname", user.Surname),
+                new Claim("Email", user.Email),
+                new Claim("PhoneNumber", user.PhoneNumber),
                 new Claim("jti",  Guid.NewGuid().ToString().Replace("-","")),
              }),
                 Expires = DateTime.UtcNow.AddHours(Convert.ToInt32(_configuration["JWTSettings:Expiration"])),
