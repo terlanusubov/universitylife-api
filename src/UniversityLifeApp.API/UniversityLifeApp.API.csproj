@@ -34,5 +34,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\uploads\bedroomPhoto\" />
+    <Folder Include="wwwroot\uploads\services\" />
   </ItemGroup>
 </Project>
