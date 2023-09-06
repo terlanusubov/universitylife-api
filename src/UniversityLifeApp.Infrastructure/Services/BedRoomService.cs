@@ -78,6 +78,13 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom()
         {
+            var bedRooms2 = await _context.BedRooms.ToListAsync();
+
+            var totalData = bedRooms2.Count();
+            var pageSize = 6;
+            var totalPage = totalData / pageSize;
+            
+
             var bedRooms = await _context.BedRooms.Select(x => new GetBedRoomResponse
             {
                 Name = x.Name,
@@ -88,8 +95,11 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude= x.Latitude,
                 Longitude= x.Longitude, 
                 Rating= x.Rating,
-
+                TotalData = totalData,
+                PageSize = pageSize,
+                TotalPage = totalPage,
             }).ToListAsync();
+
 
             return ApiResult<List<GetBedRoomResponse>>.OK(bedRooms);
 
