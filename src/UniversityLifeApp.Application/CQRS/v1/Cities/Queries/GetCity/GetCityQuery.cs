@@ -11,16 +11,16 @@ namespace UniversityLifeApp.Application.CQRS.v1.Cities.Queries.GetCity
 {
     public class GetCityQuery:IRequest<ApiResult<List<GetCityResponse>>>
     {
-        public GetCityQuery(bool? isTop)
+        public GetCityQuery(GetCityRequest request)
         {
-            IsTop = isTop;
+            Request = request;
         }
+
+        public GetCityRequest Request { get; set; }
 
         public string Name { get; set; }
         public string Latitude { get; set; }
         public string Longitude { get; set; }
-        public int CountryId { get; set; }
         public int CityStatusId { get; set; }
-        public bool? IsTop { get; set; }
     }
 }

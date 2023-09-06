@@ -16,7 +16,7 @@ namespace UniversityLifeApp.Application.Interfaces
 {
     public interface IBedRoomService
     {
-        Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom();
+        Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom(GetBedRoomRequest request);
         Task<ApiResult<GetBedRoomByIdResponse>> GetBedRoomById(int bedroomId);
         Task<ApiResult<CreateBedRoomResponse>> CreateBedRoom(CreateBedRoomCommand createBedRoom);
         Task<ApiResult<UpdateBedRoomResponse>> UpdateBedRoom(UpdateBedRoomCommand updateBedRoom , int bedroomId);
