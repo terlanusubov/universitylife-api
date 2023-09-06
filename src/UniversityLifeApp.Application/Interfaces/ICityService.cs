@@ -17,7 +17,7 @@ namespace UniversityLifeApp.Application.Interfaces
     public interface ICityService
     {
         Task<ApiResult<AddCityResponse>> AddCity(AddCityCommand request);
-        Task<ApiResult<List<GetCityResponse>>> GetCity(bool? isTop);
+        Task<ApiResult<List<GetCityResponse>>> GetCity(GetCityRequest request);
         Task<ApiResult<GetCityByIdResponse>> GetCityById(int cityId);
         Task<ApiResult<UpdateCityResponse>> UpdateCity(UpdateCityCommand request, int cityId);
         Task<ApiResult<DeleteCityResponse>> DeleteCity(int cityId);
