@@ -31,7 +31,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                        SearchId = (int)SearchStatusEnum.City
                    }).ToListAsync();
 
-                var univercity = await _applicationContext.Universities.Include(x => x.City).
+                var university = await _applicationContext.Universities.Include(x => x.City).
                                                                     ThenInclude(x => x.Country).
                                                                       Where(x => x.Name.ToLower().Contains(word.ToLower())).
                                                                       Select(x => new SearchResponse
@@ -49,7 +49,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 response.Add(item);   
             }
 
-            foreach (var item in univercity)
+            foreach (var item in university)
             {
                 response.Add(item);
             }
