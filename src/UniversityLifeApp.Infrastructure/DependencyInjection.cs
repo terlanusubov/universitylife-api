@@ -29,7 +29,10 @@ namespace UniversityLifeApp.Infrastructure
 
             services.AddTransient<IContactService, ContactService>();
 
+            services.AddTransient<ISearchService, SearchService>();
+
             services.AddTransient<IOurServiceService, OurServiceService>();
+
 
             services.AddDbContext<ApplicationContext>(opt =>
             {
