@@ -88,7 +88,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
                 Rating = x.Rating,
-                BedRoomImages = x.BedRoomPhotos.Select(c => @"http://elnurhz-001-site1.itempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
+                BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
             }).ToListAsync();
 
             return ApiResult<List<GetBedRoomResponse>>.OK(bedRooms);
