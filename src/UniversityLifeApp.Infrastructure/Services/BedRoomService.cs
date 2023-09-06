@@ -78,7 +78,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom(GetBedRoomRequest request)
         {
-            var bedRooms = await _context.BedRooms.Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && request.CityId != null ? x.CityId == request.CityId : request.CityId != null).Select(x => new GetBedRoomResponse
+            var bedRooms = await _context.BedRooms.Include(x => x.BedRoomPhotos).Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && request.CityId != null ? x.CityId == request.CityId : request.CityId == null).Select(x => new GetBedRoomResponse
             {
                 Name = x.Name,
                 BedRoomStatusId = x.BedRoomStatusId,
@@ -88,7 +88,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
                 Rating = x.Rating,
-
+                BedRoomImages = x.BedRoomPhotos.Select(c => @"http://elnurhz-001-site1.itempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
             }).ToListAsync();
 
             return ApiResult<List<GetBedRoomResponse>>.OK(bedRooms);
