@@ -55,6 +55,7 @@ namespace UniversityLifeApp.Infrastructure.Data
         public virtual DbSet<Contact> Contacts { get; set; }
 
         public virtual DbSet<OurService> OurServices { get; set; }
+        public virtual DbSet<Counter> Counter { get; set; }
 
     }
 }
