@@ -76,16 +76,18 @@ namespace UniversityLifeApp.Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        public async Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom(GetBedRoomRequest request)
+        public async Task<ApiResult<GetBedRoomResponse>> GetBedRoom(GetBedRoomRequest request)
         {
             var bedRooms2 = await _context.BedRooms.ToListAsync();
 
             var totalData = bedRooms2.Count();
+
             var pageSize = 6;
-            var totalPage = totalData / pageSize;
+
+            var totalPage = totalData % 6 != 0 ? (totalData / pageSize) + 1 : totalData / pageSize;
             
 
-            var bedRooms = await _context.BedRooms.Select(x => new GetBedRoomResponse
+            var bedRooms = await _context.BedRooms.Select(x => new GetBedRoomsDto
             {
                 Name = x.Name,
                 BedRoomStatusId= x.BedRoomStatusId,
@@ -96,13 +98,17 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Longitude= x.Longitude, 
                 Rating= x.Rating,
                 BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
-                TotalData = totalData,
-                PageSize = pageSize,
-                TotalPage = totalPage,
+             
             }).ToListAsync();
 
+            var response = new GetBedRoomResponse();
 
-            return ApiResult<List<GetBedRoomResponse>>.OK(bedRooms);
+            response.BedRooms = bedRooms;
+
+            response.TotalData = totalData;
+            response.PageSize = pageSize;
+            response.TotalPage = totalPage;
+            return ApiResult<GetBedRoomResponse>.OK(response);
 
         }
 
