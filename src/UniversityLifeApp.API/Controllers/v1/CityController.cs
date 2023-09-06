@@ -24,19 +24,19 @@ namespace UniversityLifeApp.API.Controllers.v1
         {
             _mediator = mediator;
         }
-        [HttpPost("addcity")]
-        public async Task<ApiResult<AddCityResponse>> AddCity(AddCityRequest request)
+        [HttpPost]
+        public async Task<ApiResult<AddCityResponse>> AddCity([FromForm]AddCityRequest request)
             => await _mediator.Send(new AddCityCommand(request));
 
-        [HttpGet("getcity")]
-        public async Task<ActionResult<List<GetCityResponse>>> GetCity()
-            => (await _mediator.Send(new GetCityQuery())).Response;
+        [HttpGet]
+        public async Task<ActionResult<List<GetCityResponse>>> GetCity([FromQuery]GetCityRequest request)
+            => (await _mediator.Send(new GetCityQuery(request))).Response;
 
-        [HttpGet("getcity/{cityId}")]
+        [HttpGet("{cityId}")]
         public async Task<ActionResult<GetCityByIdResponse>> GetCity(int cityId)
             => (await _mediator.Send(new GetCityByIdQuery(cityId))).Response;
 
-        [HttpPut("{cityId}/update")]
+        [HttpPut("{cityId}")]
         public async Task<ApiResult<UpdateCityResponse>> UpdateCity(UpdateCityRequest request, int cityId)
             => await _mediator.Send(new UpdateCityCommand(request, cityId));
 

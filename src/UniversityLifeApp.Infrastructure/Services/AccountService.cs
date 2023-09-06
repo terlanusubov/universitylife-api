@@ -8,7 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.Account.Login;
 using UniveristyLifeApp.Models.v1.Account.Register;
+using UniveristyLifeApp.Models.v1.Account.Update;
 using UniversityLifeApp.Application.Core;
+using UniversityLifeApp.Application.CQRS.v1.Account.Commands.Update;
 using UniversityLifeApp.Application.Interfaces;
 using UniversityLifeApp.Domain.Entities;
 using UniversityLifeApp.Domain.Enums;
@@ -45,7 +47,10 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             var response = new LoginResponse
             {
-                Token = token
+                Token = token,
+                Name = user.Name,
+                Surname = user.Surname,
+                PhoneNumber = user.PhoneNumber,
             };
 
             return ApiResult<LoginResponse>.OK(response);
@@ -87,6 +92,30 @@ namespace UniversityLifeApp.Infrastructure.Services
             };
 
             return ApiResult<RegisterResponse>.OK(response);
+        }
+
+        public async Task<ApiResult<UpdateResponse>> Update(UpdateCommand request)
+        {
+            var user = await _context.Users.Where(x => x.Id == request.Request.UserId).FirstOrDefaultAsync();
+
+            if(user != null)
+            {
+                user.Name = request.Request.Name;
+                user.Surname = request.Request.Surname;
+                user.PhoneNumber = request.Request.PhoneNumber;
+            }
+
+            await _context.SaveChangesAsync();
+
+            UpdateResponse response = new UpdateResponse
+            {
+                Name = user.Name,
+                Surname = user.Surname,
+                PhoneNumber = user.PhoneNumber,
+            };
+
+            return ApiResult<UpdateResponse>.OK(response);
+
         }
     }
 }

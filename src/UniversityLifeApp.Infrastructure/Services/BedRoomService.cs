@@ -50,7 +50,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CityId = bedRoom.CityId,
                 Description = bedRoom.Description,
                 DistanceToCenter = bedRoom.DistanceToCenter,
-                Latitude = bedRoom.Latitude,    
+                Latitude = bedRoom.Latitude,
                 Longitude = bedRoom.Longitude,
                 Rating = bedRoom.Rating,
 
@@ -61,7 +61,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<DeleteBedRoomResponse>> DeleteBedRoom(int bedroomId)
         {
-            var bedroom = await _context.BedRooms.Where(x=>x.Id == bedroomId).FirstOrDefaultAsync();
+            var bedroom = await _context.BedRooms.Where(x => x.Id == bedroomId).FirstOrDefaultAsync();
             bedroom.BedRoomStatusId = (int)BedRoomStatusEnum.Deactive;
 
             await _context.SaveChangesAsync();
@@ -76,7 +76,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        public async Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom()
+        public async Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom(GetBedRoomRequest request)
         {
             var bedRooms2 = await _context.BedRooms.ToListAsync();
 
@@ -95,6 +95,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude= x.Latitude,
                 Longitude= x.Longitude, 
                 Rating= x.Rating,
+                BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
                 TotalData = totalData,
                 PageSize = pageSize,
                 TotalPage = totalPage,
@@ -107,7 +108,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<GetBedRoomByIdResponse>> GetBedRoomById(int bedroomId)
         {
-            var bedroom = await _context.BedRooms.Where(x=>x.Id==bedroomId).Select(x => new GetBedRoomByIdResponse
+            var bedroom = await _context.BedRooms.Where(x => x.Id == bedroomId).Select(x => new GetBedRoomByIdResponse
             {
                 Name = x.Name,
                 BedRoomStatusId = x.BedRoomStatusId,

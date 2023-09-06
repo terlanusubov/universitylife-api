@@ -15,9 +15,13 @@ namespace UniveristyLifeApp.Models.v1.BedRoom.GetBedRoom
         public string Longitude { get; set; }
         public int Rating { get; set; }
         public float DistanceToCenter { get; set; }
+
         public int TotalPage { get; set; }
         public int TotalData { get; set; }
         public int PageSize { get; set; }
+
+        public List<string> BedRoomImages { get; set; }
+
 
         //City
         public int CityId { get; set; }
