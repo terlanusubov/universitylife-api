@@ -38,6 +38,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Name = createBedRoom.Request.Name,
                 Rating = createBedRoom.Request.Rating,
                 CityId = createBedRoom.Request.CityId,
+                Price = createBedRoom.Request.Price,
                 BedRoomStatusId = (int)BedRoomStatusEnum.Active,
             };
 
@@ -53,7 +54,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude = bedRoom.Latitude,
                 Longitude = bedRoom.Longitude,
                 Rating = bedRoom.Rating,
-
+                Price = bedRoom.Price,
             };
 
             return ApiResult<CreateBedRoomResponse>.OK(response);
@@ -84,10 +85,10 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             var pageSize = 6;
 
-            var totalPage = totalData % 6 != 0 ? (totalData / pageSize) + 1 : totalData / pageSize;
+            var totalPage = totalData % pageSize != 0 ? (totalData / pageSize) + 1 : totalData / pageSize;
             
 
-            var bedRooms = await _context.BedRooms.Select(x => new GetBedRoomsDto
+            var bedRooms = await _context.BedRooms.Where(x => request != null ? x.CityId == request.CityId : request.CityId == null).Select(x => new GetBedRoomsDto
             {
                 Name = x.Name,
                 BedRoomStatusId= x.BedRoomStatusId,
@@ -97,6 +98,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude= x.Latitude,
                 Longitude= x.Longitude, 
                 Rating= x.Rating,
+                Price = x.Price,
                 BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
              
             }).ToListAsync();
@@ -124,7 +126,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
                 Rating = x.Rating,
-
+                Price = x.Price,
             }).FirstOrDefaultAsync();
 
 
@@ -143,6 +145,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             result.CityId = updateBedRoom.Request.CityId;
             result.Name = updateBedRoom.Request.Name;
             result.DistanceToCenter = updateBedRoom.Request.DistanceToCenter;
+            result.Price = updateBedRoom.Request.Price;
 
             await _context.SaveChangesAsync();
 
@@ -155,6 +158,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Rating = result.Rating,
                 Name = result.Name,
                 DistanceToCenter = result.DistanceToCenter,
+                Price = result.Price,
             };
 
             return ApiResult<UpdateBedRoomResponse>.OK(bedroom);
