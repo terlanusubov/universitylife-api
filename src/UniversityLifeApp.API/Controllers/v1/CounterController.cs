@@ -19,7 +19,7 @@ namespace UniversityLifeApp.API.Controllers.v1
             _mediator = mediator;
         }
         [HttpGet]
-        public async Task<ActionResult<GetCounterResponse>> GetCount()
+        public async  Task<ActionResult<GetCounterResponse>> GetCount()
         => (await _mediator.Send(new GetCounterQuery())).Response;
     }
 }
