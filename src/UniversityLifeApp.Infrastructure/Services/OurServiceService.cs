@@ -44,7 +44,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             CreateOurServiceResponse response = new CreateOurServiceResponse
             {
-                Name = service.Name,
+                    Name = service.Name,
                 Description = service.Description,
                 Image = service.Image,
                 OurServiceStatusId = service.OurServiceStatusId,

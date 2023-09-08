@@ -15,5 +15,6 @@ namespace UniveristyLifeApp.Models.v1.Cities.GetCity
         public int CountryId { get; set; }
         public int BedRoomCount { get; set; }
         public string Image { get; set; }
+        public bool IsTop { get; set; }
     }
 }

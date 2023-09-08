@@ -1,4 +1,21 @@
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+using UniversityLifeApp.Application;
+using UniversityLifeApp.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddControllers();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
