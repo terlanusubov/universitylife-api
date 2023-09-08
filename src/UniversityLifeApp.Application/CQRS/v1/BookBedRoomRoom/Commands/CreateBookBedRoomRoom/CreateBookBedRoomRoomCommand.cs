@@ -11,12 +11,10 @@ namespace UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Commands.CreateB
 {
     public class CreateBookBedRoomRoomCommand:IRequest<ApiResult<CreateBookBedRoomRoomResponse>>
     {
-        public CreateBookBedRoomRoomCommand(int userId, int bedRoomRoomId)
+        public CreateBookBedRoomRoomCommand(CreateBookBedRoomRoomRequest request)
         {
-            UserId = userId;
-            BedRoomRoomId = bedRoomRoomId;
+            Request = request;
         }
-        public int UserId { get; set; }
-        public int BedRoomRoomId { get; set; }
+        public CreateBookBedRoomRoomRequest Request { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.CreateBookBedRoomRoom;
 using UniversityLifeApp.Application.Core;
+using UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Commands.CreateBookBedRoomRoom;
 using UniversityLifeApp.Application.Interfaces;
 using UniversityLifeApp.Domain.Entities;
 using UniversityLifeApp.Domain.Enums;
@@ -12,19 +13,19 @@ using UniversityLifeApp.Infrastructure.Data;
 
 namespace UniversityLifeApp.Infrastructure.Services
 {
-    public class BookBedRoomRoomServiceL : IBookBedRoomRoom
+    public class BookBedRoomRoomService : IBookBedRoomRoom
     {
         private readonly ApplicationContext _context;
-        public BookBedRoomRoomServiceL(ApplicationContext context)
+        public BookBedRoomRoomService(ApplicationContext context)
         {
             _context = context;
         }
-        public async Task<ApiResult<CreateBookBedRoomRoomResponse>> BookBedRoomRoom(int userId, int bedRoomRoomId)
+        public async Task<ApiResult<CreateBookBedRoomRoomResponse>> BookBedRoomRoom(CreateBookBedRoomRoomCommand request)
         {
             BedRoomRoomApply bookBedRoomRoom = new BedRoomRoomApply
             {
-                UserId = userId,
-                BedRoomRoomId = bedRoomRoomId,
+                UserId = request.Request.UserId,
+                BedRoomRoomId = request.Request.BedRoomRoomId,
                 BedRoomRoomApplyStatusId = (int)BedRoomRoomApplyStatusEnum.Pending,
             };
 
@@ -34,8 +35,8 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             CreateBookBedRoomRoomResponse response = new CreateBookBedRoomRoomResponse
             {
-                UserId = userId,
-                BedRoomRoomId = bedRoomRoomId,
+                UserId = bookBedRoomRoom.UserId,
+                BedRoomRoomId = bookBedRoomRoom.BedRoomRoomId,
             };
 
             return ApiResult<CreateBookBedRoomRoomResponse>.OK(response);

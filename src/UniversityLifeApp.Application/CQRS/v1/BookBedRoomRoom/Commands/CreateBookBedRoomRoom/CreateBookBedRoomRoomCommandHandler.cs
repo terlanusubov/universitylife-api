@@ -19,7 +19,7 @@ namespace UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Commands.CreateB
         }
         public async Task<ApiResult<CreateBookBedRoomRoomResponse>> Handle(CreateBookBedRoomRoomCommand request, CancellationToken cancellationToken)
         {
-            var result = await _bookBedRoomRoom.BookBedRoomRoom(request.UserId, request.BedRoomRoomId);
+            var result = await _bookBedRoomRoom.BookBedRoomRoom(request);
 
             return result;
         }
