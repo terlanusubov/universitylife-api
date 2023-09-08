@@ -41,7 +41,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             await _context.OurServices.AddAsync(service);
             await _context.SaveChangesAsync();
-
+             
             CreateOurServiceResponse response = new CreateOurServiceResponse
             {
                 Name = service.Name,
