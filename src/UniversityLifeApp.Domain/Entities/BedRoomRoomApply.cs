@@ -8,7 +8,7 @@ namespace UniversityLifeApp.Domain.Entities
 {
     public class BedRoomRoomApply:BaseEntity
     {
-        public string Applied { get; set; }
+        //public string Applied { get; set; }
         public int BedRoomRoomApplyStatusId { get; set; }
 
         //Bedroomroom
