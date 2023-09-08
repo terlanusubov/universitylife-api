@@ -19,6 +19,7 @@ namespace UniversityLifeApp.Infrastructure.Data.Configuration
             builder.Property(x => x.Longitude).IsRequired();
             builder.Property(x => x.DistanceToCenter).IsRequired();
             builder.Property(x => x.CityId).IsRequired();
+            builder.Property(x => x.Price).HasColumnType("decimal(18,2)");
         }
     }
 }

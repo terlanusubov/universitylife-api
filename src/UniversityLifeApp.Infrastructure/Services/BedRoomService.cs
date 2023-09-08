@@ -38,6 +38,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Name = createBedRoom.Request.Name,
                 Rating = createBedRoom.Request.Rating,
                 CityId = createBedRoom.Request.CityId,
+                Price = createBedRoom.Request.Price,
                 BedRoomStatusId = (int)BedRoomStatusEnum.Active,
             };
 
@@ -50,10 +51,10 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CityId = bedRoom.CityId,
                 Description = bedRoom.Description,
                 DistanceToCenter = bedRoom.DistanceToCenter,
-                Latitude = bedRoom.Latitude,    
+                Latitude = bedRoom.Latitude,
                 Longitude = bedRoom.Longitude,
                 Rating = bedRoom.Rating,
-
+                Price = bedRoom.Price,
             };
 
             return ApiResult<CreateBedRoomResponse>.OK(response);
@@ -61,7 +62,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<DeleteBedRoomResponse>> DeleteBedRoom(int bedroomId)
         {
-            var bedroom = await _context.BedRooms.Where(x=>x.Id == bedroomId).FirstOrDefaultAsync();
+            var bedroom = await _context.BedRooms.Where(x => x.Id == bedroomId).FirstOrDefaultAsync();
             bedroom.BedRoomStatusId = (int)BedRoomStatusEnum.Deactive;
 
             await _context.SaveChangesAsync();
@@ -76,9 +77,18 @@ namespace UniversityLifeApp.Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        public async Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom()
+        public async Task<ApiResult<GetBedRoomResponse>> GetBedRoom(GetBedRoomRequest request)
         {
-            var bedRooms = await _context.BedRooms.Select(x => new GetBedRoomResponse
+            var bedRooms2 = await _context.BedRooms.ToListAsync();
+
+            var totalData = bedRooms2.Count();
+
+            var pageSize = 6;
+
+            var totalPage = totalData % pageSize != 0 ? (totalData / pageSize) + 1 : totalData / pageSize;
+            
+
+            var bedRooms = await _context.BedRooms.Where(x => request != null ? x.CityId == request.CityId : request.CityId == null).Select(x => new GetBedRoomsDto
             {
                 Name = x.Name,
                 BedRoomStatusId= x.BedRoomStatusId,
@@ -88,16 +98,25 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude= x.Latitude,
                 Longitude= x.Longitude, 
                 Rating= x.Rating,
-
+                Price = x.Price,
+                BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
+             
             }).ToListAsync();
 
-            return ApiResult<List<GetBedRoomResponse>>.OK(bedRooms);
+            var response = new GetBedRoomResponse();
+
+            response.BedRooms = bedRooms;
+
+            response.TotalData = totalData;
+            response.PageSize = pageSize;
+            response.TotalPage = totalPage;
+            return ApiResult<GetBedRoomResponse>.OK(response);
 
         }
 
         public async Task<ApiResult<GetBedRoomByIdResponse>> GetBedRoomById(int bedroomId)
         {
-            var bedroom = await _context.BedRooms.Where(x=>x.Id==bedroomId).Select(x => new GetBedRoomByIdResponse
+            var bedroom = await _context.BedRooms.Where(x => x.Id == bedroomId).Select(x => new GetBedRoomByIdResponse
             {
                 Name = x.Name,
                 BedRoomStatusId = x.BedRoomStatusId,
@@ -107,7 +126,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
                 Rating = x.Rating,
-
+                Price = x.Price,
             }).FirstOrDefaultAsync();
 
 
@@ -126,6 +145,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             result.CityId = updateBedRoom.Request.CityId;
             result.Name = updateBedRoom.Request.Name;
             result.DistanceToCenter = updateBedRoom.Request.DistanceToCenter;
+            result.Price = updateBedRoom.Request.Price;
 
             await _context.SaveChangesAsync();
 
@@ -138,6 +158,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Rating = result.Rating,
                 Name = result.Name,
                 DistanceToCenter = result.DistanceToCenter,
+                Price = result.Price,
             };
 
             return ApiResult<UpdateBedRoomResponse>.OK(bedroom);
