@@ -1,52 +1,50 @@
-﻿@using UniveristyLifeApp.Models.v1.Cities.AddCity;
-@using UniversityLifeApp.Domain.Entities;
+﻿@using UniversityLifeApp.Domain.Entities;
+@using UniversityLifeApp.MVC.ViewModels;
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Update";
 }
 
-@model AddCityRequest
-
-
+@model CityViewModel
 
 <div class="d-flex justify-content-center align-items-center" style="width: 100%;">
     <form asp-action="Create" asp-controller="Cities" style="width: 60%; margin: 200px 0px;" enctype="multipart/form-data">
         <h4>City name</h4>
-        <input type="text" name="Name" asp-for="Name" class="form-control mb-3" placeholder="City name">
-        <span style="color: red;">@Html.ValidationMessageFor(x => x.Name)</span>
+        <input type="text" name="Name" asp-for="Response.Name" class="form-control mb-3" placeholder="City name">
+        <span style="color: red;">@Html.ValidationMessageFor(x => x.Response.Name)</span>
         <div class="row">
             <div class="col-lg-6">
                 <h4>Latitude</h4>
-                <input type="text" name="Latitude" asp-for="Latitude" class="form-control mb-3" placeholder="Latitude">
+                <input type="text" name="Latitude" asp-for="Response.Latitude" class="form-control mb-3" placeholder="Latitude">
 
-                <span style="color: red;">@Html.ValidationMessageFor(x => x.Latitude)</span>
+                <span style="color: red;">@Html.ValidationMessageFor(x => x.Response.Latitude)</span>
             </div>
 
             <div class="col-lg-6">
                 <h4>Longitude</h4>
-                <input type="text" name="Longitude" asp-for="Longitude" class="form-control mb-3" placeholder="Longitude">
+                <input type="text" name="Longitude" asp-for="Response.Longitude" class="form-control mb-3" placeholder="Longitude">
 
-                <span style="color: red;">@Html.ValidationMessageFor(x => x.Longitude)</span>
+                <span style="color: red;">@Html.ValidationMessageFor(x => x.Response.Longitude)</span>
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-6">
                 <h4>Country</h4>
-                <select class="form-control basic" asp-for="CountryId" name="CountryId" asp-items="@new SelectList((List<Country>)ViewBag.Countries, nameof(Country.Id), nameof(Country.Name))"></select>
+                <select class="form-control basic" asp-for="Response.CountryId" name="CountryId" asp-items="@new SelectList((List<Country>)ViewBag.Countries, nameof(Country.Id), nameof(Country.Name))"></select>
             </div>
 
-            <div class="col-lg-6">
+            @* <div class="col-lg-6">
                 <h4>City image</h4>
                 <input class="form-control" name="ImageFile" asp-for="ImageFile" placeholder="Şəkil">
                 <span style="color: red;">@Html.ValidationMessageFor(x => x.ImageFile)</span>
-            </div>
+            </div> *@
         </div>
 
         <div class="row">
             <div class="col-lg-6 d-flex">
                 <h4>Top city?</h4>
-                <input name="IsTop" asp-for="IsTop" class="form-control mb-3" placeholder="IsTop">
+                     @* <input name="IsTop" asp-for="Response.IsTo" class="form-control mb-3" placeholder="IsTop"> *@
             </div>
         </div>
 
@@ -61,3 +59,4 @@
         </div>
     </form>
 </div>
+

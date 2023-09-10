@@ -72,7 +72,7 @@
                     <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                         <div class="widget-content widget-content-area br-6">
                             <div class="create-btn">
-                                <a href="#" style="padding: 10  px 45px; border: 2px solid green; color: green; font-weight: 600; border-radius: 10px; margin: 20px 0px; font-size: 20px; display: flex; align-items: center; width: 15%; justify-content: center;">
+                                <a asp-controller="Cities" asp-action="Create" style="padding: 10px 45px; border: 2px solid green; color: green; font-weight: 600; border-radius: 10px; margin: 20px 0px; font-size: 20px; display: flex; align-items: center; width: 15%; justify-content: center;">
                                     <i class='bx bx-plus bx-flashing' style="padding-right: 5px; font-size: 25px;"></i>Create
                                 </a>
                             </div>
@@ -101,7 +101,7 @@
                                             <td>@item.IsTop</td>
                                             
                                             <td class="text-center" style="font-size: 25px;">
-                                                <a style="color: green;" href="#"><i class='bx bx-edit'></i></a>
+                                                <a style="color: green;" asp-controller="Cities" asp-action="Update" asp-route-cityId = "@item.Id"><i class='bx bx-edit'></i></a>
                                                 <a style="color: red;" href="#"><i class='bx bx-x-circle'></i></a>
                                             </td>
                                         </tr>
