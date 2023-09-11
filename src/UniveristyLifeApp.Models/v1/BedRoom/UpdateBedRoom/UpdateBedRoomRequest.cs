@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,9 @@ namespace UniveristyLifeApp.Models.v1.BedRoom.UpdateBedRoom
         public int Rating { get; set; }
         public float DistanceToCenter { get; set; }
         public decimal Price { get; set; }
+
+        //Bedroom image
+        public List<IFormFile> ImageFile { get; set; }
 
         //City
         public int CityId { get; set; }
