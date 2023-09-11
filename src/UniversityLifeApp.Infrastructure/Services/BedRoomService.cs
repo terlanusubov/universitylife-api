@@ -127,18 +127,19 @@ namespace UniversityLifeApp.Infrastructure.Services
             var totalData = bedRooms2.Count();
             var pageSize = 6;
             var totalPage = totalData / pageSize;
-            
+
 
             var bedRooms = await _context.BedRooms.Select(x => new GetBedRoomResponse
             {
                 Name = x.Name,
-                BedRoomStatusId= x.BedRoomStatusId,
-                Description= x.Description,
-                DistanceToCenter= x.DistanceToCenter,
-                CityId= x.CityId,
-                Latitude= x.Latitude,
-                Longitude= x.Longitude, 
-                Rating= x.Rating,
+                BedRoomStatusId = x.BedRoomStatusId,
+                Description = x.Description,
+                DistanceToCenter = x.DistanceToCenter,
+                CityId = x.CityId,
+                Latitude = x.Latitude,
+                Longitude = x.Longitude,
+                Rating = x.Rating,
+                BedRoomRoomTypes = x.BedRoomRoomTypes.Select(c => c.Name).ToList(),
                 BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
                 TotalData = totalData,
                 PageSize = pageSize,
