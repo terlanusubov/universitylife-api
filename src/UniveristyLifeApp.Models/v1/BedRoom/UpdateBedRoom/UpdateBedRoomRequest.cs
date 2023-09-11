@@ -16,6 +16,7 @@ namespace UniveristyLifeApp.Models.v1.BedRoom.UpdateBedRoom
         public string Longitude { get; set; }
         public int Rating { get; set; }
         public float DistanceToCenter { get; set; }
+        public decimal Price { get; set; }
 
         //Bedroom image
         public List<IFormFile> ImageFile { get; set; }

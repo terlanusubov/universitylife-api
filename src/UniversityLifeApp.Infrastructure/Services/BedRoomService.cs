@@ -47,6 +47,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Name = createBedRoom.Request.Name,
                 Rating = createBedRoom.Request.Rating,
                 CityId = createBedRoom.Request.CityId,
+                Price = createBedRoom.Request.Price,
                 BedRoomStatusId = (int)BedRoomStatusEnum.Active,
             };
 
@@ -98,6 +99,9 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude = bedRoom.Latitude,
                 Longitude = bedRoom.Longitude,
                 Rating = bedRoom.Rating,
+
+                Price = bedRoom.Price,
+
             };
 
             return ApiResult<CreateBedRoomResponse>.OK(response);
@@ -120,18 +124,23 @@ namespace UniversityLifeApp.Infrastructure.Services
             throw new NotImplementedException();
         }
 
-        public async Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom(GetBedRoomRequest request)
+        public async Task<ApiResult<GetBedRoomResponse>> GetBedRoom(GetBedRoomRequest request)
         {
             var bedRooms2 = await _context.BedRooms.ToListAsync();
 
             var totalData = bedRooms2.Count();
+
             var pageSize = 6;
-            var totalPage = totalData / pageSize;
 
 
-            var bedRooms = await _context.BedRooms.Select(x => new GetBedRoomResponse
+            var totalPage = totalData % pageSize != 0 ? (totalData / pageSize) + 1 : totalData / pageSize;
+            
+
+
+            var bedRooms = await _context.BedRooms.Where(x => request != null ? x.CityId == request.CityId : request.CityId == null).Select(x => new GetBedRoomsDto
             {
                 Name = x.Name,
+
                 BedRoomStatusId = x.BedRoomStatusId,
                 Description = x.Description,
                 DistanceToCenter = x.DistanceToCenter,
@@ -140,14 +149,21 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Longitude = x.Longitude,
                 Rating = x.Rating,
                 BedRoomRoomTypes = x.BedRoomRoomTypes.Select(c => c.Name).ToList(),
+
+                Price = x.Price,
+
                 BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
-                TotalData = totalData,
-                PageSize = pageSize,
-                TotalPage = totalPage,
+             
             }).ToListAsync();
 
+            var response = new GetBedRoomResponse();
 
-            return ApiResult<List<GetBedRoomResponse>>.OK(bedRooms);
+            response.BedRooms = bedRooms;
+
+            response.TotalData = totalData;
+            response.PageSize = pageSize;
+            response.TotalPage = totalPage;
+            return ApiResult<GetBedRoomResponse>.OK(response);
 
         }
 
@@ -163,7 +179,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
                 Rating = x.Rating,
-
+                Price = x.Price,
             }).FirstOrDefaultAsync();
 
 
@@ -183,6 +199,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             result.CityId = updateBedRoom.Request.CityId;
             result.Name = updateBedRoom.Request.Name;
             result.DistanceToCenter = updateBedRoom.Request.DistanceToCenter;
+            result.Price = updateBedRoom.Request.Price;
 
             if(updateBedRoom.Request.ImageFile != null)
             {
@@ -249,6 +266,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Rating = result.Rating,
                 Name = result.Name,
                 DistanceToCenter = result.DistanceToCenter,
+                Price = result.Price,
             };
 
             return ApiResult<UpdateBedRoomResponse>.OK(bedroom);

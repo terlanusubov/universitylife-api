@@ -41,12 +41,12 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             await _context.OurServices.AddAsync(service);
             await _context.SaveChangesAsync();
-
+             
             CreateOurServiceResponse response = new CreateOurServiceResponse
             {
                 Name = service.Name,
                 Description = service.Description,
-                Image = service.Image,
+                Image = "http://highresultech-001-site1.ftempurl.com/uploads/services/" + service.Image,
                 OurServiceStatusId = service.OurServiceStatusId,
 
             };
@@ -60,7 +60,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             {
                 Description = x.Description,
                 Name = x.Name,
-                Image = x.Image,
+                Image = "http://highresultech-001-site1.ftempurl.com/uploads/services/" + x.Image,
                 Id = x.Id
 
             }).ToListAsync();

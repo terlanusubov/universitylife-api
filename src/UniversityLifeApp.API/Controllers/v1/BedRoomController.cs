@@ -29,7 +29,7 @@ namespace UniversityLifeApp.API.Controllers.v1
             => await _mediator.Send(new CreateBedRoomCommand(request));
 
         [HttpGet]
-        public async Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom([FromQuery] GetBedRoomRequest request)
+        public async Task<ApiResult<GetBedRoomResponse>> GetBedRoom([FromQuery] GetBedRoomRequest request)
             => await _mediator.Send(new GetBedRoomQuery(request));
 
         [HttpGet("{bedroomId}")]
