@@ -137,10 +137,9 @@ namespace UniversityLifeApp.Infrastructure.Services
             
 
 
-            var bedRooms = await _context.BedRooms.Where(x => request != null ? x.CityId == request.CityId : request.CityId == null).Select(x => new GetBedRoomsDto
+            var bedRooms = await _context.BedRooms.Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && request.CityId != null ? x.CityId == request.CityId : request.CityId == null).Select(x => new GetBedRoomsDto
             {
                 Name = x.Name,
-
                 BedRoomStatusId = x.BedRoomStatusId,
                 Description = x.Description,
                 DistanceToCenter = x.DistanceToCenter,
@@ -149,9 +148,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Longitude = x.Longitude,
                 Rating = x.Rating,
                 BedRoomRoomTypes = x.BedRoomRoomTypes.Select(c => c.Name).ToList(),
-
                 Price = x.Price,
-
                 BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
              
             }).ToListAsync();
