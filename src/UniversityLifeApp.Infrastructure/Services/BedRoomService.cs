@@ -1,4 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Azure.Core;
+using EEWF.Infrastructure.Services;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +26,13 @@ namespace UniversityLifeApp.Infrastructure.Services
     public class BedRoomService : IBedRoomService
     {
         private readonly ApplicationContext _context;
-        public BedRoomService(ApplicationContext context)
+        private readonly IWebHostEnvironment _env;
+        private readonly IFileService _fileService;
+        public BedRoomService(ApplicationContext context, IWebHostEnvironment env, IFileService fileService)
         {
             _context = context;
+            _env = env;
+            _fileService = fileService;
         }
 
         public async Task<ApiResult<CreateBedRoomResponse>> CreateBedRoom(CreateBedRoomCommand createBedRoom)
@@ -43,6 +51,44 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             await _context.AddAsync(bedRoom);
             await _context.SaveChangesAsync();
+            int count = 1;
+
+            if(createBedRoom.Request.ImageFile != null)
+            {
+                foreach (var item in createBedRoom.Request.ImageFile)
+                {
+                    BedRoomPhoto photo = new BedRoomPhoto
+                    {
+                        BedroomId = bedRoom.Id,
+                        IsActive = true,
+                    };
+
+                    if(count == 1)
+                    {
+                        photo.IsMain = true;
+                    }
+
+                    if (createBedRoom.Request.ImageFile != null)
+                    {
+                        if (_env.WebRootPath.Contains("MVC"))
+                        {
+                            var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
+                            var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+                            photo.Name = await _fileService.SaveImage(path2, "uploads/bedroomPhoto", item);
+                        }
+
+                        else
+                        {
+                            photo.Name = await _fileService.SaveImage(_env.WebRootPath, "uploads/bedroomPhoto", item);
+                        }
+                        count++;
+                        await _context.BedRoomPhotos.AddAsync(photo);
+                        
+                    }
+                }
+            }
+
+            await _context.SaveChangesAsync();
 
             var response = new CreateBedRoomResponse
             {
@@ -53,7 +99,6 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Latitude = bedRoom.Latitude,
                 Longitude = bedRoom.Longitude,
                 Rating = bedRoom.Rating,
-
             };
 
             return ApiResult<CreateBedRoomResponse>.OK(response);

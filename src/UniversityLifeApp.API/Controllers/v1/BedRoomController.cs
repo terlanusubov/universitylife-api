@@ -25,7 +25,7 @@ namespace UniversityLifeApp.API.Controllers.v1
 
 
         [HttpPost]
-        public async Task<ApiResult<CreateBedRoomResponse>> CreateBedRoom(CreateBedRoomRequest request)
+        public async Task<ApiResult<CreateBedRoomResponse>> CreateBedRoom([FromForm]CreateBedRoomRequest request)
             => await _mediator.Send(new CreateBedRoomCommand(request));
 
 
