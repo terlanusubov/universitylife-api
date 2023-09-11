@@ -20,6 +20,7 @@ using UniversityLifeApp.Application.Interfaces;
 using UniversityLifeApp.Domain.Entities;
 using UniversityLifeApp.Domain.Enums;
 using UniversityLifeApp.Infrastructure.Data;
+using UniversityLifeApp.Infrastructure.Migrations;
 
 namespace UniversityLifeApp.Infrastructure.Services
 {
@@ -172,6 +173,7 @@ namespace UniversityLifeApp.Infrastructure.Services
         public async Task<ApiResult<UpdateBedRoomResponse>> UpdateBedRoom(UpdateBedRoomCommand updateBedRoom, int bedroomId)
         {
             var result = await _context.BedRooms.Where(x => x.Id == bedroomId).FirstOrDefaultAsync();
+            var bedRoomPhotos = await _context.BedRoomPhotos.Where(x => x.BedroomId == bedroomId).ToListAsync();
 
             result.Longitude = updateBedRoom.Request.Longitude;
             result.Latitude = updateBedRoom.Request.Latitude;
@@ -180,6 +182,60 @@ namespace UniversityLifeApp.Infrastructure.Services
             result.CityId = updateBedRoom.Request.CityId;
             result.Name = updateBedRoom.Request.Name;
             result.DistanceToCenter = updateBedRoom.Request.DistanceToCenter;
+
+            if(updateBedRoom.Request.ImageFile != null)
+            {
+                foreach (var item in bedRoomPhotos)
+                {
+                    if (_env.WebRootPath.Contains("MVC"))
+                    {
+                        var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
+                        var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+                        _fileService.DeleteImage(path2, "uploads/bedroomPhoto", item.Name);
+                    }
+
+                    else
+                    {
+                        _fileService.DeleteImage(_env.WebRootPath, "uploads/bedroomPhoto", item.Name);
+                    }
+
+                    _context.BedRoomPhotos.Remove(item);
+                }
+
+                int count = 1;
+
+                foreach (var item in updateBedRoom.Request.ImageFile)
+                {
+                    BedRoomPhoto photo = new BedRoomPhoto
+                    {
+                        BedroomId = result.Id,
+                        IsActive = true,
+                    };
+
+                    if (count == 1)
+                    {
+                        photo.IsMain = true;
+                    }
+
+
+                    if (_env.WebRootPath.Contains("MVC"))
+                    {
+                        var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
+                        var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+                        photo.Name = await _fileService.SaveImage(path2, "uploads/bedroomPhoto", item);
+                    }
+
+                    else
+                    {
+                        photo.Name = await _fileService.SaveImage(_env.WebRootPath, "uploads/bedroomPhoto", item);
+                    }
+                    count++;
+                    await _context.BedRoomPhotos.AddAsync(photo);
+
+                }
+            }
+
+
 
             await _context.SaveChangesAsync();
 
