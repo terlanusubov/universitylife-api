@@ -68,8 +68,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                         photo.IsMain = true;
                     }
 
-                    if (createBedRoom.Request.ImageFile != null)
-                    {
+                   
                         if (_env.WebRootPath.Contains("MVC"))
                         {
                             var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
@@ -84,7 +83,6 @@ namespace UniversityLifeApp.Infrastructure.Services
                         count++;
                         await _context.BedRoomPhotos.AddAsync(photo);
                         
-                    }
                 }
             }
 
