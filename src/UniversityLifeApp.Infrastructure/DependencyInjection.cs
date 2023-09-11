@@ -32,6 +32,7 @@ namespace UniversityLifeApp.Infrastructure
             services.AddTransient<ISearchService, SearchService>();
 
             services.AddTransient<IOurServiceService, OurServiceService>();
+            services.AddTransient<IGetCloseBedroom, GetCloseBedroom>();
 
 
             services.AddDbContext<ApplicationContext>(opt =>
