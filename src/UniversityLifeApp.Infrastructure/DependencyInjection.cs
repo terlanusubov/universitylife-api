@@ -26,11 +26,17 @@ namespace UniversityLifeApp.Infrastructure
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<ICityService, CityService>();
             services.AddTransient<IFileService, FileService>();
+            services.AddTransient<IUserWishlistService, UserWishlistService>();
+            services.AddTransient<IBookBedRoomRoom, BookBedRoomRoomService>();
+
             services.AddTransient<IContactService, ContactService>();
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IOurServiceService, OurServiceService>();
             services.AddTransient<ICounterService, CounterService>();
             services.AddTransient<IBookBedRoomRoom, BookBedRoomRoomService>();
+            services.AddTransient<IGetCloseBedroom, GetCloseBedroom>();
+
+            services.AddTransient<ICounterService, CounterService>();   
 
             services.AddDbContext<ApplicationContext>(opt =>
             {

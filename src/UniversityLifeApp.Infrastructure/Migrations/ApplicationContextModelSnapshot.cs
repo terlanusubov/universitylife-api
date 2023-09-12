@@ -53,6 +53,9 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
@@ -144,10 +147,6 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<string>("Applied")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<int>("BedRoomRoomApplyStatusId")
                         .HasColumnType("int");
@@ -313,6 +312,35 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Contacts");
+                });
+
+            modelBuilder.Entity("UniversityLifeApp.Domain.Entities.Counter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("BedRoom")
+                        .HasColumnType("int");
+
+                    b.Property<int>("City")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Student")
+                        .HasColumnType("int");
+
+                    b.Property<int>("University")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Counter");
                 });
 
             modelBuilder.Entity("UniversityLifeApp.Domain.Entities.Country", b =>
