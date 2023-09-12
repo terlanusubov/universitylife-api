@@ -134,10 +134,11 @@ namespace UniversityLifeApp.Infrastructure.Services
 
 
             var totalPage = totalData % pageSize != 0 ? (totalData / pageSize) + 1 : totalData / pageSize;
-            
 
+            int? start;
+            int? end;
 
-            var bedRooms = await _context.BedRooms.Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && request.CityId != null ? x.CityId == request.CityId : request.CityId == null).Select(x => new GetBedRoomsDto
+            var query = _context.BedRooms.Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && request.CityId != null ? x.CityId == request.CityId : request.CityId == null).Select(x => new GetBedRoomsDto
             {
                 Name = x.Name,
                 BedRoomStatusId = x.BedRoomStatusId,
@@ -150,8 +151,22 @@ namespace UniversityLifeApp.Infrastructure.Services
                 BedRoomRoomTypes = x.BedRoomRoomTypes.Select(c => c.Name).ToList(),
                 Price = x.Price,
                 BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
-             
-            }).ToListAsync();
+
+            });
+
+            if (request.Page != null)
+            {
+                start = (request.Page - 1) * 6 + 1;
+                end = start + 5;
+
+                if (start != null)
+                {
+                    query = query.Skip(start.Value - 1).Take(end.Value);
+
+                }
+            }
+
+            var bedRooms = await query.ToListAsync();
 
             var response = new GetBedRoomResponse();
 
