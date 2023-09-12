@@ -17,7 +17,7 @@ namespace UniversityLifeApp.Application.CQRS.v1.UserWishlist.Queries.GetUserWish
             => _service = service;
         public async Task<ApiResult<List<GetUserWishlistResponse>>> Handle(GetUserWishlistQuery request, CancellationToken cancellationToken)
         {
-            var result = await _service.GetUserWishlist(request.UserId);
+            var result = await _service.GetUserWishlist(request.Request);
             return result;
         }
     }

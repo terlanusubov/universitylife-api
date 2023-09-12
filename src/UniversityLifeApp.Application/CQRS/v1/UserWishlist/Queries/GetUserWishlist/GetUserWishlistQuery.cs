@@ -11,11 +11,11 @@ namespace UniversityLifeApp.Application.CQRS.v1.UserWishlist.Queries.GetUserWish
 {
     public class GetUserWishlistQuery : IRequest<ApiResult<List<GetUserWishlistResponse>>>
     {
-        public GetUserWishlistQuery(int userId)
+        public GetUserWishlistQuery(GetUserWishlistRequest request)
         {
-            UserId = userId;
+            Request = request;
         }
+        public GetUserWishlistRequest Request { get; set; }
         public int BedRoomId { get; set; }
-        public int UserId { get; set; }
     }
 }
