@@ -19,4 +19,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UniversityLifeApp.Domain\UniversityLifeApp.Domain.csproj" />
+  </ItemGroup>
 </Project>
