@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UniversityLifeApp.Application.CQRS.v1.BedRoom.Queries.GetBedRoom;
+using UniversityLifeApp.Application.CQRS.v1.BedRoomRoom.Queries.GetBedRoomRoom;
 
 namespace UniversityLifeApp.MVC.Controllers
 {
@@ -14,8 +15,8 @@ namespace UniversityLifeApp.MVC.Controllers
         }
         public async Task<IActionResult> Index()
         {
-           // var result = (await _mediator.Send(new GetBedRoomQuery)
-            return View();
+            var result = (await _mediator.Send(new GetBedRoomRoomQuery())).Response;
+            return View(result);
         }
     }
 }

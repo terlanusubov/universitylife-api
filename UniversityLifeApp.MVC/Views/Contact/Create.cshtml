@@ -1,0 +1,48 @@
+﻿@using UniveristyLifeApp.Models.v1.Contact.AddContact;
+@using UniversityLifeApp.Domain.Entities;
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@model CreateContactRequest
+
+
+
+<div class="d-flex justify-content-center align-items-center" style="width: 100%;">
+    <form asp-action="Create" asp-controller="Contact" style="width: 60%; margin: 200px 0px;" enctype="multipart/form-data">
+        <h4>FullName</h4>
+        <input type="text" name="FullName" asp-for="FullName" class="form-control mb-3" placeholder="FullName">
+        <span style="color: red;">@Html.ValidationMessageFor(x => x.FullName)</span>
+        <div class="row">
+            <div class="col-lg-6">
+                <h4>Email</h4>
+                <input type="text" name="Email" asp-for="Email" class="form-control mb-3" placeholder="Email">
+
+                <span style="color: red;">@Html.ValidationMessageFor(x => x.Email)</span>
+            </div>
+
+            <div class="col-lg-6">
+                <h4>Phone</h4>
+                <input type="text" name="Phone" asp-for="Phone" class="form-control mb-3" placeholder="Phone">
+
+                <span style="color: red;">@Html.ValidationMessageFor(x => x.Phone)</span>
+            </div>
+            <div class="col-lg-6">
+                <h4>Country</h4>
+                <input type="text" name="Country" asp-for="Country" class="form-control mb-3" placeholder="Country">
+
+                <span style="color: red;">@Html.ValidationMessageFor(x => x.Country)</span>
+            </div>
+            <div class="col-lg-6">
+                <h4>Comment</h4>
+                <input type="text" name="Comment" asp-for="Comment" class="form-control mb-3" placeholder="Comment">
+
+                <span style="color: red;">@Html.ValidationMessageFor(x => x.Comment)</span>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end mt-3">
+            <button type="submit" class="d-flex align-items-center" style=" background-color: green; padding: 10px 15px; color: white; border: 1px solid white; border-radius: 5px; font-weight: 600;"><i class='bx bx-save' style="margin-right: 7px;"></i>Save</button>
+        </div>
+    </form>
+</div>

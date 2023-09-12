@@ -129,6 +129,24 @@ namespace UniversityLifeApp.Infrastructure.Services
             city.CountryId = request.Request.CountryId;
             city.IsTop = request.Request.IsTop;
 
+            if (request.Request.ImageFile != null)
+            {
+                if (_env.WebRootPath.Contains("MVC"))
+                {
+                    var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
+                    var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+                    _fileService.DeleteImage(path2, "uploads/city", city.Image);
+                    city.Image = await _fileService.SaveImage(path2, "uploads/city", request.Request.ImageFile);
+                }
+                else
+                {
+                    _fileService.DeleteImage(_env.WebRootPath, "uploads/city", city.Image);
+                    city.Image = await _fileService.SaveImage(_env.WebRootPath, "uploads/city", request.Request.ImageFile);
+
+                }
+
+            }
+
             await _context.SaveChangesAsync();
 
             var response = new UpdateCityResponse

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,6 @@ namespace UniveristyLifeApp.Models.v1.Cities.UpdateCity
         public string Longitude { get; set; }
         public int CountryId { get; set; }
         public bool IsTop { get; set; }
+        public IFormFile ImageFile { get; set; }
     }
 }
