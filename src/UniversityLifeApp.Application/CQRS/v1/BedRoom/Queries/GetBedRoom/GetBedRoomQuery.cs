@@ -9,7 +9,7 @@ using UniversityLifeApp.Application.Core;
 
 namespace UniversityLifeApp.Application.CQRS.v1.BedRoom.Queries.GetBedRoom
 {
-    public class GetBedRoomQuery : IRequest<ApiResult<List<GetBedRoomResponse>>>
+    public class GetBedRoomQuery : IRequest<ApiResult<GetBedRoomResponse>>
     {
         public GetBedRoomQuery(GetBedRoomRequest request)
         {

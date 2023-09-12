@@ -20,9 +20,9 @@ namespace UniversityLifeApp.API.Controllers.v1
              _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<ApiResult<AddBedRoomPhotoResponse>> AddBedRoomPhoto([FromForm]AddBedRoomPhotoRequest request)
-           => await _mediator.Send(new AddBedRoomPhotoCommand(request));
+        //[HttpPost]
+        //public async Task<ApiResult<AddBedRoomPhotoResponse>> AddBedRoomPhoto([FromForm]AddBedRoomPhotoRequest request)
+        //   => await _mediator.Send(new AddBedRoomPhotoCommand(request));
 
     }
 }

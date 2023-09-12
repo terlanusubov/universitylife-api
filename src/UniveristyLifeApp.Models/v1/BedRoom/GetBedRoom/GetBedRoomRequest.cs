@@ -9,5 +9,6 @@ namespace UniveristyLifeApp.Models.v1.BedRoom.GetBedRoom
     public class GetBedRoomRequest
     {
         public int? CityId { get; set; }
+        public int? Page { get; set; }
     }
 }
