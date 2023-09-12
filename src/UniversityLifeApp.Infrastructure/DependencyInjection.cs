@@ -26,6 +26,7 @@ namespace UniversityLifeApp.Infrastructure
             services.AddTransient<ICountryService, CountryService>();
             services.AddTransient<ICityService, CityService>();
             services.AddTransient<IFileService, FileService>();
+            services.AddTransient<IBookBedRoomRoom, BookBedRoomRoomService>();
 
             services.AddTransient<IContactService, ContactService>();
 
@@ -33,6 +34,8 @@ namespace UniversityLifeApp.Infrastructure
 
             services.AddTransient<IOurServiceService, OurServiceService>();
             services.AddTransient<IGetCloseBedroom, GetCloseBedroom>();
+
+            services.AddTransient<ICounterService, CounterService>();   
 
 
             services.AddDbContext<ApplicationContext>(opt =>

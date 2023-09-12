@@ -25,12 +25,11 @@ namespace UniversityLifeApp.API.Controllers.v1
 
 
         [HttpPost]
-        public async Task<ApiResult<CreateBedRoomResponse>> CreateBedRoom(CreateBedRoomRequest request)
+        public async Task<ApiResult<CreateBedRoomResponse>> CreateBedRoom([FromForm]CreateBedRoomRequest request)
             => await _mediator.Send(new CreateBedRoomCommand(request));
 
-
         [HttpGet]
-        public async Task<ApiResult<List<GetBedRoomResponse>>> GetBedRoom([FromQuery] GetBedRoomRequest request)
+        public async Task<ApiResult<GetBedRoomResponse>> GetBedRoom([FromQuery] GetBedRoomRequest request)
             => await _mediator.Send(new GetBedRoomQuery(request));
 
         [HttpGet("{bedroomId}")]
@@ -39,7 +38,7 @@ namespace UniversityLifeApp.API.Controllers.v1
 
 
         [HttpPut("{bedroomId}")]
-        public async Task<ApiResult<UpdateBedRoomResponse>> UpdateBedRoom(UpdateBedRoomRequest request ,int bedroomId)
+        public async Task<ApiResult<UpdateBedRoomResponse>> UpdateBedRoom([FromForm]UpdateBedRoomRequest request ,int bedroomId)
             => await _mediator.Send(new UpdateBedRoomCommand(request,bedroomId));
 
         [HttpDelete("{bedroomId}")]
