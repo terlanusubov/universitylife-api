@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,36 +22,22 @@ namespace UniversityLifeApp.Application.Middlewares
 
         public async Task Invoke(HttpContext context)
         {
-            //string requestMethod = context.Request.Method;
-            //string requestPath = context.Request.Path;
-            //string requestBody = await GetRequestBody(context.Request.Body);
+            // Capture the client's IP address
+            string clientIpAddress = context.Connection.RemoteIpAddress?.ToString();
 
-            //_logger.LogInformation($"Incoming Request: {requestMethod} {requestPath}");
-            //_logger.LogInformation($"Request Body: {requestBody}");
+            try
+            {
+                // Capture the request body text
+                string requestBody = await GetRequestBody(context.Request.Body);
 
-            //await _next(context);
-
-            //var originalBodyStream = context.Response.Body;
-
-            //using (var responseBody = new MemoryStream())
-            //{
-            //    context.Response.Body = responseBody;
-
-            //    await _next(context);
-
-            //    context.Response.Body.Seek(0, SeekOrigin.Begin);
-            //    string responseContent = await new StreamReader(context.Response.Body).ReadToEndAsync();
-            //    context.Response.Body.Seek(0, SeekOrigin.Begin);
-
-            //    string requestMethodOutput = context.Request.Method;
-            //    string requestPathOutput = context.Request.Path;
-            //    //int responseStatusCode = context.Response.StatusCode;
-
-            //    _logger.LogInformation($"Outgoing Response: {requestMethodOutput} {requestPathOutput}, Status Code: {responseStatusCode}");
-            //    _logger.LogInformation($"Response Body: {responseContent}");
-
-            //    await responseBody.CopyToAsync(originalBodyStream);
-            //}
+                // Log the request body and client IP
+                _logger.LogInformation($"Client IP: {clientIpAddress}, Request Body: {requestBody}");
+            }
+            catch (Exception ex)
+            {
+                // Log the error message and client IP
+                _logger.LogError($"Client IP: {clientIpAddress}, Error: {ex.Message}");
+            }
 
             await _next(context);
         }
