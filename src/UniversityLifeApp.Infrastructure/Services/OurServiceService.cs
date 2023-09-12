@@ -44,7 +44,7 @@ namespace UniversityLifeApp.Infrastructure.Services
              
             CreateOurServiceResponse response = new CreateOurServiceResponse
             {
-                Name = service.Name,
+                    Name = service.Name,
                 Description = service.Description,
                 Image = "http://highresultech-001-site1.ftempurl.com/uploads/services/" + service.Image,
                 OurServiceStatusId = service.OurServiceStatusId,
