@@ -73,9 +73,9 @@ namespace UniversityLifeApp.Infrastructure.Services
             return ApiResult<DeleteBedRoomRoomResponse>.OK(response);
         }
 
-        public async Task<ApiResult<List<GetBedRoomRoomResponse>>> GetBedRoomRoom()
+        public async Task<ApiResult<List<GetBedRoomRoomResponse>>> GetBedRoomRoom(GetBedRoomRoomRequest request)
         {
-            var bedRoomRooms = await _context.BedRoomRooms.Select(x => new GetBedRoomRoomResponse
+            var bedRoomRooms = await _context.BedRoomRooms.Where(x => x.BedRoomRoomStatusId == (int)BedRoomRoomStatusEnum.Active).Select(x => new GetBedRoomRoomResponse
             {
                 Name = x.Name,
                 Price = x.Price,

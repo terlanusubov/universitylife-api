@@ -26,8 +26,8 @@ namespace UniversityLifeApp.API.Controllers.v1
             => await _mediator.Send(new CreateBedRoomRoomCommand(request));
 
         [HttpGet]
-        public async Task<ActionResult<List<GetBedRoomRoomResponse>>> Get()
-            => (await _mediator.Send(new GetBedRoomRoomQuery())).Response;
+        public async Task<ActionResult<List<GetBedRoomRoomResponse>>> Get([FromQuery]GetBedRoomRoomRequest request)
+            => (await _mediator.Send(new GetBedRoomRoomQuery(request))).Response;
 
         [HttpPut("{bedRoomRoomId}")]
         public async Task<ApiResult<UpdateBedRoomRoomResponse>> Update(UpdateBedRoomRoomRequest request, int bedRoomRoomId)
