@@ -9,15 +9,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{51EA27B9-418
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{4E2266DA-E589-4887-90EC-62C55C611FCC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityLifeApp.Application", "src\UniversityLifeApp.Application\UniversityLifeApp.Application.csproj", "{A238F949-E26F-4A0A-AE71-91D9C8B572F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityLifeApp.Application", "src\UniversityLifeApp.Application\UniversityLifeApp.Application.csproj", "{A238F949-E26F-4A0A-AE71-91D9C8B572F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityLifeApp.Domain", "src\UniversityLifeApp.Domain\UniversityLifeApp.Domain.csproj", "{6F69798B-D1F5-4D35-884A-6E02D6F6CDEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityLifeApp.Domain", "src\UniversityLifeApp.Domain\UniversityLifeApp.Domain.csproj", "{6F69798B-D1F5-4D35-884A-6E02D6F6CDEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityLifeApp.Infrastructure", "src\UniversityLifeApp.Infrastructure\UniversityLifeApp.Infrastructure.csproj", "{CC27A31F-9D5E-40C0-9A65-55FECA2302ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityLifeApp.Infrastructure", "src\UniversityLifeApp.Infrastructure\UniversityLifeApp.Infrastructure.csproj", "{CC27A31F-9D5E-40C0-9A65-55FECA2302ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityLifeApp.API", "src\UniversityLifeApp.API\UniversityLifeApp.API.csproj", "{D732F7FC-88D3-4EC3-8FA5-A847A0FAC56D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityLifeApp.API", "src\UniversityLifeApp.API\UniversityLifeApp.API.csproj", "{D732F7FC-88D3-4EC3-8FA5-A847A0FAC56D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniveristyLifeApp.Models", "src\UniveristyLifeApp.Models\UniveristyLifeApp.Models.csproj", "{84EED860-AC9E-46B6-9CC6-1F1C435B41A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniveristyLifeApp.Models", "src\UniveristyLifeApp.Models\UniveristyLifeApp.Models.csproj", "{84EED860-AC9E-46B6-9CC6-1F1C435B41A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityLifeApp.MVC", "UniversityLifeApp.MVC\UniversityLifeApp.MVC.csproj", "{475F908A-B9C8-4459-8045-960BBF53D062}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{84EED860-AC9E-46B6-9CC6-1F1C435B41A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84EED860-AC9E-46B6-9CC6-1F1C435B41A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84EED860-AC9E-46B6-9CC6-1F1C435B41A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{475F908A-B9C8-4459-8045-960BBF53D062}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{475F908A-B9C8-4459-8045-960BBF53D062}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{475F908A-B9C8-4459-8045-960BBF53D062}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{475F908A-B9C8-4459-8045-960BBF53D062}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{CC27A31F-9D5E-40C0-9A65-55FECA2302ED} = {51EA27B9-4189-4EA4-ADD7-F27485238E4B}
 		{D732F7FC-88D3-4EC3-8FA5-A847A0FAC56D} = {51EA27B9-4189-4EA4-ADD7-F27485238E4B}
 		{84EED860-AC9E-46B6-9CC6-1F1C435B41A3} = {51EA27B9-4189-4EA4-ADD7-F27485238E4B}
+		{475F908A-B9C8-4459-8045-960BBF53D062} = {51EA27B9-4189-4EA4-ADD7-F27485238E4B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5730BA85-5603-4AC4-88A1-089BB0DDDC48}

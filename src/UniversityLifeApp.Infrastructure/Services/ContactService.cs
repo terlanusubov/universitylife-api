@@ -70,7 +70,9 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Email = x.Email,
                 Country = x.Country,
                 FullName = x.FullName,
-                Phone = x.Phone
+                Phone = x.Phone,
+                ContactId = x.Id
+                
             }).ToListAsync();
             
         return ApiResult<List<GetContactResponse>>.OK(contact);
