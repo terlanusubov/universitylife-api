@@ -10,8 +10,10 @@ using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.AddCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.UpdateCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Queries.GetCity;
 using UniversityLifeApp.Application.CQRS.v1.University.Commands.CreateUniversity;
+using UniversityLifeApp.Application.CQRS.v1.University.Commands.DeleteUniversity;
 using UniversityLifeApp.Application.CQRS.v1.University.Commands.UpdateUniversity;
 using UniversityLifeApp.Application.CQRS.v1.University.Queries.GetUniversity;
+using UniversityLifeApp.Application.CQRS.v1.University.Queries.GetUniversityById;
 using UniversityLifeApp.Infrastructure.Data;
 
 namespace UniversityLifeApp.MVC.Controllers
@@ -51,20 +53,21 @@ namespace UniversityLifeApp.MVC.Controllers
         {
             ViewBag.Cities = await _context.Cities.ToListAsync();
 
-            var university = await _context.Universities.Where(x => x.Id == universityId).Select(x => new UpdateUniversityRequest
-            {
-                Name = x.Name,
-                Latitude = x.Latitude,
-                Longitude = x.Longitude,
-                CityId = x.CityId,
+            var result = (await _mediator.Send(new GetUniversityByIdQuery(universityId))).Response;
 
-            }).FirstOrDefaultAsync();
+            UpdateUniversityRequest request = new UpdateUniversityRequest
+            {
+                Name = result.Name,
+                CityId = result.CityId,
+                Latitude = result.Latitude,
+                Longitude = result.Longitude,
+            };
 
             TempData["universityId"] = universityId;
 
 
 
-            return View(university);
+            return View(request);
         }
 
         [HttpPost]
@@ -74,6 +77,12 @@ namespace UniversityLifeApp.MVC.Controllers
 
             await _mediator.Send(new UpdateUniversityCommand(request, universityId));
 
+            return RedirectToAction("index", "university");
+        }
+
+        public async Task<IActionResult> Delete(int universityId)
+        {
+            await _mediator.Send(new DeleteUniversityCommand(universityId));
             return RedirectToAction("index", "university");
         }
     }

@@ -9,6 +9,7 @@ using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.AddCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.UpdateCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Queries.GetCity;
 using UniversityLifeApp.Application.CQRS.v1.Contact.Commands.CreateContact;
+using UniversityLifeApp.Application.CQRS.v1.Contact.Commands.DeleteContact;
 using UniversityLifeApp.Application.CQRS.v1.Contact.Queries.GetContact;
 using UniversityLifeApp.Infrastructure.Data;
 
@@ -31,18 +32,14 @@ namespace UniversityLifeApp.MVC.Controllers
             return View(result);
         }
 
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Delete(int contactId)
         {
-            return View();
+            await _mediator.Send(new DeleteContactCommand(contactId));
+
+            return RedirectToAction("index" , "contact");
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateContactRequest request)
-        {
-            await _mediator.Send(new CreateContactCommand(request));
-            return RedirectToAction("index", "contact");
-        }
 
     }
 }

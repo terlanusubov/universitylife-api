@@ -10,6 +10,7 @@ using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.AddCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.UpdateCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Queries.GetCity;
 using UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.AddCountry;
+using UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.DeleteCountry;
 using UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.UpdateCountry;
 using UniversityLifeApp.Application.CQRS.v1.Countryies.Query.GetCountry;
 using UniversityLifeApp.Infrastructure.Data;
@@ -67,6 +68,13 @@ namespace UniversityLifeApp.MVC.Controllers
             int countriesId = (int)TempData["countriesId"];
 
             await _mediator.Send(new UpdateCountryCommand(request, countriesId));
+
+            return RedirectToAction("index", "countries");
+        }
+
+        public async Task<IActionResult> Delete (int countryId)
+        {
+            await _mediator.Send(new DeleteCountryCommand(countryId));
 
             return RedirectToAction("index", "countries");
         }

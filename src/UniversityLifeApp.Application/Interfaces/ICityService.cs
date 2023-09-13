@@ -15,7 +15,7 @@ using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.UpdateCity;
 namespace UniversityLifeApp.Application.Interfaces
 {
     public interface ICityService
-    {
+    {   
         Task<ApiResult<AddCityResponse>> AddCity(AddCityCommand request);
         Task<ApiResult<List<GetCityResponse>>> GetCity(GetCityRequest request);
         Task<ApiResult<GetCityByIdResponse>> GetCityById(int cityId);

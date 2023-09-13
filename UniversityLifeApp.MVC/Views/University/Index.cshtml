@@ -83,6 +83,9 @@
                                         <th>City</th>
                                         <th>Latitude</th>
                                         <th>Longitude</th>
+                                        <th>Longitude</th>
+                                        <th>CreateAt</th>
+                                        <th>UpdateAt</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                     </thead>
@@ -91,9 +94,12 @@
                                     {
                                         <tr>
                                             <td>@item.Name</td>
-                                            <td>@item.CityId</td>
+                                            <td>@item.City.Name</td>
                                             <td>@item.Latitude</td>
                                             <td>@item.Longitude</td>
+                                            <td>@item.UniversityStatusId</td>
+                                            <td>10/10/2010</td>
+                                            <td>10/10/2010</td>
                                             <td class="text-center" style="font-size: 25px;">
                                                 <a style="color: green;" asp-controller="University" asp-action="Update" asp-route-universityId="@item.UniversityId"><i class='bx bx-edit'></i></a>
                                                 <a class="delete-btn" style="color: red;" asp-action="Delete" asp-controller="University" asp-route-universityId="@item.UniversityId"><i class='bx bx-x-circle'></i></a>
@@ -104,6 +110,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>Name</th>
+                                            <th>City</th>
                                             <th>Latitude</th>
                                             <th>Longitude</th>
                                             <th>CreateAt</th>
@@ -119,6 +126,7 @@
             </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
         <script>
             $(function () {

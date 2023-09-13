@@ -19,10 +19,12 @@ namespace UniversityLifeApp.MVC.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ApplicationContext _context;
-        public CitiesController(IMediator mediator, ApplicationContext context)
+        private readonly IWebHostEnvironment _env;
+        public CitiesController(IMediator mediator, ApplicationContext context, IWebHostEnvironment env)
         {
             _mediator = mediator;
             _context = context;
+            _env = env;
         }
 
         public async Task<IActionResult> Index(GetCityRequest request)
@@ -50,21 +52,22 @@ namespace UniversityLifeApp.MVC.Controllers
         {
             ViewBag.Countries = await _context.Countries.ToListAsync();
             
-            var city = await _context.Cities.Where(x=>x.Id == cityId).Select(x=> new UpdateCityRequest
+            var result = (await _mediator.Send(new GetCityByIdQuery(cityId))).Response;
+
+            UpdateCityRequest request = new UpdateCityRequest
             {
-                Name = x.Name,
-                CountryId = x.CountryId,
-                IsTop = x.IsTop,
-                Latitude = x.Latitude,
-                Longitude = x.Longitude,
-
-            }).FirstOrDefaultAsync();
-
+                Name = result.Name,
+                Latitude = result.Latitude,
+                CountryId = result.CountryId,
+                IsTop = result.IsTop,
+                Longitude = result.Longitude,
+            };
+            
             TempData["cityId"] = cityId;
 
 
 
-            return View(city);
+            return View(request);
         }
 
         [HttpPost]

@@ -61,7 +61,7 @@
                 </ul>
 
             </nav>
-
+                
         </div>
         <!--  END SIDEBAR  -->
         <!--  BEGIN CONTENT AREA  -->
@@ -71,11 +71,6 @@
                 <div class="row layout-top-spacing">
                     <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                         <div class="widget-content widget-content-area br-6">
-                            <div class="create-btn">
-                            <a asp-controller="Contact" asp-action="Create" style="padding: 10px 45px; border: 2px solid green; color: green; font-weight: 600; border-radius: 10px; margin: 20px 0px; font-size: 20px; display: flex; align-items: center; width: 15%; justify-content: center;">
-                                <i class='bx bx-plus bx-flashing' style="padding-right: 5px; font-size: 25px;"></i>Create
-                            </a>
-                            </div>
                             <div class="table-responsive mb-4 mt-4">
                                 <table id="alter_pagination" class="table table-hover" style="width:100%">
                                     <thead>
@@ -98,7 +93,7 @@
                                             <td>@item.Country</td>
                                             <td>@item.Comment</td>
                                             <td class="text-center" style="font-size: 25px;">
-                                                <a class="delete-btn" style="color: red;" asp-action="Delete" asp-controller="Contact"><i class='bx bx-x-circle'></i></a>
+                                                <a class="delete-btn" style="color: red;" asp-action="Delete" asp-controller="Contact" asp-route-contactId="@item.ContactId"><i class='bx bx-x-circle'></i></a>
                                             </td>
                                         </tr>
 
@@ -124,6 +119,7 @@
         </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
     <script>
         $(function () {
