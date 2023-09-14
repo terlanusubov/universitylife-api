@@ -150,7 +150,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Rating = x.Rating,
                 BedRoomRoomTypes = x.BedRoomRoomTypes.Select(c => c.Name).ToList(),
                 Price = x.Price,
-                BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
+                BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name + c.IsMain).ToList(),
 
             });
 
