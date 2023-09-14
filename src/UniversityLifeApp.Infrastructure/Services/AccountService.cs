@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using UniveristyLifeApp.Models.v1.Account.GetAccount;
 using UniveristyLifeApp.Models.v1.Account.Login;
 using UniveristyLifeApp.Models.v1.Account.Register;
 using UniveristyLifeApp.Models.v1.Account.Update;
@@ -29,6 +30,19 @@ namespace UniversityLifeApp.Infrastructure.Services
             _jwtService = jwtService;
         }
 
+        public async Task<ApiResult<List<GetAccountResponse>>> GetAccount()
+        {
+            var result = await _context.Users.Where(x => x.UserStatusId == (int)UserStatusEnum.Active).Select(x => new GetAccountResponse
+            {
+                Email = x.Email,
+                Name = x.Name,
+                PhoneNumebr = x.PhoneNumber,
+                SureName = x.Surname,
+                UserRoleId = x.UserRoleId
+            }).ToListAsync();
+            return ApiResult<List<GetAccountResponse>>.OK(result);
+        }
+
         public async Task<ApiResult<LoginResponse>> Login(LoginRequest request)
         {
             var user = await _context.Users.Where(x => x.Email == request.Email).FirstOrDefaultAsync();
@@ -38,7 +52,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             bool check = user.CheckPassword(request.Password);
 
-            if(!check)
+            if (!check)
             {
                 return ApiResult<LoginResponse>.Error(ErrorCodes.EMAIL_OR_PASSWORD_IS_NOT_CORRECT);
             }
@@ -98,7 +112,7 @@ namespace UniversityLifeApp.Infrastructure.Services
         {
             var user = await _context.Users.Where(x => x.Id == request.Request.UserId).FirstOrDefaultAsync();
 
-            if(user != null)
+            if (user != null)
             {
                 user.Name = request.Request.Name;
                 user.Surname = request.Request.Surname;
