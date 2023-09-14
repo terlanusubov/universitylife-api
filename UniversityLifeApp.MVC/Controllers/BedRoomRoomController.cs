@@ -15,8 +15,8 @@ namespace UniversityLifeApp.MVC.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var result = (await _mediator.Send(new GetBedRoomRoomQuery())).Response;
-            return View(result);
+            //var result = (await _mediator.Send(new GetBedRoomRoomQuery())).Response;
+            return View();
         }
     }
 }
