@@ -37,7 +37,6 @@ namespace UniversityLifeApp.Infrastructure
             services.AddTransient<IGetCloseBedroom, GetCloseBedroom>();
 
             services.AddTransient<ICounterService, CounterService>();   
-
             services.AddDbContext<ApplicationContext>(opt =>
             {
                 opt.UseMySql(configuration.GetConnectionString("Default"), ServerVersion.AutoDetect(configuration.GetConnectionString("Default")));
