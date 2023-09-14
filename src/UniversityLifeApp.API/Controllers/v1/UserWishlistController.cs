@@ -20,7 +20,7 @@ namespace UniversityLifeApp.API.Controllers.v1
             => _mediator = mediator;
 
         [HttpPost]
-        public async Task<ActionResult<ApiResult<CreateUserWishlistResponse>>> Create([FromForm]CreateUserWishlistRequest request)
+        public async Task<ActionResult<ApiResult<CreateUserWishlistResponse>>> Create(CreateUserWishlistRequest request)
             => await _mediator.Send(new CreateUserWishlistCommand(request));
 
         [HttpGet]
