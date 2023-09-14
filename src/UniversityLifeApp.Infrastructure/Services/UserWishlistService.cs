@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniveristyLifeApp.Models.v1.BedRoom.GetBedRoom;
 using UniveristyLifeApp.Models.v1.UserWishlist.CreateUserWishlist;
 using UniveristyLifeApp.Models.v1.UserWishlist.DeleteUserWishlist;
 using UniveristyLifeApp.Models.v1.UserWishlist.GetUserWishlist;
@@ -66,10 +68,17 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetUserWishlistResponse>>> GetUserWishlist(GetUserWishlistRequest request)
         {
+
+            var config = new MapperConfiguration(cfg => {
+                cfg.CreateMap<BedRoom, GetBedRoomResponse>();
+            });
+
+            IMapper mapper = config.CreateMapper();
+
             var Wishlist = await _context.UserWishlists.Where(x=>x.UserId == request.UserId).Select(x=> new GetUserWishlistResponse
             {
                 UserId = x.UserId,
-                BedRoomId = x.BedRoomId,
+                BedRoom = mapper.Map<GetBedRoomResponse>(x.BedRoom),
                 UserWishlistId = x.Id
 
             }).ToListAsync();

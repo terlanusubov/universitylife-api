@@ -1,4 +1,5 @@
-﻿using EEWF.Infrastructure.Services;
+﻿using AutoMapper;
+using EEWF.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,7 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniveristyLifeApp.Models.v1.BedRoom.GetBedRoom;
 using UniversityLifeApp.Application.Interfaces;
+using UniversityLifeApp.Domain.Entities;
 using UniversityLifeApp.Infrastructure.Data;
 using UniversityLifeApp.Infrastructure.Services;
 
@@ -35,7 +38,8 @@ namespace UniversityLifeApp.Infrastructure
             services.AddTransient<ICounterService, CounterService>();
             services.AddTransient<IBookBedRoomRoom, BookBedRoomRoomService>();
 
-            services.AddTransient<ICounterService, CounterService>();   
+            services.AddTransient<ICounterService, CounterService>();
+
 
             services.AddDbContext<ApplicationContext>(opt =>
             {
