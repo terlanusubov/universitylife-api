@@ -36,7 +36,6 @@ namespace UniversityLifeApp.Infrastructure
             services.AddTransient<IBookBedRoomRoom, BookBedRoomRoomService>();
 
             services.AddTransient<ICounterService, CounterService>();   
-
             services.AddDbContext<ApplicationContext>(opt =>
             {
                 opt.UseMySql(configuration.GetConnectionString("Default"), ServerVersion.AutoDetect(configuration.GetConnectionString("Default")));
