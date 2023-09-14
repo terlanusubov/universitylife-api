@@ -8,7 +8,7 @@ namespace UniveristyLifeApp.Models.v1.BedRoomRoom.GetBedRoomRoom
 {
     public class GetBedRoomRoomRequest
     {
-        public int BedRoomRoomTypeId { get; set; }
-        public int BedRoomRoomId { get; set; }
+        public int? BedRoomRoomTypeId { get; set; }
+        public int? BedRoomRoomId { get; set; }
     }
 }
