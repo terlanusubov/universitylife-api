@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using UniversityLifeApp.Application;
 using UniversityLifeApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using UniversityLifeApp.Application.Middlewares;
+using UniversityLifeApp.API.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;

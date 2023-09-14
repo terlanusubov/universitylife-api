@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
-namespace UniversityLifeApp.Application.Middlewares
+namespace UniversityLifeApp.API.Middlewares
 {
     public class LoggingMiddleware
     {
@@ -34,22 +34,17 @@ namespace UniversityLifeApp.Application.Middlewares
                 string path = context.Request.Path;
                 string requestBody = await GetRequestBody(context.Request.Body);
 
-                LogLevel logLevel = DetermineLogLevel(requestBody, clientIpAddress, requestType);
+                LogLevel logLevel = DetermineLogLevel(context);
 
                 if (logLevel == LogLevel.Error)
                 {
-                    _logger.Log(logLevel, $"IpAdress: {clientIpAddress}, LogType: {logLevel}, Text: Server Error, RequestType: {requestType},Path :{path}");
-                }
-                else if (logLevel == LogLevel.Warning)
-                {
-                    _logger.Log(logLevel, $"IpAdress: {clientIpAddress}, LogType: {logLevel}, Text: Client Error, RequestType: {requestType},Path :{path}");
-
+                    _logger.LogError($"IpAdress: {clientIpAddress}, LogType: {logLevel}, Text: Server Error, RequestType: {requestType}, Path: {path}");
                 }
                 else if (logLevel == LogLevel.Information)
                 {
-                    _logger.Log(logLevel, $"IpAdress: {clientIpAddress}, LogType: {logLevel}, Text: Redirection Error, RequestType: {requestType},Path :{path}");
-
+                    _logger.LogInformation($"IpAdress: {clientIpAddress}, LogType: {logLevel}, Text: Success, RequestType: {requestType}, Path: {path}");
                 }
+
             }
             catch (Exception ex)
             {
@@ -59,22 +54,20 @@ namespace UniversityLifeApp.Application.Middlewares
             await _next(context);
         }
 
-
-        private LogLevel DetermineLogLevel(string requestBody, string clientIpAddress, string requestType)
+        private LogLevel DetermineLogLevel(HttpContext context)
         {
-            if (requestBody.Contains("ERROR") || requestBody.Contains("Exception"))
+            int statusCode = context.Response.StatusCode;
+
+            if (statusCode >= 400 && statusCode <= 599)
             {
                 return LogLevel.Error;
             }
-            else if (requestType == "POST")
+            else
             {
                 return LogLevel.Information;
             }
-            else
-            {
-                return LogLevel.Warning;
-            }
         }
+
 
         private async Task<string> GetRequestBody(Stream body)
         {

@@ -110,6 +110,12 @@ namespace UniversityLifeApp.Infrastructure.Services
         public async Task<ApiResult<DeleteBedRoomResponse>> DeleteBedRoom(int bedroomId)
         {
             var bedroom = await _context.BedRooms.Where(x => x.Id == bedroomId).FirstOrDefaultAsync();
+
+            if(bedroom == null)
+            {
+                return ApiResult<DeleteBedRoomResponse>.Error(ErrorCodes.NullReferances_Error);
+            }
+
             bedroom.BedRoomStatusId = (int)BedRoomStatusEnum.Deactive;
 
             await _context.SaveChangesAsync();
@@ -121,7 +127,6 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             return ApiResult<DeleteBedRoomResponse>.OK(response);
 
-            throw new NotImplementedException();
         }
 
         public async Task<ApiResult<GetBedRoomResponse>> GetBedRoom(GetBedRoomRequest request)
