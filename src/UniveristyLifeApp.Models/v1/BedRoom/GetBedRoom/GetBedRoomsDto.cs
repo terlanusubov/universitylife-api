@@ -17,6 +17,7 @@ namespace UniveristyLifeApp.Models.v1.BedRoom.GetBedRoom
         public int Rating { get; set; }
         public float DistanceToCenter { get; set; }
         public decimal Price { get; set; }
+        public double? Distance { get; set; }
         public List<string> BedRoomImages { get; set; }
         public List<string> BedRoomRoomTypes { get; set; }
 
