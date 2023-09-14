@@ -34,7 +34,6 @@ namespace UniversityLifeApp.Infrastructure
             services.AddTransient<IOurServiceService, OurServiceService>();
             services.AddTransient<ICounterService, CounterService>();
             services.AddTransient<IBookBedRoomRoom, BookBedRoomRoomService>();
-            services.AddTransient<IGetCloseBedroom, GetCloseBedroom>();
 
             services.AddTransient<ICounterService, CounterService>();   
 

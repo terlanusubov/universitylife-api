@@ -148,13 +148,13 @@ namespace UniversityLifeApp.Infrastructure.Services
             
 
 
-            if (request.UnivercityId != null)
+            if (request.UniversityId != null)
             {
-                var geUniCityId = await _context.Universities.Where(x => x.Id == request.UnivercityId).Select(x => x.CityId).FirstOrDefaultAsync();
+                var geUniCityId = await _context.Universities.Where(x => x.Id == request.UniversityId).Select(x => x.CityId).FirstOrDefaultAsync();
                 int cityId = geUniCityId;
-                var uniLongitude = await _context.Universities.Where(x => x.Id == request.UnivercityId).Select(x => x.Longitude).FirstOrDefaultAsync();
+                var uniLongitude = await _context.Universities.Where(x => x.Id == request.UniversityId).Select(x => x.Longitude).FirstOrDefaultAsync();
                 double lon = Convert.ToDouble(uniLongitude);
-                var uniLatitude = await _context.Universities.Where(x => x.Id == request.UnivercityId).Select(x => x.Latitude).FirstOrDefaultAsync();
+                var uniLatitude = await _context.Universities.Where(x => x.Id == request.UniversityId).Select(x => x.Latitude).FirstOrDefaultAsync();
                 double lat = Convert.ToDouble(uniLatitude);
                 var getBedroomByCity = await _context.BedRooms.Where(x => x.CityId == cityId).ToListAsync();
 
