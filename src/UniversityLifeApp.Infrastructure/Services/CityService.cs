@@ -90,7 +90,8 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetCityResponse>>> GetCity(GetCityRequest request)
         {
-            var cities = await _context.Cities.Where(x => x.CityStatusId == (int)CityStatusEnum.Active).Select(x => new GetCityResponse
+            var cities = await _context.Cities.Where(x => x.CityStatusId == (int)CityStatusEnum.Active && (request.IsTop != null ? x.IsTop == request.IsTop : true) && (request.CountryId != null ? x.CountryId == request.CountryId : true)).Select(x => new GetCityResponse
+
             {
                 Id = x.Id,
                 Name = x.Name,
