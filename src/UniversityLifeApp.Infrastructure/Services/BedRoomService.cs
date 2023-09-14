@@ -145,6 +145,8 @@ namespace UniversityLifeApp.Infrastructure.Services
             var response = new GetBedRoomResponse();
             List<double> distances = new List<double>();
             List<IDictionary<int, double>> responseList = new();
+            
+
 
             if (request.UnivercityId != null)
             {
@@ -189,6 +191,10 @@ namespace UniversityLifeApp.Infrastructure.Services
                     return degree * (Math.PI / 180);
                 }
             }
+
+
+
+
             var bedRooms2 = await _context.BedRooms.ToListAsync();
 
             var totalData = bedRooms2.Count();
@@ -213,6 +219,10 @@ namespace UniversityLifeApp.Infrastructure.Services
 
                 }
             }
+
+
+
+
 
             var bedRooms = await query.ToListAsync();
 
