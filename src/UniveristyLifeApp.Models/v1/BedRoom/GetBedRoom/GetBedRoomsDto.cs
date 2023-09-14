@@ -8,6 +8,7 @@ namespace UniveristyLifeApp.Models.v1.BedRoom.GetBedRoom
 {
     public class GetBedRoomsDto
     {
+        public int Id { get; set; }
         public int BedRoomStatusId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

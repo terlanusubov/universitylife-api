@@ -140,6 +140,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 
             var query = _context.BedRooms.Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && request.CityId != null ? x.CityId == request.CityId : request.CityId == null).Select(x => new GetBedRoomsDto
             {
+                Id = x.Id,
                 Name = x.Name,
                 BedRoomStatusId = x.BedRoomStatusId,
                 Description = x.Description,

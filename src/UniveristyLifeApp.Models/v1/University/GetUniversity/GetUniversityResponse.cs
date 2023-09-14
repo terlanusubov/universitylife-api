@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniversityLifeApp.Domain.Entities;
 
 namespace UniveristyLifeApp.Models.v1.University.GetUniversity
 {
@@ -16,5 +17,6 @@ namespace UniveristyLifeApp.Models.v1.University.GetUniversity
 
         //City
         public int CityId { get; set; }
+        public City City { get; set; }
     }
 }

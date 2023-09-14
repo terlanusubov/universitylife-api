@@ -43,7 +43,18 @@ namespace UniversityLifeApp.Infrastructure.Services
                 IsTop = request.Request.IsTop
             };
 
-            city.Image = await _fileService.SaveImage(_env.WebRootPath, "uploads/city", request.Request.ImageFile);
+            if (_env.WebRootPath.Contains("MVC"))
+            {
+                var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
+                var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+                city.Image = await _fileService.SaveImage(path2, "uploads/city", request.Request.ImageFile);
+            }
+            else
+            {
+                city.Image = await _fileService.SaveImage(_env.WebRootPath, "uploads/city", request.Request.ImageFile);
+            }
+
+
 
             await _context.Cities.AddAsync(city);
             await _context.SaveChangesAsync();
@@ -80,6 +91,7 @@ namespace UniversityLifeApp.Infrastructure.Services
         public async Task<ApiResult<List<GetCityResponse>>> GetCity(GetCityRequest request)
         {
             var cities = await _context.Cities.Where(x => x.CityStatusId == (int)CityStatusEnum.Active && (request.IsTop != null ? x.IsTop == request.IsTop : true) && (request.CountryId != null ? x.CountryId == request.CountryId : true)).Select(x => new GetCityResponse
+
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -87,8 +99,9 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Longitude = x.Longitude,
                 CountryId = x.CountryId,
                 BedRoomCount = x.BedRooms.Count(),
+                IsTop = x.IsTop,
                 Image = "http://highresultech-001-site1.ftempurl.com/uploads/city/" + x.Image,
-            }).ToListAsync();   
+            }).ToListAsync();
 
             return ApiResult<List<GetCityResponse>>.OK(cities);
         }
@@ -98,7 +111,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             var city = await _context.Cities.Where(x => x.Id == cityId && x.CityStatusId == (int)CityStatusEnum.Active).Select(x => new GetCityByIdResponse
             {
                 Name = x.Name,
-                CountryId= x.CountryId,
+                CountryId = x.CountryId,
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
                 Image = x.Image,
@@ -116,6 +129,24 @@ namespace UniversityLifeApp.Infrastructure.Services
             city.Longitude = request.Request.Longitude;
             city.CountryId = request.Request.CountryId;
             city.IsTop = request.Request.IsTop;
+
+            if (request.Request.ImageFile != null)
+            {
+                if (_env.WebRootPath.Contains("MVC"))
+                {
+                    var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
+                    var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+                    _fileService.DeleteImage(path2, "uploads/city", city.Image);
+                    city.Image = await _fileService.SaveImage(path2, "uploads/city", request.Request.ImageFile);
+                }
+                else
+                {
+                    _fileService.DeleteImage(_env.WebRootPath, "uploads/city", city.Image);
+                    city.Image = await _fileService.SaveImage(_env.WebRootPath, "uploads/city", request.Request.ImageFile);
+
+                }
+
+            }
 
             await _context.SaveChangesAsync();
 

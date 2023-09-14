@@ -13,5 +13,6 @@ namespace UniveristyLifeApp.Models.v1.Contact.GetContact
         public string Phone { get; set; }
         public string Country { get; set; }
         public string Comment { get; set; }
+        public int ContactId { get; set; }
     }
 }

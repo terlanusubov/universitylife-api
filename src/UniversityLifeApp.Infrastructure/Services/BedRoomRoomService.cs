@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EEWF.Infrastructure.Services;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +23,14 @@ namespace UniversityLifeApp.Infrastructure.Services
     public class BedRoomRoomService : IBedRoomRoomService
     {
         private readonly ApplicationContext _context;
-        public BedRoomRoomService(ApplicationContext context)
-            => _context = context;
+        private readonly IWebHostEnvironment _env;
+        private readonly IFileService _fileService;
+        public BedRoomRoomService(ApplicationContext context , IWebHostEnvironment env, IFileService fileService)
+        {
+            _context = context;
+            _env = env;
+            _fileService = fileService;
+        }
 
         public async Task<ApiResult<CreateBedRoomRoomResponse>> CreateBedRoomRoom(CreateBedRoomRoomCommand request)
         {
@@ -38,6 +46,41 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             await _context.AddAsync(bedRoomRoom);
             await _context.SaveChangesAsync();
+
+            int count = 1;
+
+            if(request.Request.ImageFile != null)
+            {
+                foreach (var item in request.Request.ImageFile)
+                {
+                    BedRoomRoomPhoto photos = new BedRoomRoomPhoto
+                    {
+                        BedRoomRoomId = bedRoomRoom.Id,
+                        IsActive = true,
+                    };
+
+                    if(count == 1)
+                    {
+                        photos.IsMain = true;
+                    }
+
+                    if (_env.WebRootPath.Contains("MVC"))
+                    {
+                        var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
+                        var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+                        photos.Name = await _fileService.SaveImage(path2, "uploads/bedRoomRoomPhotos", item);
+                    }
+
+                    else
+                    {
+                        photos.Name = await _fileService.SaveImage(_env.WebRootPath, "uploads/bedRoomRoomPhotos", item);
+                    }
+                    count++;
+                    await _context.BedRoomRoomPhotos.AddAsync(photos);
+                }
+
+                await _context.SaveChangesAsync();
+            }
 
             var response = new CreateBedRoomRoomResponse
             {
@@ -90,12 +133,65 @@ namespace UniversityLifeApp.Infrastructure.Services
         public async Task<ApiResult<UpdateBedRoomRoomResponse>> UpdateBedRoomRoom(UpdateBedRoomRoomCommand request, int bedRoomRoomId)
         {
             var bedRoomRoom = await _context.BedRoomRooms.Where(x => x.Id == bedRoomRoomId).FirstOrDefaultAsync();
+            var bedRoomRoomPhotos = await _context.BedRoomRoomPhotos.Where(x => x.BedRoomRoomId == bedRoomRoomId).ToListAsync();
 
             bedRoomRoom.Name = request.Request.Name;
             bedRoomRoom.Description = request.Request.Description;
             bedRoomRoom.BedRoomId = request.Request.BedRoomId;
             bedRoomRoom.BedRoomRoomTypeId = request.Request.BedRoomRoomTypeId;
             bedRoomRoom.Price = request.Request.Price;
+
+            if(request.Request.ImageFile != null)
+            {
+                foreach (var item in bedRoomRoomPhotos)
+                {
+                    if (_env.WebRootPath.Contains("MVC"))
+                    {
+                        var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
+                        var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+                        _fileService.DeleteImage(path2, "uploads/bedRoomRoomPhotos", item.Name);
+                    }
+
+                    else
+                    {
+                        _fileService.DeleteImage(_env.WebRootPath, "uploads/bedRoomRoomPhotos", item.Name);
+                    }
+                }
+
+                int count = 1;
+
+                foreach (var item in request.Request.ImageFile)
+                {
+                    BedRoomRoomPhoto photos = new BedRoomRoomPhoto
+                    {
+                        BedRoomRoomId = bedRoomRoom.Id,
+                        IsActive = true,
+                    };
+
+                    if(count == 1)
+                    {
+                        photos.IsMain = true;
+                    }
+
+                    if (_env.WebRootPath.Contains("MVC"))
+                    {
+                        var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
+                        var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+
+                        photos.Name = await _fileService.SaveImage(path2, "uploads/bedRoomRoomPhotos", item);
+                    }
+
+                    else
+                    {
+                        photos.Name = await _fileService.SaveImage(_env.WebRootPath, "uploads/bedRoomRoomPhotos", item);
+                    }
+
+                    count++;
+
+                    await _context.BedRoomRoomPhotos.AddAsync(photos);
+                }
+
+            }
 
             await _context.SaveChangesAsync();
 
