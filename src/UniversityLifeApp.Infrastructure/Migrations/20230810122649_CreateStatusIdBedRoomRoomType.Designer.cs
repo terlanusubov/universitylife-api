@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniversityLifeApp.Infrastructure.Data;
 
@@ -10,9 +11,11 @@ using UniversityLifeApp.Infrastructure.Data;
 namespace UniversityLifeApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20230810122649_CreateStatusIdBedRoomRoomType")]
+    partial class CreateStatusIdBedRoomRoomType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,9 +26,6 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("BedRoomStatusId")
                         .HasColumnType("int");
 
                     b.Property<int>("CityId")
@@ -52,9 +52,6 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
@@ -110,9 +107,6 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.Property<int>("BedRoomId")
                         .HasColumnType("int");
 
-                    b.Property<int>("BedRoomRoomStatusId")
-                        .HasColumnType("int");
-
                     b.Property<int>("BedRoomRoomTypeId")
                         .HasColumnType("int");
 
@@ -147,6 +141,10 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("Applied")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("BedRoomRoomApplyStatusId")
                         .HasColumnType("int");
@@ -248,13 +246,6 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("IsTop")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("Latitude")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -275,75 +266,6 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("Cities");
-                });
-
-            modelBuilder.Entity("UniversityLifeApp.Domain.Entities.Contact", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("ContactStatusId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("FullName")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Contacts");
-                });
-
-            modelBuilder.Entity("UniversityLifeApp.Domain.Entities.Counter", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("BedRoom")
-                        .HasColumnType("int");
-
-                    b.Property<int>("City")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("Student")
-                        .HasColumnType("int");
-
-                    b.Property<int>("University")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Counter");
                 });
 
             modelBuilder.Entity("UniversityLifeApp.Domain.Entities.Country", b =>
@@ -398,38 +320,6 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.ToTable("Logs");
                 });
 
-            modelBuilder.Entity("UniversityLifeApp.Domain.Entities.OurService", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("OurServiceStatusId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("OurServices");
-                });
-
             modelBuilder.Entity("UniversityLifeApp.Domain.Entities.University", b =>
                 {
                     b.Property<int>("Id")
@@ -453,9 +343,6 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<int>("UniversityStatusId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime(6)");

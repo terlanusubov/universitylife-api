@@ -19,6 +19,10 @@ namespace UniversityLifeApp.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+
+
+            services.AddTransient<IBedRoomRoomTypeRoomTypeService,BedRoomRoomTypeService>();
+
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IBedRoomService, BedRoomService>();
             services.AddTransient<IJWTService, JWTService>();
@@ -31,13 +35,12 @@ namespace UniversityLifeApp.Infrastructure
             services.AddTransient<IUserWishlistService, UserWishlistService>();
             services.AddTransient<IBookBedRoomRoom, BookBedRoomRoomService>();
 
+
             services.AddTransient<IContactService, ContactService>();
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IOurServiceService, OurServiceService>();
             services.AddTransient<ICounterService, CounterService>();
-            services.AddTransient<IBookBedRoomRoom, BookBedRoomRoomService>();
-
-            services.AddTransient<ICounterService, CounterService>();
+           
             services.AddDbContext<ApplicationContext>(opt =>
             {
                 opt.UseMySql(configuration.GetConnectionString("Default"), ServerVersion.AutoDetect(configuration.GetConnectionString("Default")));
