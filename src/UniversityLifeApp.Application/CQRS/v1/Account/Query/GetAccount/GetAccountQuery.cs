@@ -11,6 +11,11 @@ namespace UniversityLifeApp.Application.CQRS.v1.Account.Query.GetAccount
 {
     public class GetAccountQuery:IRequest<ApiResult<List<GetAccountResponse>>>
     {
+        public GetAccountQuery(GetAccountRequest request)
+        {
+            Request = request;
+        }
+        public GetAccountRequest Request { get; set; }
         public string Name { get; set; }
         public string SureName { get; set; }
         public string Email { get; set; }

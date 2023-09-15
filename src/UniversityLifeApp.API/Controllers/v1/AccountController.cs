@@ -24,9 +24,10 @@ namespace UniversityLifeApp.API.Controllers.v1
         {
             _mediator = mediator;
         }
+
         [HttpGet]
-        public async Task<ActionResult<List<GetAccountResponse>>> GetContact()
-        => (await _mediator.Send(new GetAccountQuery())).Response;
+        public async Task<ActionResult<List<GetAccountResponse>>> GetAccount([FromQuery]GetAccountRequest request)
+        => (await _mediator.Send(new GetAccountQuery(request))).Response;
 
         [HttpPost("register")]
         public async Task<ActionResult<ApiResult<RegisterResponse>>> Register([FromBody] RegisterRequest request)

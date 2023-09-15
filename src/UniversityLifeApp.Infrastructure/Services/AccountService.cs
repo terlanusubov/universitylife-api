@@ -30,9 +30,9 @@ namespace UniversityLifeApp.Infrastructure.Services
             _jwtService = jwtService;
         }
 
-        public async Task<ApiResult<List<GetAccountResponse>>> GetAccount()
+        public async Task<ApiResult<List<GetAccountResponse>>> GetAccount(GetAccountRequest request)
         {
-            var result = await _context.Users.Where(x => x.UserStatusId == (int)UserStatusEnum.Active).Select(x => new GetAccountResponse
+            var result = await _context.Users.Where(x => x.UserStatusId == (int)UserStatusEnum.Active && (request.UserId != null ? x.Id == request.UserId : true)).Select(x => new GetAccountResponse
             {
                 Email = x.Email,
                 Name = x.Name,

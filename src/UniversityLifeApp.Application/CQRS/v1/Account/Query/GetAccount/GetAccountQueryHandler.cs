@@ -21,7 +21,7 @@ namespace UniversityLifeApp.Application.CQRS.v1.Account.Query.GetAccount
 
         public Task<ApiResult<List<GetAccountResponse>>> Handle(GetAccountQuery request, CancellationToken cancellationToken)
         {
-            var result = _accountService.GetAccount();
+            var result = _accountService.GetAccount(request.Request);
             return result;
         }
     }

@@ -18,6 +18,6 @@ namespace UniversityLifeApp.Application.Interfaces
         Task<ApiResult<RegisterResponse>> Register(RegisterRequest request);
         Task<ApiResult<LoginResponse>> Login(LoginRequest request);
         Task<ApiResult<UpdateResponse>> Update(UpdateCommand request);
-        Task<ApiResult<List<GetAccountResponse>>> GetAccount();
+        Task<ApiResult<List<GetAccountResponse>>> GetAccount(GetAccountRequest request);
     }
 }
