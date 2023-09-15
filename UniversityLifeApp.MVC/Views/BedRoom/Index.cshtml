@@ -1,4 +1,5 @@
-﻿@using UniveristyLifeApp.Models.v1.BedRoom.GetBedRoom;
+﻿@using System.Globalization;
+@using UniveristyLifeApp.Models.v1.BedRoom.GetBedRoom;
 
 @{
     ViewData["Title"] = "Index";
@@ -91,6 +92,8 @@
                                             <th>Longitude </th>
                                             <th>Rating</th>
                                             <th>DistanceToCenter </th>
+                                            <th>CreateAt </th>
+                                            <th>UpdateAt </th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -104,9 +107,11 @@
                                             <td>@item.Longitude</td>
                                             <td>@item.Rating</td>
                                             <td>@item.DistanceToCenter</td>
+                                            <td>@item.CreateAt.ToString("d MMMM yyyy", new CultureInfo("en-EN"))</td>
+                                            <td>@item.UpdateAt.ToString("d MMMM yyyy", new CultureInfo("en-EN"))</td>
                                             <td class="text-center" style="font-size: 25px;">
-                                                <a style="color: green;" asp-controller="BedRoom" asp-action="Update"><i class='bx bx-edit'></i></a>
-                                                <a class="delete-btn" style="color: red;" asp-action="Delete" asp-controller="BedRoom"><i class='bx bx-x-circle'></i></a>
+                                                <a style="color: green;" asp-controller="BedRoom" asp-action="Update" asp-route-bedroomId="@item.Id" ><i class='bx bx-edit'></i></a>
+                                                <a class="delete-btn" style="color: red;" asp-action="Delete" asp-controller="BedRoom" asp-route-bedroomId="@item.Id"><i class='bx bx-x-circle'></i></a>
                                             </td>
                                         </tr>
 
@@ -122,6 +127,8 @@
                                             <th>Longitude </th>
                                             <th>Rating</th>
                                             <th>DistanceToCenter </th>
+                                            <th>CreateAt </th>
+                                            <th>UpdateAt </th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </tfoot>
@@ -137,6 +144,7 @@
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
         <script>
             $(function () {
@@ -176,4 +184,5 @@
 
             })
         </script>
+
 

@@ -14,6 +14,8 @@ namespace UniveristyLifeApp.Models.v1.University.GetUniversity
         public string Latitude { get; set; }
         public string Longitude { get; set; }
         public int UniversityStatusId { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime UpdateAt { get; set; }
 
         //City
         public int CityId { get; set; }

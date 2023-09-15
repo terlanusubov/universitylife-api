@@ -1,4 +1,5 @@
-﻿@using UniveristyLifeApp.Models.v1.University.GetUniversity;
+﻿@using System.Globalization;
+@using UniveristyLifeApp.Models.v1.University.GetUniversity;
 
 @{
     ViewData["Title"] = "Index";
@@ -98,8 +99,8 @@
                                             <td>@item.Latitude</td>
                                             <td>@item.Longitude</td>
                                             <td>@item.UniversityStatusId</td>
-                                            <td>10/10/2010</td>
-                                            <td>10/10/2010</td>
+                                            <td>@item.CreateAt.ToString("d MMMM yyyy", new CultureInfo("en-EN"))</td>
+                                            <td>@item.UpdateAt.ToString("d MMMM yyyy", new CultureInfo("en-EN"))</td>
                                             <td class="text-center" style="font-size: 25px;">
                                                 <a style="color: green;" asp-controller="University" asp-action="Update" asp-route-universityId="@item.UniversityId"><i class='bx bx-edit'></i></a>
                                                 <a class="delete-btn" style="color: red;" asp-action="Delete" asp-controller="University" asp-route-universityId="@item.UniversityId"><i class='bx bx-x-circle'></i></a>

@@ -122,21 +122,22 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             return ApiResult<DeleteBedRoomResponse>.OK(response);
 
-            throw new NotImplementedException();
         }
 
         public async Task<ApiResult<GetBedRoomResponse>> GetBedRoom(GetBedRoomRequest request)
         {
-            var query = _context.BedRooms.Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && request.CityId != null ? x.CityId == request.CityId : request.CityId == null).Select(x => new GetBedRoomsDto
+            var query = _context.BedRooms.Include(x=>x.City).Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && request.CityId != null ? x.CityId == request.CityId : request.CityId == null).Select(x => new GetBedRoomsDto
             {
                 Id = x.Id,
                 Name = x.Name,
                 BedRoomStatusId = x.BedRoomStatusId,
                 Description = x.Description,
                 DistanceToCenter = x.DistanceToCenter,
-                CityId = x.CityId,
+                //CityId = x.CityId,
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
                 Rating = x.Rating,
                 BedRoomRoomTypes = x.BedRoomRoomTypes.Select(c => c.Name).ToList(),
                 Price = x.Price,

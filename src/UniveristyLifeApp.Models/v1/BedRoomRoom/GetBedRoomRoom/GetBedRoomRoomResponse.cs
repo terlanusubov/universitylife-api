@@ -11,6 +11,8 @@ namespace UniveristyLifeApp.Models.v1.BedRoomRoom.GetBedRoomRoom
         public string Name { get; set; }
         public string Description { get; set; }
         public float Price { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime UpdateAt { get; set; }
 
         //Bedroom
         public int BedRoomId { get; set; }

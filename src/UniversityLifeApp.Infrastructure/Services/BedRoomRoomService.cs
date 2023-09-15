@@ -124,6 +124,8 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Price = x.Price,
                 Description = x.Description,
                 BedRoomId= x.BedRoomId,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
                 BedRoomRoomTypeId = x.BedRoomRoomTypeId
             }).ToListAsync();
 

@@ -1,4 +1,5 @@
-﻿@using UniveristyLifeApp.Models.v1.Countries.GetCountry;
+﻿@using System.Globalization;
+@using UniveristyLifeApp.Models.v1.Countries.GetCountry;
 
 @{
     ViewData["Title"] = "Index";
@@ -91,8 +92,8 @@
                                     {
                                         <tr>
                                             <td>@item.Name</td>
-                                            <td>2011/04/25</td>
-                                            <td>2011/04/25</td>
+                                            <td>@item.CreateAt.ToString("d MMMM yyyy", new CultureInfo("en-EN"))</td>
+                                            <td>@item.UpdateAt.ToString("d MMMM yyyy", new CultureInfo("en-EN"))</td>
                                             <td class="text-center" style="font-size: 25px;">
                                                 <a style="color: green;" asp-controller="Countries" asp-action="Update" asp-route-countriesId="@item.Id"><i class='bx bx-edit'></i></a>
                                                 <a class="delete-btn" style="color: red;" asp-action="Delete" asp-controller="Countries" asp-route-countryId="@item.Id"><i class='bx bx-x-circle'></i></a>

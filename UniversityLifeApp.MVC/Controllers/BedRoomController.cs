@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 using UniveristyLifeApp.Models.v1.BedRoom.CreateBedRoom;
 using UniveristyLifeApp.Models.v1.BedRoom.GetBedRoom;
 using UniveristyLifeApp.Models.v1.BedRoom.UpdateBedRoom;
@@ -8,9 +9,11 @@ using UniveristyLifeApp.Models.v1.Cities.AddCity;
 using UniveristyLifeApp.Models.v1.Cities.GetCity;
 using UniveristyLifeApp.Models.v1.Cities.UpdateCity;
 using UniversityLifeApp.Application.CQRS.v1.BedRoom.Commands.CreateBedRoom;
+using UniversityLifeApp.Application.CQRS.v1.BedRoom.Commands.DeleteBedRoom;
 using UniversityLifeApp.Application.CQRS.v1.BedRoom.Commands.UpdateBedRoom;
 using UniversityLifeApp.Application.CQRS.v1.BedRoom.Queries.GetBedRoom;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.AddCity;
+using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.DeleteCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.UpdateCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Queries.GetCity;
 using UniversityLifeApp.Infrastructure.Data;
@@ -44,7 +47,18 @@ namespace UniversityLifeApp.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateBedRoomRequest request)
         {
-            await _mediator.Send(new CreateBedRoomCommand(request));
+            var result = await _mediator.Send(new CreateBedRoomCommand(request));
+
+            if (result.StatusCode != (int)HttpStatusCode.OK)
+            {
+                foreach (var item in result.ErrorList)
+                {
+                    ModelState.AddModelError(item.Key, item.Value);
+                }
+
+                return View(request);
+            }
+
             return RedirectToAction("index", "bedroom");
         }
 
@@ -75,9 +89,28 @@ namespace UniversityLifeApp.MVC.Controllers
         {
             int bedroomId = (int)TempData["bedroomId"];
 
-            await _mediator.Send(new UpdateBedRoomCommand(request, bedroomId));
+            var result = await _mediator.Send(new UpdateBedRoomCommand(request, bedroomId));
+
+            if (result.StatusCode != (int)HttpStatusCode.OK)
+            {
+                foreach (var item in result.ErrorList)
+                {
+                    ModelState.AddModelError(item.Key, item.Value);
+                }
+
+                return View(request);
+            }
 
             return RedirectToAction("index", "bedroom");
+        }
+
+
+        public async Task<IActionResult> Delete(int bedroomId)
+        {
+            await _mediator.Send(new DeleteBedRoomCommand(bedroomId));
+
+            return RedirectToAction("index", "bedroomId");
+
         }
     }
 }
