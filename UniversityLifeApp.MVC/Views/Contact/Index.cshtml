@@ -1,4 +1,5 @@
-﻿@using UniveristyLifeApp.Models.v1.Contact.GetContact;
+﻿@using System.Globalization;
+@using UniveristyLifeApp.Models.v1.Contact.GetContact;
 
 @{
     ViewData["Title"] = "Index";
@@ -80,6 +81,8 @@
                                             <th>Phone</th>
                                             <th>Country</th>
                                             <th>Comment</th>
+                                            <th>CreateAt</th>
+                                            <th>UpdateAt</th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
@@ -92,6 +95,8 @@
                                             <td>@item.Phone</td>
                                             <td>@item.Country</td>
                                             <td>@item.Comment</td>
+                                            <td>@item.CreateAt.ToString("d MMMM yyyy", new CultureInfo("en-EN"))</td>
+                                            <td>@item.UpdateAt.ToString("d MMMM yyyy", new CultureInfo("en-EN"))</td>
                                             <td class="text-center" style="font-size: 25px;">
                                                 <a class="delete-btn" style="color: red;" asp-action="Delete" asp-controller="Contact" asp-route-contactId="@item.ContactId"><i class='bx bx-x-circle'></i></a>
                                             </td>
@@ -106,6 +111,8 @@
                                             <th>Phone</th>
                                             <th>Country</th>
                                             <th>Comment</th>
+                                            <th>CreateAt</th>
+                                            <th>UpdateAt</th>
                                             <th class="text-center">Action</th>
                                         </tr>
                                     </tfoot>

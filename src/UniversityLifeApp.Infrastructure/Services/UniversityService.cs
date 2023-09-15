@@ -81,6 +81,8 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Longitude = x.Longitude,
                 CityId = x.CityId,
                 City = x.City,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
                 UniversityId = x.Id,
                 UniversityStatusId = x.UniversityStatusId,
             }).ToListAsync();

@@ -71,6 +71,8 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Country = x.Country,
                 FullName = x.FullName,
                 Phone = x.Phone,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
                 ContactId = x.Id
                 
             }).ToListAsync();

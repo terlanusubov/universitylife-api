@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 using UniveristyLifeApp.Models.v1.Cities.AddCity;
 using UniveristyLifeApp.Models.v1.Cities.DeleteCity;
 using UniveristyLifeApp.Models.v1.Cities.GetCity;
@@ -44,7 +45,19 @@ namespace UniversityLifeApp.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(AddCityRequest request)
         {
-            await _mediator.Send(new AddCityCommand(request));
+            ViewBag.Countries = await _context.Countries.ToListAsync();
+            var result = await _mediator.Send(new AddCityCommand(request));
+
+            if(result.StatusCode != (int)HttpStatusCode.OK)
+            {
+                foreach (var item in result.ErrorList)
+                {
+                    ModelState.AddModelError(item.Key, item.Value);
+                }
+
+                return View(request);
+            }
+
             return RedirectToAction("index", "cities");
         }
 
@@ -65,17 +78,28 @@ namespace UniversityLifeApp.MVC.Controllers
             
             TempData["cityId"] = cityId;
 
-
-
             return View(request);
         }
 
         [HttpPost]
         public async Task<IActionResult> Update(UpdateCityRequest request)
         {
+            ViewBag.Countries = await _context.Countries.ToListAsync();
             int cityId = (int)TempData["cityId"];
 
-            await _mediator.Send(new UpdateCityCommand(request,cityId));
+            var result = await _mediator.Send(new UpdateCityCommand(request,cityId));
+
+            if(result.StatusCode != (int)HttpStatusCode.OK)
+            {
+                foreach (var item in result.ErrorList)
+                {
+                    ModelState.AddModelError(item.Key, item.Value);
+                }
+
+                return View(request);
+            }
+
+            TempData["cityId"] = 0;
 
             return RedirectToAction("index", "cities");
         }

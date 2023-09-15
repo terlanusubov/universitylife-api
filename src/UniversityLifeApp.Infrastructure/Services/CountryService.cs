@@ -47,6 +47,8 @@ namespace UniversityLifeApp.Infrastructure.Services
             {
                 Id = x.Id,
                 Name = x.Name,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
                 CountryStatisId = x.CountryStatusId,
             }).ToListAsync();
             return ApiResult<List<GetCountryResponse>>.OK(country);

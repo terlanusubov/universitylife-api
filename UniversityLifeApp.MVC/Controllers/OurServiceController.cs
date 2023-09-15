@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 using UniveristyLifeApp.Models.v1.Cities.AddCity;
 using UniveristyLifeApp.Models.v1.Cities.GetCity;
 using UniveristyLifeApp.Models.v1.Cities.UpdateCity;
@@ -43,7 +44,17 @@ namespace UniversityLifeApp.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateOurServiceRequest request)
         {
-            await _mediator.Send(new CreateServiceCommand(request));
+            var result = await _mediator.Send(new CreateServiceCommand(request));
+
+            if (result.StatusCode != (int)HttpStatusCode.OK)
+            {
+                foreach (var item in result.ErrorList)
+                {
+                    ModelState.AddModelError(item.Key, item.Value);
+                }
+
+                return View(request);
+            }
 
             return RedirectToAction("index" , "ourservice");
         }
@@ -68,7 +79,17 @@ namespace UniversityLifeApp.MVC.Controllers
         {
             int serviceId = (int)TempData["ServiceId"];
             
-            await _mediator.Send(new UpdateOurServiceCommand(request, serviceId));
+            var result = await _mediator.Send(new UpdateOurServiceCommand(request, serviceId));
+
+            if (result.StatusCode != (int)HttpStatusCode.OK)
+            {
+                foreach (var item in result.ErrorList)
+                {
+                    ModelState.AddModelError(item.Key, item.Value);
+                }
+
+                return View(request);
+            }
 
             return RedirectToAction("index", "ourservice");
         }

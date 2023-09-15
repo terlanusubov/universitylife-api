@@ -87,6 +87,8 @@ namespace UniversityLifeApp.Infrastructure.Services
             {
                 Description = x.Description,
                 Name = x.Name,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
                 Image = "http://highresultech-001-site1.ftempurl.com/uploads/services/" + x.Image,
                 Id = x.Id
 

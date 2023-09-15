@@ -90,7 +90,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetCityResponse>>> GetCity(GetCityRequest request)
         {
-            var cities = await _context.Cities.Where(x => x.CityStatusId == (int)CityStatusEnum.Active && (request.IsTop != null ? x.IsTop == request.IsTop : true) && (request.CountryId != null ? x.CountryId == request.CountryId : true)).Select(x => new GetCityResponse
+            var cities = await _context.Cities.Include(x => x.Country).Where(x => x.CityStatusId == (int)CityStatusEnum.Active && (request.IsTop != null ? x.IsTop == request.IsTop : true) && (request.CountryId != null ? x.CountryId == request.CountryId : true)).Select(x => new GetCityResponse
 
             {
                 Id = x.Id,
@@ -101,7 +101,10 @@ namespace UniversityLifeApp.Infrastructure.Services
                 BedRoomCount = x.BedRooms.Count(),
                 IsTop = x.IsTop,
                 Image = "http://highresultech-001-site1.ftempurl.com/uploads/city/" + x.Image,
-            }).ToListAsync();
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
+                CountryName = x.Country.Name,
+            }).OrderByDescending(x => x.CreateAt).ToListAsync();
 
             return ApiResult<List<GetCityResponse>>.OK(cities);
         }

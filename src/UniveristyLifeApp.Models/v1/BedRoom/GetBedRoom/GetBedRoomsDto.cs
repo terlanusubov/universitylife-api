@@ -18,6 +18,8 @@ namespace UniveristyLifeApp.Models.v1.BedRoom.GetBedRoom
         public float DistanceToCenter { get; set; }
         public decimal Price { get; set; }
         public double? Distance { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime UpdateAt { get; set; }
         public List<string> BedRoomImages { get; set; }
         public List<string> BedRoomRoomTypes { get; set; }
 
