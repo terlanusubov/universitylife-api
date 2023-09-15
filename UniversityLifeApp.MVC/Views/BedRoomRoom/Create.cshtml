@@ -1,12 +1,12 @@
-﻿@using UniveristyLifeApp.Models.v1.BedRoom.UpdateBedRoom;
+﻿@using UniveristyLifeApp.Models.v1.BedRoomRoom.CreateCity;
 @using UniversityLifeApp.Domain.Entities;
 
 @{
-    ViewData["Title"] = "Update";
+    ViewData["Title"] = "Create";
     Layout = null;
 }
 
-@model UpdateBedRoomRequest
+@model CreateBedRoomRoomRequest
 
 <!DOCTYPE html>
 <html lang="en">
@@ -166,10 +166,8 @@
         </ul>
     </header>
 </div>
-
-
 <div class="d-flex justify-content-center align-items-center" style="width: 100%;">
-    <form asp-action="Update" asp-controller="BedRoom" style="width: 60%; margin: 200px 0px;" enctype="multipart/form-data">
+    <form asp-action="Create" asp-controller="BedRoom" style="width: 60%; margin: 200px 0px;" enctype="multipart/form-data">
         <h4>BedRoom name</h4>
         <input type="text" name="Name" asp-for="Name" class="form-control mb-3" placeholder="BedRoom name">
         <span style="color: red;">@Html.ValidationMessageFor(x => x.Name)</span>
@@ -181,22 +179,23 @@
                 <span style="color: red;">@Html.ValidationMessageFor(x => x.Description)</span>
             </div>
             <div class="col-lg-6">
-                <h4>Latitude</h4>
-                <input type="text" name="Latitude" asp-for="Latitude" class="form-control mb-3" placeholder="Latitude">
+                <h4>Price</h4>
+                <input name="Price" asp-for="Price" class="form-control mb-3" placeholder="Price">
 
-                <span style="color: red;">@Html.ValidationMessageFor(x => x.Latitude)</span>
+                <span style="color: red;">@Html.ValidationMessageFor(x => x.Price)</span>
             </div>
 
             <div class="col-lg-6">
-                <h4>Longitude</h4>
-                <input type="text" name="Longitude" asp-for="Longitude" class="form-control mb-3" placeholder="Longitude">
+                <h4>Bed room</h4>
+                <select class="form-control basic" asp-for="BedRoomId" name="BedRoomId" asp-items="@new SelectList((List<BedRoom>)ViewBag.BedRooms, nameof(BedRoom.Id), nameof(BedRoom.Name))"></select>
 
-                <span style="color: red;">@Html.ValidationMessageFor(x => x.Longitude)</span>
+                <span style="color: red;">@Html.ValidationMessageFor(x => x.BedRoomId)</span>
             </div>
 
-            <div class="col-lg-6">
-                <h4>Rating</h4>
-                <input type="text" name="Rating" asp-for="Rating" class="form-control mb-3" placeholder="Rating">
+            <@* div class="col-lg-6">
+                <h4>Type</h4>
+                <select class="form-control basic" asp-for="BedRoomRoomTypeId" name="BedRoomRoomTypeId" asp-items="@new SelectList((List<BedRoomRoomType>)ViewBag.BedRoomRoomTypes, nameof(BedRoomRoomType.Id), nameof(BedRoomRoomType.Name))"></select>
+
 
                 <span style="color: red;">@Html.ValidationMessageFor(x => x.Rating)</span>
             </div>
@@ -207,21 +206,22 @@
                 <span style="color: red;">@Html.ValidationMessageFor(x => x.DistanceToCenter)</span>
             </div>
 
+
+
             <div class="col-lg-6">
                 <h4>Cities</h4>
                 <select class="form-control basic" asp-for="CityId" name="CityId" asp-items="@new SelectList((List<City>)ViewBag.Cities, nameof(City.Id), nameof(City.Name))"></select>
-            </div>
+            </div> *@
 
             <div class="col-lg-6">
-                <h4>Image</h4>
-                
-                <input name="ImageFile" asp-for="ImageFile" class="form-control mb-3" placeholder="ImageFile">
+                <h4>Images</h4>
+                <input name="ImageFile" asp-for="ImageFile" class="form-control mb-3" placeholder="Image">
 
                 <span style="color: red;">@Html.ValidationMessageFor(x => x.ImageFile)</span>
             </div>
         </div>
 
-     
+
 
         <div class="d-flex justify-content-end mt-3">
             <button type="submit" class="d-flex align-items-center" style=" background-color: green; padding: 10px 15px; color: white; border: 1px solid white; border-radius: 5px; font-weight: 600;"><i class='bx bx-save' style="margin-right: 7px;"></i>Save</button>

@@ -47,6 +47,7 @@ namespace UniversityLifeApp.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateBedRoomRequest request)
         {
+            ViewBag.Cities = await _context.Cities.ToListAsync();
             var result = await _mediator.Send(new CreateBedRoomCommand(request));
 
             if (result.StatusCode != (int)HttpStatusCode.OK)
@@ -75,7 +76,7 @@ namespace UniversityLifeApp.MVC.Controllers
                 CityId = x.CityId,
                 DistanceToCenter = x.DistanceToCenter,
                 Rating = x.Rating,
-
+                Image = x.BedRoomPhotos.Select(x => x.Name).ToList(),
             }).FirstOrDefaultAsync();
 
             TempData["bedroomId"] = bedroomId;

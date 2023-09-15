@@ -18,6 +18,9 @@ namespace UniversityLifeApp.Domain.Enums
         [Description("There are some validations error.")]
         VALIDATION_ERROR = 2_0_0,
 
+        [Description("The data you wanted to delete could not be found.")]
+        DELETE_ERROR = 2_1_0,
+
         [Description("This item already exist in your wishlist")]
         WISHLIST_IS_ALREADY_EXIST = 4_0_0,
 

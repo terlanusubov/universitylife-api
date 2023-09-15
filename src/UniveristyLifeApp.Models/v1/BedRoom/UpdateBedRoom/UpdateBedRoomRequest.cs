@@ -20,6 +20,7 @@ namespace UniveristyLifeApp.Models.v1.BedRoom.UpdateBedRoom
 
         //Bedroom image
         public List<IFormFile> ImageFile { get; set; }
+        public List<string> Image { get; set; }
 
         //City
         public int CityId { get; set; }

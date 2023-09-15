@@ -104,7 +104,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,
                 CountryName = x.Country.Name,
-            }).ToListAsync();
+            }).OrderByDescending(x => x.CreateAt).ToListAsync();
 
             return ApiResult<List<GetCityResponse>>.OK(cities);
         }

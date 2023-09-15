@@ -111,6 +111,11 @@ namespace UniversityLifeApp.Infrastructure.Services
         public async Task<ApiResult<DeleteBedRoomResponse>> DeleteBedRoom(int bedroomId)
         {
             var bedroom = await _context.BedRooms.Where(x => x.Id == bedroomId).FirstOrDefaultAsync();
+            if(bedroom == null)
+            {
+                return ApiResult<DeleteBedRoomResponse>.Error(ErrorCodes.DELETE_ERROR);
+            }
+
             bedroom.BedRoomStatusId = (int)BedRoomStatusEnum.Deactive;
 
             await _context.SaveChangesAsync();
@@ -126,7 +131,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<GetBedRoomResponse>> GetBedRoom(GetBedRoomRequest request)
         {
-            var query = _context.BedRooms.Include(x=>x.City).Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && request.CityId != null ? x.CityId == request.CityId : request.CityId == null).Select(x => new GetBedRoomsDto
+            var query = _context.BedRooms.Include(x=>x.City).Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && (request.CityId != null ? x.CityId == request.CityId : true)).Select(x => new GetBedRoomsDto
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -225,7 +230,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
 
 
-            var bedRooms = await query.ToListAsync();
+            var bedRooms = await query.OrderByDescending(x => x.CreateAt).ToListAsync();
 
 
             response.BedRooms = bedRooms;
