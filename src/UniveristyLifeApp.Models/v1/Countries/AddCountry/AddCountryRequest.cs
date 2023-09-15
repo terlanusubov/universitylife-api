@@ -9,7 +9,5 @@ namespace UniveristyLifeApp.Models.v1.Countries.AddCountry
     public class AddCountryRequest
     {
         public string Name { get; set; }
-        public int CountryStatisId { get; set; }
-        public ICollection<string> CiytEs { get; set; }
     }
 }

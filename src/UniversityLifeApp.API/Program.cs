@@ -12,8 +12,19 @@ using UniversityLifeApp.Application.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Reflection;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+                      });
+});
 
 // Add services to the container.
 
@@ -46,12 +57,12 @@ builder.Services.AddVersionedApiExplorer(setup =>
 });
 
 
-
 builder.Services.AddApplication();
 
 
 
-builder.Services.AddInfrastructure(builder.Configuration); 
+builder.Services.AddInfrastructure(builder.Configuration);
+
 
 builder.Services.AddHttpContextAccessor();
 
@@ -79,6 +90,9 @@ builder.Services.AddAuthentication(options =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddAuthorization();
+
 builder.Services.AddSwaggerGen(c =>
 {
     var provider = builder.Services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
@@ -103,13 +117,23 @@ builder.Services.AddSwaggerGen(c =>
         });
     }
     c.CustomSchemaIds(a => a.FullName);
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Description = "ADD jwt token",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey
+    });
 }
 );
 
 
 var app = builder.Build();
 
+app.UseStaticFiles();
 
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpLogging();
 

@@ -13,7 +13,14 @@
     <None Remove="v1\Users\AddUser\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="v1\University\GetUniversityById\" />
     <Folder Include="v1\Users\" />
     <Folder Include="v1\Users\AddUser\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UniversityLifeApp.Domain\UniversityLifeApp.Domain.csproj" />
   </ItemGroup>
 </Project>

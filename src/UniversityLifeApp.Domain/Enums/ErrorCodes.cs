@@ -16,7 +16,10 @@ namespace UniversityLifeApp.Domain.Enums
         USER_IS_ALREADY_EXIST = 1_0_1,
 
         [Description("There are some validations error.")]
-        VALIDATION_ERROR = 2_0_0
+        VALIDATION_ERROR = 2_0_0,
+
+        [Description("This item already exist in your wishlist")]
+        WISHLIST_IS_ALREADY_EXIST = 4_0_0,
 
 
     }

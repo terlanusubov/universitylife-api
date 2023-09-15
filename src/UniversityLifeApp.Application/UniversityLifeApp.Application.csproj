@@ -25,6 +25,8 @@
 	  <None Remove="Interfaces\" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Folder Include="CQRS\v1\BedRoomPhoto\Query\" />
+	  <Folder Include="CQRS\v1\BookBedRoomRoom\Queries\" />
 	  <Folder Include="CQRS\v1\Users\" />
 	  <Folder Include="CQRS\v1\Users\Commands\" />
 	  <Folder Include="CQRS\v1\Users\Queries\" />

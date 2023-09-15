@@ -26,8 +26,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             Country country = new Country
             {
                 Name = request.Request.Name,
-                CountryStatusId = request.Request.CountryStatisId,
-                Cities = (ICollection<City>)request.Request.CiytEs,
+                CountryStatusId = (int)CountryStatusEnum.Active,
             };
             await _applicationContext.Countries.AddAsync(country);
             await _applicationContext.SaveChangesAsync();
@@ -36,7 +35,6 @@ namespace UniversityLifeApp.Infrastructure.Services
             {
                 Name = country.Name,
                 CountryStatisId = country.CountryStatusId,
-                CiytEs = (ICollection<string>)country.Cities,
             };
 
             return ApiResult<AddCountryResponse>.OK(response);
@@ -47,9 +45,11 @@ namespace UniversityLifeApp.Infrastructure.Services
         {
             var country = await _applicationContext.Countries.Where(x => x.CountryStatusId == 10).Select(x => new GetCountryResponse
             {
+                Id = x.Id,
                 Name = x.Name,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
                 CountryStatisId = x.CountryStatusId,
-                CiytEs = (ICollection<string>)x.Cities
             }).ToListAsync();
             return ApiResult<List<GetCountryResponse>>.OK(country);
         }
@@ -58,15 +58,11 @@ namespace UniversityLifeApp.Infrastructure.Services
         {
             var country = await _applicationContext.Countries.Where(x => x.Id == cityId).FirstOrDefaultAsync();
             country.Name = request.Request.Name;
-            country.CountryStatusId = request.Request.CountryStatisId;
-            country.Cities = (ICollection<City>)request.Request.CiytEs;
             await _applicationContext.SaveChangesAsync();
 
             var response = new UpdateCountryResponse
             {
                 Name = country.Name,
-                CountryStatisId = country.CountryStatusId,
-                CiytEs = (ICollection<string>)country.Cities
             };
             return ApiResult<UpdateCountryResponse>.OK(response);
         }
