@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.BedRoomRoom.CreateCity;
 using UniveristyLifeApp.Models.v1.BedRoomRoom.DeleteBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BedRoomRoom.GetBedRoomRoom;
+using UniveristyLifeApp.Models.v1.BedRoomRoom.GetBedRoomRoomById;
 using UniveristyLifeApp.Models.v1.BedRoomRoom.UpdateBedRoomRoom;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.BedRoomRoom.Commands.CreateBedRoomRoom;
@@ -118,18 +119,39 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetBedRoomRoomResponse>>> GetBedRoomRoom(GetBedRoomRoomRequest request)
         {
-            var bedRoomRooms = await _context.BedRoomRooms.Where(x => x.BedRoomRoomStatusId == (int)BedRoomRoomStatusEnum.Active && (request.BedRoomRoomId != null ? x.Id == request.BedRoomRoomId : true) && (request.BedRoomRoomTypeId != null ? x.BedRoomRoomTypeId == request.BedRoomRoomTypeId : true)).Select(x => new GetBedRoomRoomResponse
+            var bedRoomRooms = await _context.BedRoomRooms.Include(x => x.BedRoom).Include(x => x.BedRoomRoomPhotos).Where(x => x.BedRoomRoomStatusId == (int)BedRoomRoomStatusEnum.Active && (request.BedRoomRoomId != null ? x.Id == request.BedRoomRoomId : true) && (request.BedRoomRoomTypeId != null ? x.BedRoomRoomTypeId == request.BedRoomRoomTypeId : true)).Select(x => new GetBedRoomRoomResponse
             {
+                Id = x.Id,
                 Name = x.Name,
                 Price = x.Price,
                 Description = x.Description,
                 BedRoomId= x.BedRoomId,
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,
-                BedRoomRoomTypeId = x.BedRoomRoomTypeId
+                BedRoomRoomTypeId = x.BedRoomRoomTypeId,
+                Image = x.BedRoomRoomPhotos.Select(x => "http://highresultech-001-site1.ftempurl.com/uploads/bedRoomRoomPhotos/" + x.Name).ToList(),
             }).ToListAsync();
 
             return ApiResult<List<GetBedRoomRoomResponse>>.OK(bedRoomRooms);
+        }
+
+        public async Task<ApiResult<GetBedRoomRoomByIdResponse>> GetBedRoomRoomById(int bedRoomRoomId)
+        {
+            var bedroomroom = await _context.BedRoomRooms.Where(x => x.Id == bedRoomRoomId).FirstOrDefaultAsync();
+
+            GetBedRoomRoomByIdResponse response = new GetBedRoomRoomByIdResponse
+            {
+                Id = bedroomroom.Id,
+                BedRoomId = bedroomroom.BedRoomId,
+                BedRoomRoomTypeId = bedroomroom.BedRoomRoomTypeId,
+                CreateAt= bedroomroom.CreateAt,
+                Description = bedroomroom.Description,
+                Name = bedroomroom.Name,
+                Price= bedroomroom.Price,
+                UpdateAt = bedroomroom.UpdateAt
+            };
+
+            return ApiResult<GetBedRoomRoomByIdResponse>.OK(response);
         }
 
         public async Task<ApiResult<UpdateBedRoomRoomResponse>> UpdateBedRoomRoom(UpdateBedRoomRoomCommand request, int bedRoomRoomId)

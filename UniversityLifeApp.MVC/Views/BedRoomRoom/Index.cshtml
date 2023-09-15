@@ -94,14 +94,14 @@
                                         @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td></td>
+                                            <td><img src="@item.Image.FirstOrDefault()" style="width: 100px; height: 100px;" /></td>
                                             <td>@item.Name</td>
                                             <td>@item.Description</td>
                                             <td>@item.Price</td>
                                             <td>@item.CreateAt.ToString("d MMMM yyyy", new CultureInfo("en-EN"))</td>
                                             <td>@item.UpdateAt.ToString("d MMMM yyyy", new CultureInfo("en-EN"))</td>
                                             <td class="text-center" style="font-size: 25px;">
-                                                <a style="color: green;" asp-controller="BedRoomRoom" asp-action="Update"><i class='bx bx-edit'></i></a>
+                                                <a style="color: green;" asp-controller="BedRoomRoom" asp-action="Update" asp-route-bedRoomRoomId="@item.Id"><i class='bx bx-edit'></i></a>
                                                 <a class="delete-btn" style="color: red;" asp-action="Delete" asp-controller="BedRoomRoom"><i class='bx bx-x-circle'></i></a>
                                             </td>
                                         </tr>

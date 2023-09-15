@@ -68,6 +68,7 @@ namespace UniversityLifeApp.Infrastructure.Services
         {
             var roomtype = await _context.BedRoomRoomTypes.Select(x => new GetBedRoomRoomTypeResponse
             {
+                Id = x.Id,
                 BedRoomId = x.Id,
                 Name = x.Name,
                BedRoomRoomTypeStatusId = x.BedRoomRoomTypeStatusId

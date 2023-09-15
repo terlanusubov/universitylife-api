@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniveristyLifeApp.Models.v1.BedRoomRoom.GetBedRoomRoom
+namespace UniveristyLifeApp.Models.v1.BedRoomRoom.GetBedRoomRoomById
 {
-    public class GetBedRoomRoomResponse
+    public class GetBedRoomRoomByIdResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public float Price { get; set; }
-        public List<string> Image { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime UpdateAt { get; set; }
 

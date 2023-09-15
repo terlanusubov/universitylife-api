@@ -5,22 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.BedRoomRoom.GetBedRoomRoom;
+using UniveristyLifeApp.Models.v1.BedRoomRoom.GetBedRoomRoomById;
 using UniversityLifeApp.Application.Core;
 
-namespace UniversityLifeApp.Application.CQRS.v1.BedRoomRoom.Queries.GetBedRoomRoom
+namespace UniversityLifeApp.Application.CQRS.v1.BedRoomRoom.Queries.GetBedRoomRoomById
 {
-    public class GetBedRoomRoomQuery:IRequest<ApiResult<List<GetBedRoomRoomResponse>>>
+    public class GetBedRoomRoomByIdQuery:IRequest<ApiResult<GetBedRoomRoomByIdResponse>>
     {
-        public GetBedRoomRoomQuery(GetBedRoomRoomRequest request)
+        public GetBedRoomRoomByIdQuery(int bedRoomRoomId)
         {
-            Request = request;
+            BedRoomRoomId = bedRoomRoomId;
         }
 
-        public GetBedRoomRoomRequest Request { get; set; }
-        public int Id { get; set; }
+        public int BedRoomRoomId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public float Price { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime UpdateAt { get; set; }
 
         //Bedroom
         public int BedRoomId { get; set; }
