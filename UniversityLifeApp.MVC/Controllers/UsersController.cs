@@ -8,6 +8,7 @@ using UniversityLifeApp.Infrastructure.Data;
 
 namespace UniversityLifeApp.MVC.Controllers
 {
+    //[Area("admin")]
     public class UsersController : Controller
     {
         public async Task<IActionResult> Index()

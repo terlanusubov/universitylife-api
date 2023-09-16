@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using UniversityLifeApp.Application;
@@ -9,9 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 //builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
 //builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-
+builder.Services.AddControllersWithViews();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(x => x.LoginPath = "/account/login");
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
@@ -32,10 +36,17 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
+
+//app.MapControllerRoute(
+//            name: "areas",
+//            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+//          );
 
 app.MapControllerRoute(
     name: "default",
