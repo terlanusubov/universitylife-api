@@ -20,10 +20,12 @@ namespace UniversityLifeApp.Infrastructure.Services
     public class ContactService : IContactService
     {
         private readonly ApplicationContext _context;
+        private readonly IEmailService _emailService;
 
-        public ContactService(ApplicationContext context)
+        public ContactService(ApplicationContext context, IEmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
         public async Task<ApiResult<CreateContactResponse>> CreateContact(CreateContactCommand request)
         {
@@ -38,6 +40,10 @@ namespace UniversityLifeApp.Infrastructure.Services
             };
             await _context.Contacts.AddAsync(contact);
             await _context.SaveChangesAsync();
+
+            var message = string.Format("Salam.\n Sizə {0} tərəfindən yeni bir ismarıc göndərildi.\n\n{1}", contact.FullName, contact.Comment);
+            _emailService.Send("huseynove174@gmail.com", "Yeni ismaric", message);
+
             var response = new CreateContactResponse()
             {
                 Phone = contact.Phone,

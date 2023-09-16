@@ -34,8 +34,7 @@ namespace UniversityLifeApp.Infrastructure
             services.AddTransient<IFileService, FileService>();
             services.AddTransient<IUserWishlistService, UserWishlistService>();
             services.AddTransient<IBookBedRoomRoom, BookBedRoomRoomService>();
-
-
+            services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IContactService, ContactService>();
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IOurServiceService, OurServiceService>();
