@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using UniversityLifeApp.Domain.Entities;
 
 namespace UniversityLifeApp.API.Middlewares
 {
@@ -12,16 +13,18 @@ namespace UniversityLifeApp.API.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<LoggingMiddleware> _logger;
+        private readonly IWebHostEnvironment _env;
+        private string logDirectoryPath;
 
-        public LoggingMiddleware(RequestDelegate next, ILogger<LoggingMiddleware> logger)
+        public LoggingMiddleware(RequestDelegate next, ILogger<LoggingMiddleware> logger, IWebHostEnvironment Env)
         {
             _next = next;
             _logger = logger;
+            _env = Env;
         }
 
         public async Task Invoke(HttpContext context)
         {
-            // Capture the client's IP address from X-Forwarded-For header, or use default if not available
             string clientIpAddress = context.Request.Headers["X-Forwarded-For"].FirstOrDefault();
             if (string.IsNullOrWhiteSpace(clientIpAddress))
             {
@@ -36,19 +39,20 @@ namespace UniversityLifeApp.API.Middlewares
 
                 LogLevel logLevel = DetermineLogLevel(context);
 
-                if (logLevel == LogLevel.Error)
-                {
-                    _logger.LogError($"IpAdress: {clientIpAddress}, LogType: {logLevel}, Text: Server Error, RequestType: {requestType}, Path: {path}");
-                }
-                else if (logLevel == LogLevel.Information)
-                {
-                    _logger.LogInformation($"IpAdress: {clientIpAddress}, LogType: {logLevel}, Text: Success, RequestType: {requestType}, Path: {path}");
-                }
+                DateTime currentDate = DateTime.Now;
 
+                string logFileName = $"{currentDate:yyyy-MM}.log";
+
+                string logFilePath = Path.Combine(_env.WebRootPath+"\\logging", logFileName);
+
+                string logMessage = $"{currentDate:yyyy-MM-dd HH:mm:ss} | IpAdress: {clientIpAddress}, LogType: {logLevel}, Text: {(logLevel == LogLevel.Error ? "Server Error" : "Success")}, RequestType: {requestType}, Path: {path}";
+
+                File.AppendAllText(logFilePath, logMessage + Environment.NewLine);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error: {ex.Message}, LogType: Error, IpAdress: {clientIpAddress}");
+                string errorMessage = $"Error: {ex.Message}, LogType: Error, IpAdress: {clientIpAddress}";
+                _logger.LogError(errorMessage);
             }
 
             await _next(context);
@@ -67,7 +71,6 @@ namespace UniversityLifeApp.API.Middlewares
                 return LogLevel.Information;
             }
         }
-
 
         private async Task<string> GetRequestBody(Stream body)
         {
