@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using UniveristyLifeApp.Models.v1.BedRoomRoomType.CreateBedRoomRoomType;
+using UniveristyLifeApp.Models.v1.BedRoomRoomType.GetBedRoomRoomType;
 using UniveristyLifeApp.Models.v1.BedRoomRoomType.UpdateBedRoomRoomType;
 using UniveristyLifeApp.Models.v1.Cities.AddCity;
 using UniveristyLifeApp.Models.v1.Cities.GetCity;
@@ -34,9 +35,9 @@ namespace UniversityLifeApp.MVC.Controllers
             _env = env;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(GetBedRoomRoomTypeRequest request)
         {
-            var result = (await _mediator.Send(new GetBedRoomRoomTypeQuery())).Response;
+            var result = (await _mediator.Send(new GetBedRoomRoomTypeQuery(request))).Response;
 
             return View(result);
         }

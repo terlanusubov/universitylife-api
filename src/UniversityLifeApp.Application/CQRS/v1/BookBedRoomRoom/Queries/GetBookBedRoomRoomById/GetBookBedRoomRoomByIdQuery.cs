@@ -4,13 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoom;
+using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoomById;
 using UniversityLifeApp.Application.Core;
 
-namespace UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Queries.GetBookBedRoomRoom
+namespace UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Queries.GetBookBedRoomRoomById
 {
-    public class GetBookBedRoomRoomQuery : IRequest<ApiResult<List<GetBookBedRoomRoomResponse>>>
+    public class GetBookBedRoomRoomByIdQuery:IRequest<ApiResult<GetBookBedRoomRoomByIdResponse>>
     {
+        public GetBookBedRoomRoomByIdQuery(int applyId)
+        {
+            Id = applyId;
+        }
         public int Id { get; set; }
         public string BedRoomRoomName { get; set; }
         public string Fullname { get; set; }

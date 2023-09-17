@@ -56,7 +56,7 @@ builder.Services.AddVersionedApiExplorer(setup =>
     setup.SubstituteApiVersionInUrl = true;
 });
 
-
+builder.Services.AddControllersWithViews();
 builder.Services.AddApplication();
 
 
@@ -150,8 +150,8 @@ app.UseSwaggerUI(c =>
     }
 });
 
+app.UseSession();
 app.UseMiddleware<LoggingMiddleware>();
-
 
 app.UseHttpsRedirection();
 

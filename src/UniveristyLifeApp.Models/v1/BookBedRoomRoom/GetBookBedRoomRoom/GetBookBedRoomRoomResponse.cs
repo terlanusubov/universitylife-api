@@ -16,6 +16,10 @@ namespace UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoom
         public string PhoneNumber { get; set; }
         public string BedRoomRoomType { get; set; }
         public string BedRoomName { get; set; }
+        public string Image { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime UpdateAt { get; set; }
+        public int BedRoomRoomApplyStatusId { get; set; }
 
     }
 }

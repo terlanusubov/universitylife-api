@@ -78,11 +78,10 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Id = x.Id,
                 BedRoomId = x.BedRoomId,
                 Name = x.Name,
-               BedRoomRoomTypeStatusId = x.BedRoomRoomTypeStatusId,
-               CreateAt = x.CreateAt,
-               UpdateAt = x.UpdateAt,
-               BedRoomName = x.BedRoom.Name              
-                BedRoomRoomTypeStatusId = x.BedRoomRoomTypeStatusId
+                BedRoomRoomTypeStatusId = x.BedRoomRoomTypeStatusId,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
+                BedRoomName = x.BedRoom.Name,
 
             }).ToListAsync();
 

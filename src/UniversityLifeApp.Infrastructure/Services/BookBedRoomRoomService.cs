@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniveristyLifeApp.Models.v1.BookBedRoomRoom.AcceptBook;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.CreateBookBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoom;
+using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoomById;
+using UniveristyLifeApp.Models.v1.BookBedRoomRoom.RejectBook;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Commands.CreateBookBedRoomRoom;
 using UniversityLifeApp.Application.Interfaces;
@@ -24,6 +27,26 @@ namespace UniversityLifeApp.Infrastructure.Services
             _context = context;
             _emailService = emailService;
         }
+
+        public async Task<ApiResult<AcceptBookResponse>> Accept(int id)
+        {
+            var apply = await _context.BedRoomRoomApplies.Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            if(apply != null)
+            {
+                apply.BedRoomRoomApplyStatusId = (int)BedRoomRoomApplyStatusEnum.Accepted;
+            }
+
+            await _context.SaveChangesAsync();
+
+            AcceptBookResponse response = new AcceptBookResponse
+            {
+                Id = apply.Id
+            };
+
+            return ApiResult<AcceptBookResponse>.OK(response);
+        }
+
         public async Task<ApiResult<CreateBookBedRoomRoomResponse>> BookBedRoomRoom(CreateBookBedRoomRoomCommand request)
         {
             BedRoomRoomApply bookBedRoomRoom = new BedRoomRoomApply
@@ -59,15 +82,57 @@ namespace UniversityLifeApp.Infrastructure.Services
                 PhoneNumber = x.User.PhoneNumber,
                 BedRoomRoomName = x.BedRoomRoom.Name,
                 BedRoomName = x.BedRoomRoom.BedRoom.Name,
-                BedRoomRoomType = x.BedRoomRoom.BedRoomRoomType.Name
-                
-
+                BedRoomRoomType = x.BedRoomRoom.BedRoomRoomType.Name,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
+                Image = x.BedRoomRoom.BedRoomRoomPhotos.Select(x => "http://highresultech-001-site1.ftempurl.com/uploads/bedRoomRoomPhotos/" + x.Name).FirstOrDefault(),
+                BedRoomRoomApplyStatusId = x.BedRoomRoomApplyStatusId,
             }).ToListAsync();
-
 
             return ApiResult<List<GetBookBedRoomRoomResponse>>.OK(bookbed);
 
 
+        }
+
+        public async Task<ApiResult<GetBookBedRoomRoomByIdResponse>> GetById(int id)
+        {
+            var bedroom = await _context.BedRoomRoomApplies.Where(x => x.Id == id).Select(x => new GetBookBedRoomRoomByIdResponse
+            {
+                Id = x.Id,
+                Fullname = x.User.Name + " " + x.User.Surname,
+                Price = x.BedRoomRoom.Price,
+                Email = x.User.Email,
+                PhoneNumber = x.User.PhoneNumber,
+                Description = x.BedRoomRoom.Description,
+                BedRoomRoomName = x.BedRoomRoom.Name,
+                BedRoomName = x.BedRoomRoom.BedRoom.Name,
+                BedRoomRoomType = x.BedRoomRoom.BedRoomRoomType.Name,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
+                Image = x.BedRoomRoom.BedRoomRoomPhotos.Select(x => "http://highresultech-001-site1.ftempurl.com/uploads/bedRoomRoomPhotos/" + x.Name).FirstOrDefault(),
+                BedRoomRoomApplyStatusId = x.BedRoomRoomApplyStatusId,
+            }).FirstOrDefaultAsync();
+
+            return ApiResult<GetBookBedRoomRoomByIdResponse>.OK(bedroom);
+        }
+
+        public async Task<ApiResult<RejectBookResponse>> Reject(int id)
+        {
+            var apply = await _context.BedRoomRoomApplies.Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            if (apply != null)
+            {
+                apply.BedRoomRoomApplyStatusId = (int)BedRoomRoomApplyStatusEnum.Rejected;
+            }
+
+            await _context.SaveChangesAsync();
+
+            RejectBookResponse response = new RejectBookResponse
+            {
+                Id = apply.Id
+            };
+
+            return ApiResult<RejectBookResponse>.OK(response);
         }
     }
 }
