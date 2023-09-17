@@ -19,6 +19,7 @@ using UniversityLifeApp.Infrastructure.Data;
 
 namespace UniversityLifeApp.MVC.Controllers
 {
+    //[Area("admin")]
     public class UniversityController : Controller
     {
         private readonly IMediator _mediator;
@@ -54,6 +55,8 @@ namespace UniversityLifeApp.MVC.Controllers
                 {
                     ModelState.AddModelError(item.Key, item.Value);
                 }
+
+                ViewBag.Cities = await _context.Cities.ToListAsync();
 
                 return View(request);
             }
@@ -95,8 +98,14 @@ namespace UniversityLifeApp.MVC.Controllers
                     ModelState.AddModelError(item.Key, item.Value);
                 }
 
+                TempData["universityId"] = universityId;
+
+                ViewBag.Cities = await _context.Cities.ToListAsync();
+
                 return View(request);
             }
+
+            TempData["universityId"] = 0;
 
             return RedirectToAction("index", "university");
         }

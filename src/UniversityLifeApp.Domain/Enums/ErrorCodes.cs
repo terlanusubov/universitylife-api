@@ -12,6 +12,9 @@ namespace UniversityLifeApp.Domain.Enums
         [Description("Email or password is not correct")]
         EMAIL_OR_PASSWORD_IS_NOT_CORRECT = 1_0_0,
 
+        [Description("Password is incorrect")]
+        PASSWORD_IS_INCORRECT = 1_1_0,
+
         [Description("User is already exist.")]
         USER_IS_ALREADY_EXIST = 1_0_1,
 

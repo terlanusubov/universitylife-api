@@ -16,6 +16,7 @@ using UniversityLifeApp.MVC.ViewModels;
 
 namespace UniversityLifeApp.MVC.Controllers
 {
+    //[Area("admin")]
     public class CitiesController : Controller
     {
         private readonly IMediator _mediator;

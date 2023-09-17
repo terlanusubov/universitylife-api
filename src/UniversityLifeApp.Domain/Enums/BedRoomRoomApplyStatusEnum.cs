@@ -11,5 +11,5 @@ namespace UniversityLifeApp.Domain.Enums
         Pending = 10,
         Accepted = 20,
         Rejected = 30,
-    }
+    }   
 }

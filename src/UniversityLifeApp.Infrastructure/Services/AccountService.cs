@@ -6,10 +6,12 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using UniveristyLifeApp.Models.v1.Account.Delete;
 using UniveristyLifeApp.Models.v1.Account.GetAccount;
 using UniveristyLifeApp.Models.v1.Account.Login;
 using UniveristyLifeApp.Models.v1.Account.Register;
 using UniveristyLifeApp.Models.v1.Account.Update;
+using UniveristyLifeApp.Models.v1.Cities.DeleteCity;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.Account.Commands.Update;
 using UniversityLifeApp.Application.Interfaces;
@@ -30,15 +32,39 @@ namespace UniversityLifeApp.Infrastructure.Services
             _jwtService = jwtService;
         }
 
+        public async Task<ApiResult<DeleteAccountResponse>> Delete(int accountId)
+        {
+            var user = await _context.Users.Where(x=>x.Id == accountId).FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                return ApiResult<DeleteAccountResponse>.Error(ErrorCodes.DELETE_ERROR);
+            }
+
+            user.UserStatusId = (int)UserStatusEnum.Deactive;
+
+            await _context.SaveChangesAsync();
+
+            var response = new DeleteAccountResponse
+            {
+                AccountId = accountId,
+            };
+
+            return ApiResult<DeleteAccountResponse>.OK(response);
+        }
+
         public async Task<ApiResult<List<GetAccountResponse>>> GetAccount(GetAccountRequest request)
         {
             var result = await _context.Users.Where(x => x.UserStatusId == (int)UserStatusEnum.Active && (request.UserId != null ? x.Id == request.UserId : true)).Select(x => new GetAccountResponse
             {
+                Id = x.Id,
                 Email = x.Email,
                 Name = x.Name,
                 PhoneNumebr = x.PhoneNumber,
                 SureName = x.Surname,
-                UserRoleId = x.UserRoleId
+                UserRoleId = x.UserRoleId,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
             }).ToListAsync();
             return ApiResult<List<GetAccountResponse>>.OK(result);
         }

@@ -30,7 +30,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 UniversityCount = university,
                 StudentCount = user,
                 BedRoomCount = bedroom,
-                CityCount = cities
+                CityCount = cities,
             };
 
             return ApiResult<GetCounterResponse>.OK(getCounterResponse);

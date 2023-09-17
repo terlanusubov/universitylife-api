@@ -55,6 +55,11 @@ namespace UniversityLifeApp.Infrastructure.Services
         {
             var university = await _context.Universities.Where(x => x.Id == universityId).FirstOrDefaultAsync();
 
+            if (university == null)
+            {
+                return ApiResult<DeleteUniversityResponse>.Error(ErrorCodes.DELETE_ERROR);
+            }
+
             university.UniversityStatusId = (int)UniversityStatusEnum.Deactive;
 
             await _context.SaveChangesAsync();
@@ -85,7 +90,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 UpdateAt = x.UpdateAt,
                 UniversityId = x.Id,
                 UniversityStatusId = x.UniversityStatusId,
-            }).ToListAsync();
+            }).OrderByDescending(x=>x.CreateAt).ToListAsync();
 
             return ApiResult<List<GetUniversityResponse>>.OK(universities);
         }

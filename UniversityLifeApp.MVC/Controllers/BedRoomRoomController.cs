@@ -18,6 +18,7 @@ using UniversityLifeApp.Infrastructure.Data;
 
 namespace UniversityLifeApp.MVC.Controllers
 {
+    //[Area("admin")]
     public class BedRoomRoomController : Controller
     {
         private readonly IMediator _mediator;

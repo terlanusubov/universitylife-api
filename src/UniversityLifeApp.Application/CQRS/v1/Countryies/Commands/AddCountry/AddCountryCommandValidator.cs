@@ -12,7 +12,8 @@ namespace UniversityLifeApp.Application.CQRS.v1.Countryies.Commands.AddCountry
         public AddCountryCommandValidator()
         {
             RuleFor(x => x.Request.Name)
-               //.MinimumLength(3).WithMessage("The country name must contain at least 3 letters.")
+
+               .MinimumLength(3).WithMessage("The country name must contain at least 3 letters.")
                .MaximumLength(50).WithMessage("The country name can contain up to 50 characters.")
                .NotEmpty().WithMessage("The city name cannot be empty.");
         }

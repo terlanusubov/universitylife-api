@@ -15,6 +15,7 @@ using UniversityLifeApp.Infrastructure.Data;
 
 namespace UniversityLifeApp.MVC.Controllers
 {
+    //[Area("admin")]
     public class ContactController : Controller
     {
         private readonly IMediator _mediator;

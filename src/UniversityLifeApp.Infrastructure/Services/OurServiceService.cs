@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.OurService.CreateOurService;
+using UniveristyLifeApp.Models.v1.OurService.DeleteOurService;
 using UniveristyLifeApp.Models.v1.OurService.GetOurService;
 using UniveristyLifeApp.Models.v1.OurService.GetOurServiceById;
 using UniveristyLifeApp.Models.v1.OurService.UpdateOurService;
@@ -65,6 +66,27 @@ namespace UniversityLifeApp.Infrastructure.Services
             };
 
             return ApiResult<CreateOurServiceResponse>.OK(response);
+        }
+
+        public async Task<ApiResult<DeleteOurServiceResponse>> DeleteService(int serviceId)
+        {
+            var service = _context.OurServices.Where(x=>x.Id == serviceId).FirstOrDefault();
+
+            if (service == null)
+            {
+                return ApiResult<DeleteOurServiceResponse>.Error(ErrorCodes.DELETE_ERROR);
+            }
+
+            service.OurServiceStatusId = (int)OurServiceStatusEnum.Deactive;
+
+            await _context.SaveChangesAsync();
+
+            var response = new DeleteOurServiceResponse
+            {
+                Id = service.Id,
+            };
+
+            return ApiResult<DeleteOurServiceResponse>.OK(response);
         }
 
         public async Task<ApiResult<GetOurServiceResponse>> GetById(int serviceId)
