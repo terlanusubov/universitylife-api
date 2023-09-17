@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.CreateBookBedRoomRoom;
+using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoom;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Commands.CreateBookBedRoomRoom;
 using UniversityLifeApp.Application.Interfaces;
@@ -40,6 +42,28 @@ namespace UniversityLifeApp.Infrastructure.Services
             };
 
             return ApiResult<CreateBookBedRoomRoomResponse>.OK(response);
+        }
+
+        public async Task<ApiResult<List<GetBookBedRoomRoomResponse>>> GetBookBedRoomRoom()
+        {
+            var bookbed = await _context.BedRoomRoomApplies.Include(x => x.BedRoomRoom).Include(x => x.User).Select(x => new GetBookBedRoomRoomResponse
+            {
+                Id = x.Id,
+                Fullname = x.User.Name + " " + x.User.Surname,
+                Price = x.BedRoomRoom.Price,
+                Email = x.User.Email,
+                PhoneNumber = x.User.PhoneNumber,
+                BedRoomRoomName = x.BedRoomRoom.Name,
+                BedRoomName = x.BedRoomRoom.BedRoom.Name,
+                BedRoomRoomType = x.BedRoomRoom.BedRoomRoomType.Name
+                
+
+            }).ToListAsync();
+
+
+            return ApiResult<List<GetBookBedRoomRoomResponse>>.OK(bookbed);
+
+
         }
     }
 }
