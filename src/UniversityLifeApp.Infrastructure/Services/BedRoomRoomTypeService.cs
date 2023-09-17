@@ -64,14 +64,14 @@ namespace UniversityLifeApp.Infrastructure.Services
             return ApiResult<DeleteBedRoomRoomTypeResponse>.OK(response);
         }
 
-        public async Task<ApiResult<List<GetBedRoomRoomTypeResponse>>> GetBedRoomRoomType()
+        public async Task<ApiResult<List<GetBedRoomRoomTypeResponse>>> GetBedRoomRoomType(GetBedRoomRoomTypeRequest request)
         {
-            var roomtype = await _context.BedRoomRoomTypes.Select(x => new GetBedRoomRoomTypeResponse
+            var roomtype = await _context.BedRoomRoomTypes.Where(x => x.BedRoomRoomTypeStatusId == (int)BedRoomRoomTypeStatusEnum.Active && (request.Id != null ? x.Id == request.Id : true)).Select(x => new GetBedRoomRoomTypeResponse
             {
                 Id = x.Id,
                 BedRoomId = x.Id,
                 Name = x.Name,
-               BedRoomRoomTypeStatusId = x.BedRoomRoomTypeStatusId
+                BedRoomRoomTypeStatusId = x.BedRoomRoomTypeStatusId
 
             }).ToListAsync();
 
@@ -84,7 +84,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             {
                 Name = x.Name,
                 BedRoomRoomTypeStatusId = x.BedRoomRoomTypeStatusId
-                
+
             }).FirstOrDefaultAsync();
 
             return ApiResult<GetBedRoomRoomTypeByIdResponse>.OK(roomtype);

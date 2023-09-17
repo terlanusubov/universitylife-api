@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using UniveristyLifeApp.Models.v1.BedRoomRoom.GetBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BedRoomRoomType.CreateBedRoomRoomType;
 using UniveristyLifeApp.Models.v1.BedRoomRoomType.DeleteBedRoomRoomType;
 using UniveristyLifeApp.Models.v1.BedRoomRoomType.GetBedRoomRoomType;
@@ -29,8 +30,8 @@ namespace UniversityLifeApp.API.Controllers.v1
               => await _mediator.Send(new CreateBedRoomRoomTypeCommand(request));
 
         [HttpGet("getbedroomroomtype")]
-        public async Task<ApiResult<List<GetBedRoomRoomTypeResponse>>> GetBedRoomRoomType()
-            => await _mediator.Send(new GetBedRoomRoomTypeQuery());
+        public async Task<ApiResult<List<GetBedRoomRoomTypeResponse>>> GetBedRoomRoomType([FromQuery] GetBedRoomRoomTypeRequest request)
+            => await _mediator.Send(new GetBedRoomRoomTypeQuery(request));
 
         //[HttpGet("getbedroomroomtypebyid/{bedroomroomtypeId}")]
         //public async Task<ApiResult<GetBedRoomRoomTypeByIdResponse>> GetBedRoomRoomTypeById(int roomtypeId)
