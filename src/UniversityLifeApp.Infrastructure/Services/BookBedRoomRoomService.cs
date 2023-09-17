@@ -18,9 +18,11 @@ namespace UniversityLifeApp.Infrastructure.Services
     public class BookBedRoomRoomService : IBookBedRoomRoom
     {
         private readonly ApplicationContext _context;
-        public BookBedRoomRoomService(ApplicationContext context)
+        private readonly IEmailService _emailService;
+        public BookBedRoomRoomService(ApplicationContext context, IEmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
         public async Task<ApiResult<CreateBookBedRoomRoomResponse>> BookBedRoomRoom(CreateBookBedRoomRoomCommand request)
         {
@@ -34,6 +36,8 @@ namespace UniversityLifeApp.Infrastructure.Services
             await _context.BedRoomRoomApplies.AddAsync(bookBedRoomRoom);
 
             await _context.SaveChangesAsync();
+
+            _emailService.Send("huseynove174@gmail.com", "Müraciət", "Yeni bir müraciətiniz var.");
 
             CreateBookBedRoomRoomResponse response = new CreateBookBedRoomRoomResponse
             {

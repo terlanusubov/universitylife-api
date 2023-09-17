@@ -9,9 +9,12 @@ namespace UniveristyLifeApp.Models.v1.Search
     public class SearchResponse
     {
         public string Name { get; set; }
+        public int? CityId { get; set; }
         public string? City { get; set; }
+
+        public int? UniversityId { get; set; }
         public string? Country { get; set; }
         public int SearchId { get; set; }
-        
+
     }
 }

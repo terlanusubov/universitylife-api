@@ -22,6 +22,7 @@ namespace UniveristyLifeApp.Models.v1.BedRoom.GetBedRoom
         public DateTime UpdateAt { get; set; }
         public List<string> BedRoomImages { get; set; }
         public List<string> BedRoomRoomTypes { get; set; }
+        public List<int> BedRoomRoomTypeIds { get; set; }
 
 
         //City

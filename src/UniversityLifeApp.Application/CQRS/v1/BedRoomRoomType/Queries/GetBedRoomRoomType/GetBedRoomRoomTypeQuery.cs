@@ -11,6 +11,11 @@ namespace UniversityLifeApp.Application.CQRS.v1.BedRoomRoomType.Queries.GetBedRo
 {
     public class GetBedRoomRoomTypeQuery : IRequest<ApiResult<List<GetBedRoomRoomTypeResponse>>>
     {
+        public GetBedRoomRoomTypeQuery(GetBedRoomRoomTypeRequest request)
+        {
+            Request = request;
+        }
+        public GetBedRoomRoomTypeRequest Request { get; set; }
         public string Name { get; set; }
         public int BedRoomRoomTypeStatusId { get; set; }
 

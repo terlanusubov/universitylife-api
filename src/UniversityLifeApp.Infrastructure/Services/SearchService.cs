@@ -26,6 +26,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 var cities = await _applicationContext.Cities.Include(x => x.Country).Where(x=>x.Name.ToLower().Contains(word.ToLower())).
                    Select(x => new SearchResponse
                    {
+                       CityId = x.Id,
                        Name = x.Name,
                        Country = x.Country.Name,
                        SearchId = (int)SearchStatusEnum.City
@@ -36,9 +37,11 @@ namespace UniversityLifeApp.Infrastructure.Services
                                                                       Where(x => x.Name.ToLower().Contains(word.ToLower())).
                                                                       Select(x => new SearchResponse
                                                                       {
+                                                                          UniversityId = x.Id,
                                                                           Name = x.Name,
                                                                           City = x.City.Name,
-                                                                          Country = x.City.Country.Name
+                                                                          Country = x.City.Country.Name,
+                                                                          SearchId = (int)SearchStatusEnum.Univercity,
                                                                       }).ToListAsync();
 
 
