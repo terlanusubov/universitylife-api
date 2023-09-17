@@ -50,7 +50,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,
                 CountryStatisId = x.CountryStatusId,
-            }).ToListAsync();
+            }).OrderByDescending(a => a.CreateAt).ToListAsync();
             return ApiResult<List<GetCountryResponse>>.OK(country);
         }
 

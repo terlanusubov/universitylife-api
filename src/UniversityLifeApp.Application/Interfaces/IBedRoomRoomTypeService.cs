@@ -15,7 +15,7 @@ using UniversityLifeApp.Application.CQRS.v1.BedRoomRoomType.Commands.UpdateBedRo
 namespace UniversityLifeApp.Application.Interfaces
 {
     public interface IBedRoomRoomTypeRoomTypeService
-    {
+    {   
         Task<ApiResult<List<GetBedRoomRoomTypeResponse>>> GetBedRoomRoomType();
         Task<ApiResult<GetBedRoomRoomTypeByIdResponse>> GetBedRoomRoomTypeById(int BedRoomRoomTypeId);
         Task<ApiResult<CreateBedRoomRoomTypeResponse>> CreateBedRoomRoomType(CreateBedRoomRoomTypeCommand createBedRoomRoomType);

@@ -12,6 +12,7 @@ using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.AddCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.UpdateCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Queries.GetCity;
 using UniversityLifeApp.Application.CQRS.v1.OurService.Commands.CreateService;
+using UniversityLifeApp.Application.CQRS.v1.OurService.Commands.DeleteOurService;
 using UniversityLifeApp.Application.CQRS.v1.OurService.Commands.UpdateOurService;
 using UniversityLifeApp.Application.CQRS.v1.OurService.Queries.GetOurService;
 using UniversityLifeApp.Application.CQRS.v1.OurService.Queries.GetOurServiceById;
@@ -95,5 +96,12 @@ namespace UniversityLifeApp.MVC.Controllers
             return RedirectToAction("index", "ourservice");
         }
 
+
+        public async Task<IActionResult> Delete(int ourserviceId)
+        {
+            await _mediator.Send(new DeleteOurServiceCommand(ourserviceId));
+
+            return RedirectToAction("index", "ourservice");
+        }
     }
 }

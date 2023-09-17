@@ -11,6 +11,9 @@ namespace UniveristyLifeApp.Models.v1.BedRoomRoomType.GetBedRoomRoomType
         public int Id { get; set; }
         public int BedRoomRoomTypeStatusId { get; set; }
         public string Name { get; set; }
+        public string BedRoomName { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime UpdateAt { get; set; }
 
         //Bedroom
         public int BedRoomId { get; set; }

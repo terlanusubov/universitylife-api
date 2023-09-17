@@ -9,6 +9,7 @@ using UniveristyLifeApp.Models.v1.BedRoomRoomType.DeleteBedRoomRoomType;
 using UniveristyLifeApp.Models.v1.BedRoomRoomType.GetBedRoomRoomType;
 using UniveristyLifeApp.Models.v1.BedRoomRoomType.GetBedRoomRoomTypeById;
 using UniveristyLifeApp.Models.v1.BedRoomRoomType.UpdateBedRoomRoomType;
+using UniveristyLifeApp.Models.v1.Cities.DeleteCity;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.BedRoomRoomType.Commands.CreateBedRoomRoomType;
 using UniversityLifeApp.Application.CQRS.v1.BedRoomRoomType.Commands.UpdateBedRoomRoomType;
@@ -52,6 +53,11 @@ namespace UniversityLifeApp.Infrastructure.Services
         public async Task<ApiResult<DeleteBedRoomRoomTypeResponse>> DeleteBedRoomRoomType(int BedRoomRoomTypeId)
         {
             var roomType = await _context.BedRoomRoomTypes.Where(x => x.Id == BedRoomRoomTypeId).FirstOrDefaultAsync();
+            if (roomType == null)
+            {
+                return ApiResult<DeleteBedRoomRoomTypeResponse>.Error(ErrorCodes.DELETE_ERROR);
+            }
+
             roomType.BedRoomRoomTypeStatusId = (int)BedRoomRoomTypeStatusEnum.Deactive;
 
             await _context.SaveChangesAsync();
@@ -66,13 +72,15 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetBedRoomRoomTypeResponse>>> GetBedRoomRoomType()
         {
-            var roomtype = await _context.BedRoomRoomTypes.Select(x => new GetBedRoomRoomTypeResponse
+            var roomtype = await _context.BedRoomRoomTypes.Include(x=>x.BedRoom).Where(x=>x.BedRoomRoomTypeStatusId == (int)BedRoomRoomTypeStatusEnum.Active).Select(x => new GetBedRoomRoomTypeResponse
             {
                 Id = x.Id,
-                BedRoomId = x.Id,
+                BedRoomId = x.BedRoomId,
                 Name = x.Name,
-               BedRoomRoomTypeStatusId = x.BedRoomRoomTypeStatusId
-
+               BedRoomRoomTypeStatusId = x.BedRoomRoomTypeStatusId,
+               CreateAt = x.CreateAt,
+               UpdateAt = x.UpdateAt,
+               BedRoomName = x.BedRoom.Name              
             }).ToListAsync();
 
             return ApiResult<List<GetBedRoomRoomTypeResponse>>.OK(roomtype);

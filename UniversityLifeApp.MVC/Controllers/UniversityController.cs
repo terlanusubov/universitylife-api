@@ -56,6 +56,8 @@ namespace UniversityLifeApp.MVC.Controllers
                     ModelState.AddModelError(item.Key, item.Value);
                 }
 
+                ViewBag.Cities = await _context.Cities.ToListAsync();
+
                 return View(request);
             }
             return RedirectToAction("index", "university");
@@ -96,8 +98,14 @@ namespace UniversityLifeApp.MVC.Controllers
                     ModelState.AddModelError(item.Key, item.Value);
                 }
 
+                TempData["universityId"] = universityId;
+
+                ViewBag.Cities = await _context.Cities.ToListAsync();
+
                 return View(request);
             }
+
+            TempData["universityId"] = 0;
 
             return RedirectToAction("index", "university");
         }

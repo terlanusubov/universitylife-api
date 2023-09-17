@@ -1,7 +1,14 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using System.Globalization;
+@using UniveristyLifeApp.Models.v1.Counter.GetCounter;
+
+@{
+    ViewData["Title"] = "Index";
 }
 
+@model GetCounterResponse
+
+<!--  END NAVBAR  -->
+<!--  BEGIN MAIN CONTAINER  -->
 <div class="main-container" id="container">
 
     <div class="overlay"></div>
@@ -12,6 +19,7 @@
 
         <nav id="sidebar">
             <div class="shadow-bottom"></div>
+
             <ul class="list-unstyled menu-categories" id="accordionExample">
                 <li class="menu">
                     <a href="#dashboard" data-active="true" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle">
@@ -58,10 +66,53 @@
                 </li>
 
             </ul>
-            <!-- <div class="shadow-bottom"></div> -->
 
         </nav>
 
     </div>
     <!--  END SIDEBAR  -->
     <!--  BEGIN CONTENT AREA  -->
+    <div id="content" class="main-content">
+        <div class="layout-px-spacing">
+
+            <div class="row layout-top-spacing">
+                <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                    <div class="widget-content widget-content-area br-6">
+                        <div class="table-responsive mb-4 mt-4">
+                            <table id="alter_pagination" class="table table-hover" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Student Count</th>
+                                        <th>City Count</th>
+                                        <th>BedRoom Count</th>
+                                        <th>University Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+
+                                        <tr>
+                                            <td>@Model.StudentCount</td>
+                                            <td>@Model.CityCount</td>
+                                            <td>@Model.BedRoomCount</td>
+                                            <td>@Model.UniversityCount</td>
+                                        </tr>
+                                    
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Student Count</th>
+                                        <th>City Count</th>
+                                        <th>BedRoom Count</th>
+                                        <th>University Count</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
