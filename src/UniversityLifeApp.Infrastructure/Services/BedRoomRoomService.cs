@@ -119,7 +119,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetBedRoomRoomResponse>>> GetBedRoomRoom(GetBedRoomRoomRequest request)
         {
-            var bedRoomRooms = await _context.BedRoomRooms.Include(x => x.BedRoom).Include(x => x.BedRoomRoomPhotos).Where(x => x.BedRoomRoomStatusId == (int)BedRoomRoomStatusEnum.Active && (request.BedRoomRoomId != null ? x.Id == request.BedRoomRoomId : true) && (request.BedRoomRoomTypeId != null ? x.BedRoomRoomTypeId == request.BedRoomRoomTypeId : true)).Select(x => new GetBedRoomRoomResponse
+            var bedRoomRooms = await _context.BedRoomRooms.Include(x => x.BedRoom).Include(x => x.BedRoomRoomPhotos).Where(x => x.BedRoomRoomStatusId == (int)BedRoomRoomStatusEnum.Active && (request.BedRoomRoomId != null ? x.Id == request.BedRoomRoomId : true) && (request.BedRoomRoomTypeId != null ? x.BedRoomRoomTypeId == request.BedRoomRoomTypeId : true) && (request.BedRoomId != null ? x.BedRoomId == request.BedRoomId : true)).Select(x => new GetBedRoomRoomResponse
             {
                 Id = x.Id,
                 Name = x.Name,
