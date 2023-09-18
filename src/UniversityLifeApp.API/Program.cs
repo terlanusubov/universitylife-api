@@ -12,6 +12,8 @@ using UniversityLifeApp.API.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Reflection;
+
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,13 +56,13 @@ builder.Services.AddVersionedApiExplorer(setup =>
     setup.SubstituteApiVersionInUrl = true;
 });
 
-
-
+builder.Services.AddControllersWithViews();
 builder.Services.AddApplication();
 
 
 
 builder.Services.AddInfrastructure(builder.Configuration);
+
 
 builder.Services.AddHttpContextAccessor();
 
@@ -150,6 +152,7 @@ app.UseSwaggerUI(c =>
 });
 
 
+app.UseSession();
 app.UseMiddleware<LoggingMiddleware>();
 
 app.UseHttpsRedirection();
