@@ -74,7 +74,9 @@ namespace UniversityLifeApp.Infrastructure.Services
             var user = await _context.Users.Where(x => x.Email == request.Email).FirstOrDefaultAsync();
 
             if (user == null)
+            {
                 return ApiResult<LoginResponse>.Error(ErrorCodes.EMAIL_OR_PASSWORD_IS_NOT_CORRECT);
+            }
 
             bool check = user.CheckPassword(request.Password);
 
