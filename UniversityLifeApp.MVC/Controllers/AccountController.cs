@@ -51,25 +51,25 @@ namespace UniversityLifeApp.MVC.Controllers
             return RedirectToAction("login", "Account");
         }
 
-       public async Task<IActionResult> Create()
-        {
-            User admin = new User
-            {
-                Name = "Ibrahim",
-                Surname = "Ahmedzade",
-                Email = "axmedovibrahim0004@gmail.com",
-                PhoneNumber = "+994505008028",
-                UserRoleId = 20,
-                UserStatusId = 10,
-                
-            };
+        //public async Task<IActionResult> Create()
+        //{
+        //    User admin = new User
+        //    {
+        //        Name = "Ibrahim",
+        //        Surname = "Ahmedzade",
+        //        Email = "axmedovibrahim0004@gmail.com",
+        //        PhoneNumber = "+994505008028",
+        //        UserRoleId = 20,
+        //        UserStatusId = 10,
 
-            admin.AddPassword("Ibrahim12345678");
+        //    };
 
-            await _context.AddAsync(admin);
-            await _context.SaveChangesAsync();
+        //    admin.AddPassword("1brah1m8");
 
-            return Ok(admin);
-        }
+        //    await _context.AddAsync(admin);
+        //    await _context.SaveChangesAsync();
+
+        //    return Ok(admin);
+        //}
     }
 }
