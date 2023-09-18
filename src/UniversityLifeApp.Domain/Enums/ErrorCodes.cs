@@ -25,7 +25,7 @@ namespace UniversityLifeApp.Domain.Enums
         NullReferances_Error = 3_0_0,
 
         [Description("Internal server error occured")]
-        INTERNAL_SERVER_ERROR = 5_0_0
+        INTERNAL_SERVER_ERROR = 5_0_0,
 
 
 

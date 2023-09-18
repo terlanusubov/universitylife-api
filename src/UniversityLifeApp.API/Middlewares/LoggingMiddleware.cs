@@ -53,7 +53,7 @@ namespace UniversityLifeApp.API.Middlewares
                 stringBuilder.Append($"REQUEST DATE : {currentDate:yyyy-MM-dd HH:mm:ss}\n");
                 stringBuilder.Append($"IP ADDRESS: {clientIpAddress}\n");
                 stringBuilder.Append($"PATH : {path} \n");
-                if (context.Request.Method == "POST" || context.Request.Method == "PUT")
+                if (context.Request.Method == "POST" || context.Request.Method == "PUT" || context.Request.Method == "GET")
                 {
                     //TODO: take body as json
                     stringBuilder.Append($"REQUEST BODY : {requestBody}\n");
@@ -82,7 +82,7 @@ namespace UniversityLifeApp.API.Middlewares
 
             StringBuilder responseStringBuilder = new StringBuilder();
             var responseBody = await GetResponseBody(context);
-            if (context.Request.Method == "POST" || context.Request.Method == "PUT")
+            if (context.Request.Method == "POST" || context.Request.Method == "PUT" || context.Request.Method == "GET")
             {
                 responseStringBuilder.Append($"RESPONSE BODY : ${responseBody}\n");
             }
@@ -90,7 +90,6 @@ namespace UniversityLifeApp.API.Middlewares
             File.AppendAllText(logFilePath, responseStringBuilder.ToString() + Environment.NewLine);
 
         }
-
 
         private async Task<string> GetRequestBody(HttpContext context)
         {
@@ -107,12 +106,18 @@ namespace UniversityLifeApp.API.Middlewares
 
         private async Task<string> GetResponseBody(HttpContext context)
         {
+            context.Request.EnableBuffering();
 
-            using (StreamReader reader = new StreamReader(context.Response.Body, Encoding.UTF8, true, 1024, true))
+            using (MemoryStream responseBodyStream = new MemoryStream())
             {
-                var body = await reader.ReadToEndAsync();
-                return body;
+                responseBodyStream.Seek(0, SeekOrigin.Begin);
+                using (StreamReader reader = new StreamReader(responseBodyStream, Encoding.UTF8, true, 1024, true))
+                {
+                    var body = await reader.ReadToEndAsync();
+                    return body;
+                }
             }
+                
         }
     }
 }
