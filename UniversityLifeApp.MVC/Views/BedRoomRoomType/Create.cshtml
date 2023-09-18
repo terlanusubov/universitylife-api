@@ -175,7 +175,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <h4>BedRoom</h4>
-                <input type="text" name="BedRoomId" asp-for="BedRoomId" class="form-control mb-3" placeholder="BedRoomId">
+                <select class="form-control basic" asp-for="BedRoomId" name="BedRoomId" asp-items="@new SelectList((List<BedRoom>)ViewBag.BedRoom, nameof(BedRoom.Id), nameof(BedRoom.Name))"></select>
 
                 <span style="color: red;">@Html.ValidationMessageFor(x => x.BedRoomId)</span>
             </div>

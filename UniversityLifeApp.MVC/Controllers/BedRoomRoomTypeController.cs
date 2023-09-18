@@ -60,7 +60,7 @@ namespace UniversityLifeApp.MVC.Controllers
                 {
                     ModelState.AddModelError(item.Key, item.Value);
                 }
-
+                ViewBag.BedRoom = await _context.BedRooms.ToListAsync();
                 return View(request);
             }
 
@@ -97,7 +97,7 @@ namespace UniversityLifeApp.MVC.Controllers
                 {
                     ModelState.AddModelError(item.Key, item.Value);
                 }
-
+                ViewBag.BedRoom = await _context.BedRooms.ToListAsync();
                 return View(request);
             }
 
