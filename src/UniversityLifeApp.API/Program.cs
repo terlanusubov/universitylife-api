@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using UniversityLifeApp.Application;
 using UniversityLifeApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using UniversityLifeApp.Application.Middlewares;
+using UniversityLifeApp.API.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -131,9 +131,10 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+app.UseCors(MyAllowSpecificOrigins);
+
 app.UseStaticFiles();
 
-app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpLogging();
 
@@ -149,6 +150,7 @@ app.UseSwaggerUI(c =>
         c.RoutePrefix = string.Empty;
     }
 });
+
 
 app.UseSession();
 app.UseMiddleware<LoggingMiddleware>();
