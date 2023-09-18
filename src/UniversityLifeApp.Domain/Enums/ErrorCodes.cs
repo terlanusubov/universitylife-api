@@ -18,7 +18,12 @@ namespace UniversityLifeApp.Domain.Enums
         [Description("There are some validations error.")]
         VALIDATION_ERROR = 2_0_0,
         [Description("teterte")]
-        NullReferances_Error = 3_0_0
+        NullReferances_Error = 3_0_0,
+
+        [Description("Internal server error occured")]
+        INTERNAL_SERVER_ERROR = 5_0_0
+
+
 
     }
 }

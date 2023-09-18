@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Identity.Client;
 using UniversityLifeApp.Domain.Entities;
 
 namespace UniversityLifeApp.API.Middlewares
@@ -14,7 +15,6 @@ namespace UniversityLifeApp.API.Middlewares
         private readonly RequestDelegate _next;
         private readonly ILogger<LoggingMiddleware> _logger;
         private readonly IWebHostEnvironment _env;
-        private string logDirectoryPath;
 
         public LoggingMiddleware(RequestDelegate next, ILogger<LoggingMiddleware> logger, IWebHostEnvironment Env)
         {
@@ -31,52 +31,87 @@ namespace UniversityLifeApp.API.Middlewares
                 clientIpAddress = context.Connection.RemoteIpAddress.ToString();
             }
 
+            DateTime currentDate = DateTime.Now;
+
+            string logFileName = $"{currentDate:yyyy-MM}.log";
+
+            string logFilePath = Path.Combine(_env.WebRootPath + "\\logging", logFileName);
+
             try
             {
                 string requestType = context.Request.Method;
                 string path = context.Request.Path;
-                string requestBody = await GetRequestBody(context.Request.Body);
+                string requestBody = await GetRequestBody(context);
 
-                LogLevel logLevel = DetermineLogLevel(context);
 
-                DateTime currentDate = DateTime.Now;
 
-                string logFileName = $"{currentDate:yyyy-MM}.log";
+              
 
-                string logFilePath = Path.Combine(_env.WebRootPath+"\\logging", logFileName);
+                StringBuilder stringBuilder = new StringBuilder();
 
-                string logMessage = $"{currentDate:yyyy-MM-dd HH:mm:ss} | IpAdress: {clientIpAddress}, LogType: {logLevel}, Text: {(logLevel == LogLevel.Error ? "Server Error" : "Success")}, RequestType: {requestType}, Path: {path}";
+                stringBuilder.Append("----------Request Started----------\n");
+                stringBuilder.Append($"REQUEST DATE : {currentDate:yyyy-MM-dd HH:mm:ss}\n");
+                stringBuilder.Append($"IP ADDRESS: {clientIpAddress}\n");
+                stringBuilder.Append($"PATH : {path} \n");
+                if (context.Request.Method == "POST" || context.Request.Method == "PUT")
+                {
+                    //TODO: take body as json
+                    stringBuilder.Append($"REQUEST BODY : {requestBody}\n");
 
-                File.AppendAllText(logFilePath, logMessage + Environment.NewLine);
+                }
+
+
+                File.AppendAllText(logFilePath, stringBuilder.ToString() + Environment.NewLine);
             }
             catch (Exception ex)
             {
-                string errorMessage = $"Error: {ex.Message}, LogType: Error, IpAdress: {clientIpAddress}";
-                _logger.LogError(errorMessage);
+                StringBuilder stringBuilder = new StringBuilder();
+
+                stringBuilder.Append("----------Request Started----------\n");
+                stringBuilder.Append($"REQUEST DATE : {DateTime.Now:yyyy-MM-dd HH:mm:ss}\n");
+                stringBuilder.Append($"IP ADDRESS: {clientIpAddress}\n");
+                stringBuilder.Append($"PATH : {context.Request.Path} \n");
+                stringBuilder.Append($"Error : {ex.Message}\n");
+
+                _logger.LogError(stringBuilder.ToString());
+                //TODO: return Internal Server Error;
             }
 
             await _next(context);
+
+
+            StringBuilder responseStringBuilder = new StringBuilder();
+            var responseBody = await GetResponseBody(context);
+            if (context.Request.Method == "POST" || context.Request.Method == "PUT")
+            {
+                responseStringBuilder.Append($"RESPONSE BODY : ${responseBody}\n");
+            }
+            responseStringBuilder.Append("----------Request Ended----------\n");
+            File.AppendAllText(logFilePath, responseStringBuilder.ToString() + Environment.NewLine);
+
         }
 
-        private LogLevel DetermineLogLevel(HttpContext context)
-        {
-            int statusCode = context.Response.StatusCode;
 
-            if (statusCode >= 400 && statusCode <= 599)
+        private async Task<string> GetRequestBody(HttpContext context)
+        {
+            context.Request.EnableBuffering();
+
+            using (StreamReader reader = new StreamReader(context.Request.Body, Encoding.UTF8, true, 1024, true))
             {
-                return LogLevel.Error;
-            }
-            else
-            {
-                return LogLevel.Information;
+                var body = await reader.ReadToEndAsync();
+                context.Request.Body.Position = 0;
+
+                return body;
             }
         }
 
-        private async Task<string> GetRequestBody(Stream body)
+        private async Task<string> GetResponseBody(HttpContext context)
         {
-            using (StreamReader reader = new StreamReader(body, Encoding.UTF8, true, 1024, true))
+
+            using (StreamReader reader = new StreamReader(context.Response.Body, Encoding.UTF8, true, 1024, true))
             {
-                return await reader.ReadToEndAsync();
+                var body = await reader.ReadToEndAsync();
+                return body;
             }
         }
     }

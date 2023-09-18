@@ -60,7 +60,7 @@ builder.Services.AddApplication();
 
 
 
-builder.Services.AddInfrastructure(builder.Configuration); 
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddHttpContextAccessor();
 
@@ -129,9 +129,10 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+app.UseCors(MyAllowSpecificOrigins);
+
 app.UseStaticFiles();
 
-app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpLogging();
 
@@ -148,8 +149,8 @@ app.UseSwaggerUI(c =>
     }
 });
 
-app.UseMiddleware<LoggingMiddleware>();
 
+app.UseMiddleware<LoggingMiddleware>();
 
 app.UseHttpsRedirection();
 
