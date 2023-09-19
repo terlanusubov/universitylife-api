@@ -270,15 +270,34 @@ namespace UniversityLifeApp.Infrastructure.Services
         {
             var bedroom = await _context.BedRooms.Where(x => x.Id == bedroomId).Select(x => new GetBedRoomByIdResponse
             {
+
+
+                Id = x.Id,
                 Name = x.Name,
                 BedRoomStatusId = x.BedRoomStatusId,
                 Description = x.Description,
                 DistanceToCenter = x.DistanceToCenter,
-                CityId = x.CityId,
+                //CityId = x.CityId,
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
                 Rating = x.Rating,
+                BedRoomRoomTypeIds = x.BedRoomRoomTypes.Select(x => x.Id).ToList(),
+                BedRoomRoomTypes = x.BedRoomRoomTypes.Select(c => c.Name).ToList(),
                 Price = x.Price,
+                BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
+
+
+                //Name = x.Name,
+                //BedRoomStatusId = x.BedRoomStatusId,
+                //Description = x.Description,
+                //DistanceToCenter = x.DistanceToCenter,
+                //CityId = x.CityId,
+                //Latitude = x.Latitude,
+                //Longitude = x.Longitude,
+                //Rating = x.Rating,
+                //Price = x.Price,
             }).FirstOrDefaultAsync();
 
 
