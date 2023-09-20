@@ -1,11 +1,13 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using UniveristyLifeApp.Models.v1.Account.Delete;
 using UniveristyLifeApp.Models.v1.Account.GetAccount;
 using UniveristyLifeApp.Models.v1.Account.Login;
 using UniveristyLifeApp.Models.v1.Account.Register;
 using UniveristyLifeApp.Models.v1.Account.Update;
 using UniveristyLifeApp.Models.v1.Contact.GetContact;
 using UniversityLifeApp.Application.Core;
+using UniversityLifeApp.Application.CQRS.v1.Account.Commands.Delete;
 using UniversityLifeApp.Application.CQRS.v1.Account.Commands.Login;
 using UniversityLifeApp.Application.CQRS.v1.Account.Commands.Register;
 using UniversityLifeApp.Application.CQRS.v1.Account.Commands.Update;
@@ -40,6 +42,10 @@ namespace UniversityLifeApp.API.Controllers.v1
         [HttpPost("update")]
         public async Task<ActionResult<ApiResult<UpdateResponse>>> Update(UpdateRequest request)
             => await _mediator.Send(new UpdateCommand(request));
+
+        [HttpDelete("delete/{accountId}")]
+        public async Task<ActionResult<ApiResult<DeleteAccountResponse>>> Delete(int accountId)
+            => await _mediator.Send(new DeleteAccountCommand(accountId));
 
     }
 }

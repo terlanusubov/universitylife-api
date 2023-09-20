@@ -34,7 +34,7 @@ namespace UniversityLifeApp.MVC.Controllers
             return View(result);
         }
 
-        public async Task<IActionResult> Create(GetBedRoomRequest request)
+        public async Task<IActionResult> Create()
         {
             ViewBag.BedRoomRoomTypes = await _context.BedRoomRoomTypes.ToListAsync();
             ViewBag.BedRooms = await _context.BedRooms.ToListAsync();

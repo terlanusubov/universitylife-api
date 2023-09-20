@@ -55,10 +55,7 @@ namespace UniversityLifeApp.Infrastructure.Services
         {
             var university = await _context.Universities.Where(x => x.Id == universityId).FirstOrDefaultAsync();
 
-            if (university == null)
-            {
-                return ApiResult<DeleteUniversityResponse>.Error(ErrorCodes.DELETE_ERROR);
-            }
+           
 
             university.UniversityStatusId = (int)UniversityStatusEnum.Deactive;
 

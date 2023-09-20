@@ -42,6 +42,7 @@ namespace UniversityLifeApp.Infrastructure
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IOurServiceService, OurServiceService>();
             services.AddTransient<ICounterService, CounterService>();
+            services.AddTransient<IRoomTypeService, RoomTypeService>();
 
             services.AddSession();
             services.AddHttpContextAccessor();

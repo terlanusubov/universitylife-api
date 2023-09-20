@@ -112,11 +112,7 @@ namespace UniversityLifeApp.Infrastructure.Services
         {
             var bedroom = await _context.BedRooms.Where(x => x.Id == bedroomId).FirstOrDefaultAsync();
 
-            if(bedroom == null)
-            {
-                return ApiResult<DeleteBedRoomResponse>.Error(ErrorCodes.DELETE_ERROR);
-
-            }
+            
 
             bedroom.BedRoomStatusId = (int)BedRoomStatusEnum.Deactive;
 

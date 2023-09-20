@@ -72,10 +72,7 @@ namespace UniversityLifeApp.Infrastructure.Services
         {
             var service = _context.OurServices.Where(x=>x.Id == serviceId).FirstOrDefault();
 
-            if (service == null)
-            {
-                return ApiResult<DeleteOurServiceResponse>.Error(ErrorCodes.DELETE_ERROR);
-            }
+           
 
             service.OurServiceStatusId = (int)OurServiceStatusEnum.Deactive;
 

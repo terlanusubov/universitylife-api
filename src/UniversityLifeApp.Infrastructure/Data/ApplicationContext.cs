@@ -56,6 +56,7 @@ namespace UniversityLifeApp.Infrastructure.Data
 
         public virtual DbSet<OurService> OurServices { get; set; }
         public virtual DbSet<Counter> Counter { get; set; }
+        public virtual DbSet<RoomType> RoomTypes { get; set; }
 
     }
 }
