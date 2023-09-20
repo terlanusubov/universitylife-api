@@ -45,6 +45,8 @@ namespace UniversityLifeApp.Infrastructure.Services
                 BedRoomRoomStatusId = (int)BedRoomRoomStatusEnum.Active,
             };
 
+            
+
             await _context.AddAsync(bedRoomRoom);
             await _context.SaveChangesAsync();
 

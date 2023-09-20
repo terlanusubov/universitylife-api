@@ -38,7 +38,9 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             if (user == null)
             {
-                return ApiResult<DeleteAccountResponse>.Error(ErrorCodes.DELETE_ERROR);
+                Dictionary<string, string> errorList = new Dictionary<string, string>();
+                errorList.Add("Id", "User is not exist.");
+                return ApiResult<DeleteAccountResponse>.Error(ErrorCodes.USER_IS_NOT_EXIST, errorList);
             }
 
             user.UserStatusId = (int)UserStatusEnum.Deactive;

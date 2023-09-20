@@ -53,10 +53,7 @@ namespace UniversityLifeApp.Infrastructure.Services
         public async Task<ApiResult<DeleteBedRoomRoomTypeResponse>> DeleteBedRoomRoomType(int BedRoomRoomTypeId)
         {
             var roomType = await _context.BedRoomRoomTypes.Where(x => x.Id == BedRoomRoomTypeId).FirstOrDefaultAsync();
-            if (roomType == null)
-            {
-                return ApiResult<DeleteBedRoomRoomTypeResponse>.Error(ErrorCodes.DELETE_ERROR);
-            }
+            
 
             roomType.BedRoomRoomTypeStatusId = (int)BedRoomRoomTypeStatusEnum.Deactive;
 
