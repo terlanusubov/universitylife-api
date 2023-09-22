@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.AcceptBook;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.CreateBookBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoom;
-using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoomById;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.RejectBook;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Commands.CreateBookBedRoomRoom;
@@ -71,9 +70,9 @@ namespace UniversityLifeApp.Infrastructure.Services
             return ApiResult<CreateBookBedRoomRoomResponse>.OK(response);
         }
 
-        public async Task<ApiResult<List<GetBookBedRoomRoomResponse>>> GetBookBedRoomRoom()
+        public async Task<ApiResult<List<GetBookBedRoomRoomResponse>>> GetBookBedRoomRoom(GetBookBedRoomRoomRequest request)
         {
-            var bookbed = await _context.BedRoomRoomApplies.Include(x => x.BedRoomRoom).Include(x => x.User).Select(x => new GetBookBedRoomRoomResponse
+            var bookbed = await _context.BedRoomRoomApplies.Include(x => x.BedRoomRoom).Include(x => x.User).Where(x => x.UserId == request.UserId).Select(x => new GetBookBedRoomRoomResponse
             {
                 Id = x.Id,
                 Fullname = x.User.Name + " " + x.User.Surname,
@@ -94,27 +93,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         }
 
-        public async Task<ApiResult<GetBookBedRoomRoomByIdResponse>> GetById(int id)
-        {
-            var bedroom = await _context.BedRoomRoomApplies.Where(x => x.Id == id).Select(x => new GetBookBedRoomRoomByIdResponse
-            {
-                Id = x.Id,
-                Fullname = x.User.Name + " " + x.User.Surname,
-                Price = x.BedRoomRoom.Price,
-                Email = x.User.Email,
-                PhoneNumber = x.User.PhoneNumber,
-                Description = x.BedRoomRoom.Description,
-                BedRoomRoomName = x.BedRoomRoom.Name,
-                BedRoomName = x.BedRoomRoom.BedRoom.Name,
-                BedRoomRoomType = x.BedRoomRoom.BedRoomRoomType.Name,
-                CreateAt = x.CreateAt,
-                UpdateAt = x.UpdateAt,
-                Image = x.BedRoomRoom.BedRoomRoomPhotos.Select(x => "http://highresultech-001-site1.ftempurl.com/uploads/bedRoomRoomPhotos/" + x.Name).FirstOrDefault(),
-                BedRoomRoomApplyStatusId = x.BedRoomRoomApplyStatusId,
-            }).FirstOrDefaultAsync();
-
-            return ApiResult<GetBookBedRoomRoomByIdResponse>.OK(bedroom);
-        }
+      
 
         public async Task<ApiResult<RejectBookResponse>> Reject(int id)
         {

@@ -24,7 +24,9 @@ namespace UniversityLifeApp.API.Controllers.v1
             => await _mediator.Send(new CreateBookBedRoomRoomCommand(request));
 
         [HttpGet]
-        public async Task<ActionResult<ApiResult<List<GetBookBedRoomRoomResponse>>>> Get()
-            => await _mediator.Send(new GetBookBedRoomRoomQuery());
+        public async Task<ActionResult<ApiResult<List<GetBookBedRoomRoomResponse>>>> Get([FromQuery]GetBookBedRoomRoomRequest request)
+            => await _mediator.Send(new GetBookBedRoomRoomQuery(request));
+
+        
     }
 }

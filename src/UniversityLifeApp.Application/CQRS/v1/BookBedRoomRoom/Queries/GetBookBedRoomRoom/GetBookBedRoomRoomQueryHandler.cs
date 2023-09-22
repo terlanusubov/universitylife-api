@@ -19,7 +19,7 @@ namespace UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Queries.GetBookB
         }
         public async Task<ApiResult<List<GetBookBedRoomRoomResponse>>> Handle(GetBookBedRoomRoomQuery request, CancellationToken cancellationToken)
         {
-            var result = await _bookService.GetBookBedRoomRoom();
+            var result = await _bookService.GetBookBedRoomRoom(request.Request);
 
             return result;
         }
