@@ -11,6 +11,12 @@ namespace UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Queries.GetBookB
 {
     public class GetBookBedRoomRoomQuery : IRequest<ApiResult<List<GetBookBedRoomRoomResponse>>>
     {
+        public GetBookBedRoomRoomQuery(GetBookBedRoomRoomRequest request)
+        {
+            Request = request;
+        }
+
+        public GetBookBedRoomRoomRequest Request { get; set; }
         public int Id { get; set; }
         public string BedRoomRoomName { get; set; }
         public string Fullname { get; set; }

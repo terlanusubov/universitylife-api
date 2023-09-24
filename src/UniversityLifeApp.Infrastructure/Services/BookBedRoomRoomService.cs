@@ -8,7 +8,6 @@ using UniveristyLifeApp.Models.v1.BookBedRoomRoom.AcceptBook;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.CreateBookBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.DeleteBookBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoom;
-using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoomById;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.RejectBook;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Commands.CreateBookBedRoomRoom;
@@ -96,9 +95,9 @@ namespace UniversityLifeApp.Infrastructure.Services
             return ApiResult<DeleteBookBedRoomRoomResponse>.OK(response);
         }
 
-        public async Task<ApiResult<List<GetBookBedRoomRoomResponse>>> GetBookBedRoomRoom()
+        public async Task<ApiResult<List<GetBookBedRoomRoomResponse>>> GetBookBedRoomRoom(GetBookBedRoomRoomRequest request)
         {
-            var bookbed = await _context.BedRoomRoomApplies.Include(x => x.BedRoomRoom).Include(x => x.User).Select(x => new GetBookBedRoomRoomResponse
+            var bookbed = await _context.BedRoomRoomApplies.Include(x => x.BedRoomRoom).Include(x => x.User).Where(x => x.UserId == request.UserId).Select(x => new GetBookBedRoomRoomResponse
             {
                 Id = x.Id,
                 Fullname = x.User.Name + " " + x.User.Surname,
@@ -140,6 +139,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             return ApiResult<GetBookBedRoomRoomByIdResponse>.OK(bedroom);
         }
+      
 
         public async Task<ApiResult<RejectBookResponse>> Reject(int id)
         {

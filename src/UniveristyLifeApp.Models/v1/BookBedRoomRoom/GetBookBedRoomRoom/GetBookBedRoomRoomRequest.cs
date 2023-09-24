@@ -8,6 +8,6 @@ namespace UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoom
 {
     public class GetBookBedRoomRoomRequest
     {
-
+        public int UserId { get; set; }
     }
 }
