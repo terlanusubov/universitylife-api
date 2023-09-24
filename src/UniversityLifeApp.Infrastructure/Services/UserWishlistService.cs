@@ -87,7 +87,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 UserId = x.UserId,
                 UserWishlistId = x.Id,
                 Id = x.BedRoom.Id,
-                BedRoomRoomTypes = x.BedRoom.BedRoomRoomTypes.Select(x => x.Name).ToList(),
+                BedRoomRoomTypes = x.BedRoom.RoomTypes.Select(x => x.BedRoomRoomType.Name).ToList(),
                 BedRoomStatusId = x.BedRoom.BedRoomStatusId,
                 BedRoomImages = x.BedRoom.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
                 CityId = x.BedRoom.CityId,

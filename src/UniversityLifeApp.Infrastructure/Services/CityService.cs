@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,12 +26,16 @@ namespace UniversityLifeApp.Infrastructure.Services
         private readonly ApplicationContext _context;
         private readonly IFileService _fileService;
         private readonly IWebHostEnvironment _env;
-        public CityService(ApplicationContext context, IWebHostEnvironment env, IFileService fileService)
+        private readonly IConfiguration _configuration;
+        public CityService(ApplicationContext context, IWebHostEnvironment env, IFileService fileService, IConfiguration configuration)
         {
             _context = context;
             _fileService = fileService;
             _env = env;
+            _configuration = configuration; ;
         }
+
+
         public async Task<ApiResult<AddCityResponse>> AddCity(AddCityCommand request)
         {
             City city = new City
@@ -76,7 +81,7 @@ namespace UniversityLifeApp.Infrastructure.Services
         {
             var city = await _context.Cities.Where(x => x.Id == cityId).FirstOrDefaultAsync();
 
-            
+
 
             city.CityStatusId = (int)CityStatusEnum.Deactive;
 
@@ -92,6 +97,10 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetCityResponse>>> GetCity(GetCityRequest request)
         {
+
+            
+
+            var baseUrl = _configuration["BaseUrl"];
             var cities = await _context.Cities.Include(x => x.Country).Where(x => x.CityStatusId == (int)CityStatusEnum.Active && (request.IsTop != null ? x.IsTop == request.IsTop : true) && (request.CountryId != null ? x.CountryId == request.CountryId : true)).Select(x => new GetCityResponse
 
             {
@@ -102,7 +111,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CountryId = x.CountryId,
                 BedRoomCount = x.BedRooms.Count(),
                 IsTop = x.IsTop,
-                Image = "http://highresultech-001-site1.ftempurl.com/uploads/city/" + x.Image,
+                Image = baseUrl + "city/" + x.Image,
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,
                 CountryName = x.Country.Name,

@@ -17,6 +17,6 @@ namespace UniveristyLifeApp.Models.v1.BedRoomRoom.DeleteBedRoomRoom
         public int BedRoomId { get; set; }
 
         //Bedroomroom type
-        public int BedRoomRoomTypeId { get; set; }
+        //public int BedRoomRoomTypeId { get; set; }
     }
 }

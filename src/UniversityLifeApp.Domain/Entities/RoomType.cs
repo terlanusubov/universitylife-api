@@ -8,6 +8,12 @@ namespace UniversityLifeApp.Domain.Entities
 {
     public class RoomType : BaseEntity
     {
-        public string Name { get; set; }
+        public int BedRoomId { get; set; }
+        public int BedRoomRoomTypeId { get; set; }
+
+        public BedRoom BedRoom { get; set; }
+        public BedRoomRoomType BedRoomRoomType { get; set; }
+
+        public ICollection<BedRoomRoom> BedRoomRooms { get; set; }
     }
 }

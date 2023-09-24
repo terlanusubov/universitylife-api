@@ -35,24 +35,33 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<CreateBedRoomRoomResponse>> CreateBedRoomRoom(CreateBedRoomRoomCommand request)
         {
+            RoomType type = new RoomType
+            {
+                BedRoomId = request.Request.BedRoomId,
+                BedRoomRoomTypeId = request.Request.BedRoomRoomTypeId
+            };
+
+            await _context.RoomTypes.AddAsync(type);
+            await _context.SaveChangesAsync();
             BedRoomRoom bedRoomRoom = new BedRoomRoom
             {
                 BedRoomId = request.Request.BedRoomId,
-                BedRoomRoomTypeId = request.Request.BedRoomRoomTypeId,
+                //BedRoomRoomTypeId = request.Request.BedRoomRoomTypeId,
                 Description = request.Request.Description,
                 Name = request.Request.Name,
+                RoomTypeId = type.Id,
                 Price = request.Request.Price,
                 BedRoomRoomStatusId = (int)BedRoomRoomStatusEnum.Active,
             };
 
-            
-
-            await _context.AddAsync(bedRoomRoom);
+            await _context.BedRoomRooms.AddAsync(bedRoomRoom);
             await _context.SaveChangesAsync();
+
 
             int count = 1;
 
-            if(request.Request.ImageFile != null)
+
+            if (request.Request.ImageFile != null)
             {
                 foreach (var item in request.Request.ImageFile)
                 {
@@ -85,14 +94,19 @@ namespace UniversityLifeApp.Infrastructure.Services
                 await _context.SaveChangesAsync();
             }
 
+
+
             var response = new CreateBedRoomRoomResponse
             {
                 Price = bedRoomRoom.Price,
                 Name = bedRoomRoom.Name,
                 Description = bedRoomRoom.Description,
                 BedRoomId = bedRoomRoom.BedRoomId,
-                BedRoomRoomTypeId = bedRoomRoom.BedRoomRoomTypeId
+                //BedRoomRoomTypeId = bedRoomRoom.BedRoomRoomTypeId
+                CreateAt = bedRoomRoom.CreateAt,
+                UpdateAt = bedRoomRoom.UpdateAt,
             };
+
 
             return ApiResult<CreateBedRoomRoomResponse>.OK(response);
         }
@@ -111,7 +125,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Name = bedRoomRoom.Name,
                 Description = bedRoomRoom.Description,
                 BedRoomId = bedRoomRoom.BedRoomId,
-                BedRoomRoomTypeId = bedRoomRoom.BedRoomRoomTypeId,
+                //BedRoomRoomTypeId = bedRoomRoom.BedRoomRoomTypeId,
                 BedRoomRoomStatusId = bedRoomRoom.BedRoomRoomStatusId,
                 
             };
@@ -121,7 +135,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetBedRoomRoomResponse>>> GetBedRoomRoom(GetBedRoomRoomRequest request)
         {
-            var bedRoomRooms = await _context.BedRoomRooms.Include(x => x.BedRoom).Include(x => x.BedRoomRoomPhotos).Where(x => x.BedRoomRoomStatusId == (int)BedRoomRoomStatusEnum.Active && (request.BedRoomRoomId != null ? x.Id == request.BedRoomRoomId : true) && (request.BedRoomRoomTypeId != null ? x.BedRoomRoomTypeId == request.BedRoomRoomTypeId : true) && (request.BedRoomId != null ? x.BedRoomId == request.BedRoomId : true)).Select(x => new GetBedRoomRoomResponse
+            var bedRoomRooms = await _context.BedRoomRooms.Include(x => x.BedRoom).Include(x => x.BedRoomRoomPhotos).Where(x => x.BedRoomRoomStatusId == (int)BedRoomRoomStatusEnum.Active && (request.BedRoomRoomTypeId != null ? x.RoomType.BedRoomRoomTypeId == request.BedRoomRoomTypeId : true) && (request.BedRoomId != null ? x.BedRoomId == request.BedRoomId : true) && (request.BedRoomRoomId != null ? x.Id == request.BedRoomRoomId : true)).Select(x => new GetBedRoomRoomResponse
             {
                 Id = x.Id,
                 Name = x.Name,
@@ -130,9 +144,20 @@ namespace UniversityLifeApp.Infrastructure.Services
                 BedRoomId= x.BedRoomId,
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,
-                BedRoomRoomTypeId = x.BedRoomRoomTypeId,
+                BedRoomRoomTypeId = x.RoomType.BedRoomRoomType.Id,
                 Image = x.BedRoomRoomPhotos.Select(x => "http://highresultech-001-site1.ftempurl.com/uploads/bedRoomRoomPhotos/" + x.Name).ToList(),
             }).ToListAsync();
+
+            if(bedRoomRooms == null)
+            {
+                Console.WriteLine("NUll");
+            }
+
+            else
+            {
+                Console.WriteLine("Null degil");
+            }
+          
 
             return ApiResult<List<GetBedRoomRoomResponse>>.OK(bedRoomRooms);
         }
@@ -145,7 +170,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             {
                 Id = bedroomroom.Id,
                 BedRoomId = bedroomroom.BedRoomId,
-                BedRoomRoomTypeId = bedroomroom.BedRoomRoomTypeId,
+                BedRoomRoomTypeId = bedroomroom.RoomTypeId,
                 CreateAt= bedroomroom.CreateAt,
                 Description = bedroomroom.Description,
                 Name = bedroomroom.Name,
@@ -160,11 +185,14 @@ namespace UniversityLifeApp.Infrastructure.Services
         {
             var bedRoomRoom = await _context.BedRoomRooms.Where(x => x.Id == bedRoomRoomId).FirstOrDefaultAsync();
             var bedRoomRoomPhotos = await _context.BedRoomRoomPhotos.Where(x => x.BedRoomRoomId == bedRoomRoomId).ToListAsync();
+            var type = await _context.RoomTypes.Where(x => x.Id == bedRoomRoom.RoomTypeId).FirstOrDefaultAsync();
 
             bedRoomRoom.Name = request.Request.Name;
             bedRoomRoom.Description = request.Request.Description;
             bedRoomRoom.BedRoomId = request.Request.BedRoomId;
-            bedRoomRoom.BedRoomRoomTypeId = request.Request.BedRoomRoomTypeId;
+            //bedRoomRoom.RoomTypeId = request.Request.BedRoomRoomTypeId;
+            type.BedRoomId = request.Request.BedRoomId;
+            type.BedRoomRoomTypeId = request.Request.BedRoomRoomTypeId;
             bedRoomRoom.Price = request.Request.Price;
 
             if(request.Request.ImageFile != null)
@@ -227,7 +255,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Name = bedRoomRoom.Name,
                 Description = bedRoomRoom.Description,
                 BedRoomId = bedRoomRoom.BedRoomId,
-                BedRoomRoomTypeId = bedRoomRoom.BedRoomRoomTypeId,
+                BedRoomRoomTypeId = bedRoomRoom.RoomTypeId,
                 BedRoomRoomStatusId = bedRoomRoom.BedRoomRoomStatusId,
             };
 

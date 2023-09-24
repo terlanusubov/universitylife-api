@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.AcceptBook;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.CreateBookBedRoomRoom;
+using UniveristyLifeApp.Models.v1.BookBedRoomRoom.DeleteBookBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.RejectBook;
 using UniversityLifeApp.Application.Core;
@@ -70,6 +71,30 @@ namespace UniversityLifeApp.Infrastructure.Services
             return ApiResult<CreateBookBedRoomRoomResponse>.OK(response);
         }
 
+        public async Task<ApiResult<DeleteBookBedRoomRoomResponse>> Delete(int bookId)
+        {
+            var book = await _context.BedRoomRoomApplies.Where(x => x.Id == bookId).FirstOrDefaultAsync();
+
+            if(book == null)
+            {
+                Dictionary<string,string> error = new Dictionary<string, string>();
+
+                error.Add("Id", "Apply is not exist.");
+                return ApiResult<DeleteBookBedRoomRoomResponse>.Error(ErrorCodes.DATA_IS_NOT_EXIST , error);
+            }
+
+            _context.BedRoomRoomApplies.Remove(book);
+
+            await _context.SaveChangesAsync();
+
+            DeleteBookBedRoomRoomResponse response = new DeleteBookBedRoomRoomResponse
+            {
+                Id = book.Id,
+            };
+
+            return ApiResult<DeleteBookBedRoomRoomResponse>.OK(response);
+        }
+
         public async Task<ApiResult<List<GetBookBedRoomRoomResponse>>> GetBookBedRoomRoom(GetBookBedRoomRoomRequest request)
         {
             var bookbed = await _context.BedRoomRoomApplies.Include(x => x.BedRoomRoom).Include(x => x.User).Where(x => x.UserId == request.UserId).Select(x => new GetBookBedRoomRoomResponse
@@ -81,7 +106,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 PhoneNumber = x.User.PhoneNumber,
                 BedRoomRoomName = x.BedRoomRoom.Name,
                 BedRoomName = x.BedRoomRoom.BedRoom.Name,
-                BedRoomRoomType = x.BedRoomRoom.BedRoomRoomType.Name,
+                BedRoomRoomType = x.BedRoomRoom.RoomType.BedRoomRoomType.Name,
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,
                 Image = x.BedRoomRoom.BedRoomRoomPhotos.Select(x => "http://highresultech-001-site1.ftempurl.com/uploads/bedRoomRoomPhotos/" + x.Name).FirstOrDefault(),
@@ -93,6 +118,27 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         }
 
+        public async Task<ApiResult<GetBookBedRoomRoomByIdResponse>> GetById(int id)
+        {
+            var bedroom = await _context.BedRoomRoomApplies.Where(x => x.Id == id).Select(x => new GetBookBedRoomRoomByIdResponse
+            {
+                Id = x.Id,
+                Fullname = x.User.Name + " " + x.User.Surname,
+                Price = x.BedRoomRoom.Price,
+                Email = x.User.Email,
+                PhoneNumber = x.User.PhoneNumber,
+                Description = x.BedRoomRoom.Description,
+                BedRoomRoomName = x.BedRoomRoom.Name,
+                BedRoomName = x.BedRoomRoom.BedRoom.Name,
+                BedRoomRoomType = x.BedRoomRoom.RoomType.BedRoomRoomType.Name,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
+                Image = x.BedRoomRoom.BedRoomRoomPhotos.Select(x => "http://highresultech-001-site1.ftempurl.com/uploads/bedRoomRoomPhotos/" + x.Name).FirstOrDefault(),
+                BedRoomRoomApplyStatusId = x.BedRoomRoomApplyStatusId,
+            }).FirstOrDefaultAsync();
+
+            return ApiResult<GetBookBedRoomRoomByIdResponse>.OK(bedroom);
+        }
       
 
         public async Task<ApiResult<RejectBookResponse>> Reject(int id)

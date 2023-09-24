@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.AcceptBook;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.CreateBookBedRoomRoom;
+using UniveristyLifeApp.Models.v1.BookBedRoomRoom.DeleteBookBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.RejectBook;
 using UniversityLifeApp.Application.Core;
@@ -18,5 +19,6 @@ namespace UniversityLifeApp.Application.Interfaces
         Task<ApiResult<List<GetBookBedRoomRoomResponse>>> GetBookBedRoomRoom(GetBookBedRoomRoomRequest request);
         Task<ApiResult<AcceptBookResponse>> Accept(int id);
         Task<ApiResult<RejectBookResponse>> Reject(int id);
+        Task<ApiResult<DeleteBookBedRoomRoomResponse>> Delete(int bookId);
     }
 }

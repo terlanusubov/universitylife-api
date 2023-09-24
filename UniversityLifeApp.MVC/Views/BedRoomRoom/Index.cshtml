@@ -98,7 +98,7 @@
                                         @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td><img src="@item.Image.FirstOrDefault()" style="width: 100px; height: 100px;" /></td>
+                                             @* <td><img src="@item.Image.FirstOrDefault()" style="width: 100px; height: 100px;" /></td> *@
                                             <td>@item.Name</td>
                                             <td>@item.Description</td>
                                             <td>@item.Price</td>
@@ -109,8 +109,6 @@
                                                 <a class="delete-btn" style="color: red;" asp-action="Delete" asp-controller="BedRoomRoom"><i class='bx bx-x-circle'></i></a>
                                             </td>
                                         </tr>
-
-
                                     }   
                                     </tbody>
                                     <tfoot>

@@ -21,7 +21,6 @@ using UniversityLifeApp.Application.Interfaces;
 using UniversityLifeApp.Domain.Entities;
 using UniversityLifeApp.Domain.Enums;
 using UniversityLifeApp.Infrastructure.Data;
-using UniversityLifeApp.Infrastructure.Migrations;
 
 namespace UniversityLifeApp.Infrastructure.Services
 {
@@ -144,8 +143,8 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,
                 Rating = x.Rating,
-                BedRoomRoomTypeIds = x.BedRoomRoomTypes.Select(x => x.Id).ToList(),
-                BedRoomRoomTypes = x.BedRoomRoomTypes.Select(c => c.Name).ToList(),
+                BedRoomRoomTypeIds = x.RoomTypes.Select(x => x.BedRoomRoomTypeId).ToList(),
+                BedRoomRoomTypes = x.RoomTypes.Select(c => c.BedRoomRoomType.Name).ToList(),
                 Price = x.Price,
                 BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
             });
@@ -164,7 +163,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 var uniLatitude = await _context.Universities.Where(x => x.Id == request.UniversityId).Select(x => x.Latitude).FirstOrDefaultAsync();
                 double lat = Convert.ToDouble(uniLatitude);
                 var getBedroomByCity = await _context.BedRooms.Where(x => x.CityId == cityId && x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && (request.CityId != null ? x.CityId == request.CityId : true)).ToListAsync();
-                query = _context.BedRooms.Include(x => x.City).Include(x => x.BedRoomRoomTypes).Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && x.CityId == cityId && (request.CityId != null ? x.CityId == request.CityId : true)).Select(x => new GetBedRoomsDto
+                query = _context.BedRooms.Include(x => x.City).Include(x => x.RoomTypes).Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && x.CityId == cityId && (request.CityId != null ? x.CityId == request.CityId : true)).Select(x => new GetBedRoomsDto
                 {
                     Id = x.Id,
                     Name = x.Name,
@@ -177,8 +176,8 @@ namespace UniversityLifeApp.Infrastructure.Services
                     CreateAt = x.CreateAt,
                     UpdateAt = x.UpdateAt,
                     Rating = x.Rating,
-                    BedRoomRoomTypeIds = x.BedRoomRoomTypes.Select(x => x.Id).ToList(),
-                    BedRoomRoomTypes = x.BedRoomRoomTypes.Select(c => c.Name).ToList(),
+                    BedRoomRoomTypeIds = x.RoomTypes.Select(x => x.BedRoomRoomTypeId).ToList(),
+                    BedRoomRoomTypes = x.RoomTypes.Select(c => c.BedRoomRoomType.Name).ToList(),
                     Price = x.Price,
                     BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
                 });
@@ -279,8 +278,8 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,
                 Rating = x.Rating,
-                BedRoomRoomTypeIds = x.BedRoomRoomTypes.Select(x => x.Id).ToList(),
-                BedRoomRoomTypes = x.BedRoomRoomTypes.Select(c => c.Name).ToList(),
+                BedRoomRoomTypeIds = x.RoomTypes.Select(x => x.BedRoomRoomTypeId).ToList(),
+                BedRoomRoomTypes = x.RoomTypes.Select(c => c.BedRoomRoomType.Name).ToList(),
                 Price = x.Price,
                 BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
 
