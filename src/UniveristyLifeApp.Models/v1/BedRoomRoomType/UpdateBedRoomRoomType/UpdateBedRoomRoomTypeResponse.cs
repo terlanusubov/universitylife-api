@@ -11,6 +11,6 @@ namespace UniveristyLifeApp.Models.v1.BedRoomRoomType.UpdateBedRoomRoomType
         public string Name { get; set; }
 
         //Bedroom
-        public int BedRoomId { get; set; }
+        //public int BedRoomId { get; set; }
     }
 }

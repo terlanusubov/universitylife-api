@@ -18,8 +18,8 @@ namespace UniversityLifeApp.Domain.Entities
         public BedRoom BedRoom { get; set; }
 
         //Bedroomroom type
-        public int BedRoomRoomTypeId { get; set; }
-        public BedRoomRoomType BedRoomRoomType { get; set; }
+        public int RoomTypeId { get; set; }
+        public RoomType RoomType { get; set; }
 
         //Bedroomroom photos
         public ICollection<BedRoomRoomPhoto> BedRoomRoomPhotos { get; set; }

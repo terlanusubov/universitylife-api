@@ -22,7 +22,7 @@ namespace UniversityLifeApp.Domain.Entities
         public City City { get; set; }
 
         //Bedroom types
-        public ICollection<BedRoomRoomType> BedRoomRoomTypes { get; set; }
+        public ICollection<RoomType> RoomTypes { get; set; }
 
         //Bedroomrooms
         public ICollection<BedRoomRoom> BedRoomRooms { get; set; }

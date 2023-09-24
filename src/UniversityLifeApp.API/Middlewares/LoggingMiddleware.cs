@@ -35,7 +35,21 @@ namespace UniversityLifeApp.API.Middlewares
 
             string logFileName = $"{currentDate:yyyy-MM}.log";
 
-            string logFilePath = Path.Combine(_env.WebRootPath + "\\logging", logFileName);
+            string logFilePath;
+
+            if (_env.WebRootPath.Contains("MVC"))
+            {
+                var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
+                var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+                logFilePath = Path.Combine(path2 + "\\ogging", logFileName);
+            }
+
+            else
+            {
+                logFilePath = Path.Combine(_env.WebRootPath + "\\logging", logFileName);
+            }
+
+            
 
             try
             {

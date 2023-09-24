@@ -34,7 +34,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             {
                 BedRoomRoomTypeStatusId = (int)BedRoomRoomTypeStatusEnum.Active,
                 Name = createBedRoomRoomType.Request.Name,
-                BedRoomId = createBedRoomRoomType.Request.BedRoomId
+                //BedRoomId = createBedRoomRoomType.Request.BedRoomId
             };
 
             await _context.AddAsync(RoomType);
@@ -43,7 +43,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             var response = new CreateBedRoomRoomTypeResponse
             {
                 Name = RoomType.Name,
-                BedRoomId = RoomType.BedRoomId
+                //BedRoomId = RoomType.BedRoomId
             };
 
             return ApiResult<CreateBedRoomRoomTypeResponse>.OK(response);
@@ -61,7 +61,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             var response = new DeleteBedRoomRoomTypeResponse
             {
-                BedRoomId = roomType.BedRoomId,
+                Name = roomType.Name,
             };
 
             return ApiResult<DeleteBedRoomRoomTypeResponse>.OK(response);
@@ -73,12 +73,12 @@ namespace UniversityLifeApp.Infrastructure.Services
             var roomtype = await _context.BedRoomRoomTypes.Where(x => x.BedRoomRoomTypeStatusId == (int)BedRoomRoomTypeStatusEnum.Active && (request.Id != null ? x.Id == request.Id : true)).Select(x => new GetBedRoomRoomTypeResponse
             {
                 Id = x.Id,
-                BedRoomId = x.BedRoomId,
+                //BedRoomId = x.BedRoomId,
                 Name = x.Name,
                 BedRoomRoomTypeStatusId = x.BedRoomRoomTypeStatusId,
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,
-                BedRoomName = x.BedRoom.Name,
+                //BedRoomName = x.BedRoom.Name,
 
             }).ToListAsync();
 
@@ -102,14 +102,14 @@ namespace UniversityLifeApp.Infrastructure.Services
         {
             var result = await _context.BedRoomRoomTypes.Where(x => x.Id == BedRoomRoomTypeId).FirstOrDefaultAsync();
             result.Name = updateBedRoomRoomType.Request.Name;
-            result.BedRoomId = updateBedRoomRoomType.Request.BedRoomId;
+            //result.BedRoomId = updateBedRoomRoomType.Request.BedRoomId;
 
             await _context.SaveChangesAsync();
 
             var roomtype = new UpdateBedRoomRoomTypeResponse
             {
                 Name = result.Name,
-                BedRoomId = result.BedRoomId,
+                //BedRoomId = result.BedRoomId,
             };
 
             return ApiResult<UpdateBedRoomRoomTypeResponse>.OK(roomtype);

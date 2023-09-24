@@ -38,12 +38,12 @@ namespace UniversityLifeApp.API.Controllers.v1
         //   => await _mediator.Send(new GetBedRoomRoomTypeByIdQuery(roomtypeId));
 
         [HttpPut("{bedroomroomtypeId}/updatebedroomroomtype")]
-        public async Task<ApiResult<UpdateBedRoomRoomTypeResponse>> UpdateBedRoomRoomType(UpdateBedRoomRoomTypeRequest request, int roomtypeId)
-           => await _mediator.Send(new UpdateBedRoomRoomTypeCommand(request, roomtypeId));
+        public async Task<ApiResult<UpdateBedRoomRoomTypeResponse>> UpdateBedRoomRoomType(UpdateBedRoomRoomTypeRequest request, int bedroomroomtypeId)
+           => await _mediator.Send(new UpdateBedRoomRoomTypeCommand(request, bedroomroomtypeId));
 
         [HttpDelete("{bedroomroomtypeId}/deletebedroomroomtype")]
-        public async Task<ApiResult<DeleteBedRoomRoomTypeResponse>> DeleteBedRoomRoomType(int roomtypeId)
-            => await _mediator.Send(new DeleteBedRoomRoomTypeCommand(roomtypeId));
+        public async Task<ApiResult<DeleteBedRoomRoomTypeResponse>> DeleteBedRoomRoomType(int bedroomroomtypeId)
+            => await _mediator.Send(new DeleteBedRoomRoomTypeCommand(bedroomroomtypeId));
 
     }
 }

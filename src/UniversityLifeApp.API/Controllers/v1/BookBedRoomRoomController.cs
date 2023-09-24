@@ -1,9 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.CreateBookBedRoomRoom;
+using UniveristyLifeApp.Models.v1.BookBedRoomRoom.DeleteBookBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoom;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Commands.CreateBookBedRoomRoom;
+using UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Commands.DeleteBookBedRoomRoom;
 using UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Queries.GetBookBedRoomRoom;
 
 namespace UniversityLifeApp.API.Controllers.v1
@@ -26,5 +28,9 @@ namespace UniversityLifeApp.API.Controllers.v1
         [HttpGet]
         public async Task<ActionResult<ApiResult<List<GetBookBedRoomRoomResponse>>>> Get()
             => await _mediator.Send(new GetBookBedRoomRoomQuery());
+
+        [HttpDelete]
+        public async Task<ActionResult<ApiResult<DeleteBookBedRoomRoomResponse>>> Delete([FromQuery] int bookId)
+            => await _mediator.Send(new DeleteBookBedRoomRoomCommand(bookId));
     }
 }

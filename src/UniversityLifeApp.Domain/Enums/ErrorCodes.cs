@@ -24,6 +24,9 @@ namespace UniversityLifeApp.Domain.Enums
         [Description("There are some validations error.")]
         VALIDATION_ERROR = 2_0_0,
 
+        [Description("Data is not exist")]
+        DATA_IS_NOT_EXIST = 2_0_1,
+
         [Description("teterte")]
         NullReferances_Error = 3_0_0,
 

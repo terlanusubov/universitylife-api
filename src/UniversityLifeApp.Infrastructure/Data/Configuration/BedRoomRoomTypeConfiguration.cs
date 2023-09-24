@@ -14,7 +14,7 @@ namespace UniversityLifeApp.Infrastructure.Data.Configuration
         public void Configure(EntityTypeBuilder<BedRoomRoomType> builder)
         {
             builder.Property(x => x.Name).IsRequired();
-            builder.Property(x => x.BedRoomId).IsRequired();
+            //builder.Property(x => x.BedRoomId).IsRequired();
         }
     }
 }
