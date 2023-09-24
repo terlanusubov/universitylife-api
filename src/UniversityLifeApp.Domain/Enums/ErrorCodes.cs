@@ -36,6 +36,9 @@ namespace UniversityLifeApp.Domain.Enums
         [Description("This item already exist in your wishlist")]
         WISHLIST_IS_ALREADY_EXIST = 4_0_0,
 
+        [Description("This item already exist in your booking")]
+        APPLY_IS_ALREADY_EXIST = 4_1_0,
+
 
 
     }

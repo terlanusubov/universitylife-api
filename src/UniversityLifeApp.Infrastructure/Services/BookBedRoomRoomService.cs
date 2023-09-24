@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.AcceptBook;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.CreateBookBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.DeleteBookBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoom;
+using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoomById;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.RejectBook;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Commands.CreateBookBedRoomRoom;
@@ -49,6 +51,15 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<CreateBookBedRoomRoomResponse>> BookBedRoomRoom(CreateBookBedRoomRoomCommand request)
         {
+
+            var books = await _context.BedRoomRoomApplies.ToListAsync();
+            foreach (var item in books)
+            {
+                if(item.UserId == request.Request.UserId && item.BedRoomRoomId == request.Request.BedRoomRoomId)
+                {
+                    return ApiResult<CreateBookBedRoomRoomResponse>.Error(ErrorCodes.APPLY_IS_ALREADY_EXIST, null, (int)HttpStatusCode.AlreadyReported);
+                }
+            }
             BedRoomRoomApply bookBedRoomRoom = new BedRoomRoomApply
             {
                 UserId = request.Request.UserId,
@@ -56,6 +67,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 BedRoomRoomApplyStatusId = (int)BedRoomRoomApplyStatusEnum.Pending,
             };
 
+            
             await _context.BedRoomRoomApplies.AddAsync(bookBedRoomRoom);
 
             await _context.SaveChangesAsync();
@@ -97,7 +109,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetBookBedRoomRoomResponse>>> GetBookBedRoomRoom(GetBookBedRoomRoomRequest request)
         {
-            var bookbed = await _context.BedRoomRoomApplies.Include(x => x.BedRoomRoom).Include(x => x.User).Where(x => x.UserId == request.UserId).Select(x => new GetBookBedRoomRoomResponse
+            var bookbed = await _context.BedRoomRoomApplies.Include(x => x.BedRoomRoom).Include(x => x.User).Where(x => request.UserId != null ? x.UserId == request.UserId : true).Select(x => new GetBookBedRoomRoomResponse
             {
                 Id = x.Id,
                 Fullname = x.User.Name + " " + x.User.Surname,

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using UniveristyLifeApp.Models.v1.BedRoomRoom.GetBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BookBedRoomRoom.GetBookBedRoomRoom;
 using UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Commands.AcceptBook;
 using UniversityLifeApp.Application.CQRS.v1.BookBedRoomRoom.Commands.RejectBook;
@@ -19,9 +20,9 @@ namespace UniversityLifeApp.MVC.Controllers
             _mediator = mediator;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(GetBookBedRoomRoomRequest request)
         {
-            var result = (await _mediator.Send(new GetBookBedRoomRoomQuery())).Response;
+            var result = (await _mediator.Send(new GetBookBedRoomRoomQuery(request))).Response;
             return View(result);
         }
 
