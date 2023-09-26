@@ -2,6 +2,7 @@
 using EEWF.Infrastructure.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -29,11 +30,13 @@ namespace UniversityLifeApp.Infrastructure.Services
         private readonly ApplicationContext _context;
         private readonly IWebHostEnvironment _env;
         private readonly IFileService _fileService;
-        public BedRoomService(ApplicationContext context, IWebHostEnvironment env, IFileService fileService)
+        private readonly IConfiguration _configuration;
+        public BedRoomService(ApplicationContext context, IWebHostEnvironment env, IFileService fileService, IConfiguration configuration)
         {
             _context = context;
             _env = env;
             _fileService = fileService;
+            _configuration = configuration;
         }
 
         public async Task<ApiResult<CreateBedRoomResponse>> CreateBedRoom(CreateBedRoomCommand createBedRoom)
@@ -129,7 +132,7 @@ namespace UniversityLifeApp.Infrastructure.Services
         public async Task<ApiResult<GetBedRoomResponse>> GetBedRoom(GetBedRoomRequest request)
         {
             //var bedRooms2 = await _context.BedRooms.Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && (request.CityId != null ? x.CityId == request.CityId : true)).ToListAsync();
-
+            var baseUrl = _configuration["BaseUrl"];
             var query = _context.BedRooms.Include(x=>x.City).Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && (request.CityId != null ? x.CityId == request.CityId : true)).Select(x => new GetBedRoomsDto
             {
                 Id = x.Id,
@@ -146,13 +149,11 @@ namespace UniversityLifeApp.Infrastructure.Services
                 BedRoomRoomTypeIds = x.RoomTypes.Select(x => x.BedRoomRoomTypeId).ToList(),
                 BedRoomRoomTypes = x.RoomTypes.Select(c => c.BedRoomRoomType.Name).ToList(),
                 Price = x.Price,
-                BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
+                BedRoomImages = x.BedRoomPhotos.Select(c => baseUrl + "bedroomPhoto/" + c.Name).ToList(),
             });
             var response = new GetBedRoomResponse();
             List<double> distances = new List<double>();
             List<IDictionary<int, double>> responseList = new();
-            
-
 
             if (request.UniversityId != null)
             {

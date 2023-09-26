@@ -70,7 +70,7 @@ namespace UniversityLifeApp.Infrastructure.Services
         public async Task<ApiResult<List<GetBedRoomRoomTypeResponse>>> GetBedRoomRoomType(GetBedRoomRoomTypeRequest request)
         {
 
-            var roomtype = await _context.BedRoomRoomTypes.Where(x => x.BedRoomRoomTypeStatusId == (int)BedRoomRoomTypeStatusEnum.Active && (request.Id != null ? x.Id == request.Id : true)).Select(x => new GetBedRoomRoomTypeResponse
+            var roomtype = await _context.BedRoomRoomTypes.Include(x => x.RoomTypes).Where(x => x.BedRoomRoomTypeStatusId == (int)BedRoomRoomTypeStatusEnum.Active && (request.Id != null ? x.Id == request.Id : true)).Select(x => new GetBedRoomRoomTypeResponse
             {
                 Id = x.Id,
                 //BedRoomId = x.BedRoomId,
@@ -78,6 +78,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 BedRoomRoomTypeStatusId = x.BedRoomRoomTypeStatusId,
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,
+                //BedRoomRoomIds = x.RoomTypes.SelectMany(x => x.BedRoomRooms.Select(x => x.Id)).ToList(),
                 //BedRoomName = x.BedRoom.Name,
 
             }).ToListAsync();

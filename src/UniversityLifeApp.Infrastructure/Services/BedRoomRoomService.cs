@@ -1,6 +1,7 @@
 ﻿using EEWF.Infrastructure.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,13 @@ namespace UniversityLifeApp.Infrastructure.Services
         private readonly ApplicationContext _context;
         private readonly IWebHostEnvironment _env;
         private readonly IFileService _fileService;
-        public BedRoomRoomService(ApplicationContext context , IWebHostEnvironment env, IFileService fileService)
+        public IConfiguration _configuration;
+        public BedRoomRoomService(ApplicationContext context , IWebHostEnvironment env, IFileService fileService, IConfiguration configuration)
         {
             _context = context;
             _env = env;
             _fileService = fileService;
+            _configuration = configuration;
         }
 
         public async Task<ApiResult<CreateBedRoomRoomResponse>> CreateBedRoomRoom(CreateBedRoomRoomCommand request)
@@ -135,6 +138,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetBedRoomRoomResponse>>> GetBedRoomRoom(GetBedRoomRoomRequest request)
         {
+            var baseUrl = _configuration["BaseUrl"];
             var bedRoomRooms = await _context.BedRoomRooms.Include(x => x.BedRoom).Include(x => x.BedRoomRoomPhotos).Where(x => x.BedRoomRoomStatusId == (int)BedRoomRoomStatusEnum.Active && (request.BedRoomRoomTypeId != null ? x.RoomType.BedRoomRoomTypeId == request.BedRoomRoomTypeId : true) && (request.BedRoomId != null ? x.BedRoomId == request.BedRoomId : true) && (request.BedRoomRoomId != null ? x.Id == request.BedRoomRoomId : true)).Select(x => new GetBedRoomRoomResponse
             {
                 Id = x.Id,
@@ -145,7 +149,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,
                 BedRoomRoomTypeId = x.RoomType.BedRoomRoomType.Id,
-                Image = x.BedRoomRoomPhotos.Select(x => "http://highresultech-001-site1.ftempurl.com/uploads/bedRoomRoomPhotos/" + x.Name).ToList(),
+                Image = x.BedRoomRoomPhotos.Select(x => baseUrl + "bedRoomRoomPhotos/" + x.Name).ToList(),
             }).ToListAsync();
 
             if(bedRoomRooms == null)

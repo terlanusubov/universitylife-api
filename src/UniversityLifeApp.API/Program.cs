@@ -135,6 +135,7 @@ app.UseCors(MyAllowSpecificOrigins);
 
 app.UseStaticFiles();
 
+app.UseDeveloperExceptionPage();
 
 app.UseHttpLogging();
 

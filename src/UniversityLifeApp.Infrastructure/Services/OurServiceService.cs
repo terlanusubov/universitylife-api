@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,11 +26,13 @@ namespace UniversityLifeApp.Infrastructure.Services
         private readonly ApplicationContext _context;
         private readonly IFileService _fileService;
         private readonly IWebHostEnvironment _env;
-        public OurServiceService (ApplicationContext context, IFileService fileService, IWebHostEnvironment env)
+        private readonly IConfiguration _configuration;
+        public OurServiceService (ApplicationContext context, IFileService fileService, IWebHostEnvironment env, IConfiguration configuration)
         {
              _context = context;
             _fileService = fileService;
             _env = env;
+            _configuration = configuration;
         }
 
         public async Task<ApiResult<CreateOurServiceResponse>> CreateService(CreateServiceCommand request)
@@ -60,7 +63,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             {
                     Name = service.Name,
                 Description = service.Description,
-                Image = "http://highresultech-001-site1.ftempurl.com/uploads/services/" + service.Image,
+                //Image = "http://highresultech-001-site1.ftempurl.com/uploads/services/" + service.Image,
                 OurServiceStatusId = service.OurServiceStatusId,
 
             };
@@ -88,12 +91,14 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<GetOurServiceResponse>> GetById(int serviceId)
         {
+            var baseUrl = _configuration["BaseUrl"];
+
             var service = await _context.OurServices.Where(x => x.Id == serviceId).Select(x => new GetOurServiceResponse
             {
                 Name = x.Name,
                 Id = x.Id,
                 Description = x.Description,
-                Image = x.Image,
+                Image = baseUrl + "services/" + x.Image,
                 OurServiceStatusId = x.OurServiceStatusId
             }).FirstOrDefaultAsync();
 
@@ -102,13 +107,15 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetOurServiceResponse>>> GetOurService()
         {
+            var baseUrl = _configuration["BaseUrl"];
+
             var result = await _context.OurServices.Where(x=>x.OurServiceStatusId == (int)OurServiceStatusEnum.Active).Select(x=> new GetOurServiceResponse
             {
                 Description = x.Description,
                 Name = x.Name,
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,
-                Image = "http://highresultech-001-site1.ftempurl.com/uploads/services/" + x.Image,
+                Image = baseUrl + "services/" + x.Image,
                 Id = x.Id
 
             }).ToListAsync();
