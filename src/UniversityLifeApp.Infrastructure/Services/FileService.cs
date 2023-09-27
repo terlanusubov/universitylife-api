@@ -27,7 +27,7 @@ namespace EEWF.Infrastructure.Services
             string filename = file.FileName;
             filename = filename.Length <= 64 ? filename : (filename.Substring(filename.Length - 64, 64));
             filename = Guid.NewGuid().ToString() + filename;
-
+             
             string path = Path.Combine(rootPath, folder, filename);
 
             using (FileStream stream = new FileStream(path, FileMode.Create))

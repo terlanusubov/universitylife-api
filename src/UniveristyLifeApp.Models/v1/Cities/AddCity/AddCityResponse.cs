@@ -14,5 +14,6 @@ namespace UniveristyLifeApp.Models.v1.Cities.AddCity
         public int CountryId { get; set; }
         public int CityStatusId { get; set; }
         public bool IsTop { get; set; }
+        public string Image { get; set; }
     }
 }

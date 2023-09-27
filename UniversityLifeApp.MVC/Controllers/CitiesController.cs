@@ -6,11 +6,13 @@ using UniveristyLifeApp.Models.v1.Cities.AddCity;
 using UniveristyLifeApp.Models.v1.Cities.DeleteCity;
 using UniveristyLifeApp.Models.v1.Cities.GetCity;
 using UniveristyLifeApp.Models.v1.Cities.UpdateCity;
+using UniveristyLifeApp.Models.v1.Upload;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.AddCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.DeleteCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.UpdateCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Queries.GetCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Queries.GetCityById;
+using UniversityLifeApp.Application.CQRS.v1.Upload;
 using UniversityLifeApp.Infrastructure.Data;
 using UniversityLifeApp.MVC.ViewModels;
 
@@ -49,7 +51,8 @@ namespace UniversityLifeApp.MVC.Controllers
             ViewBag.Countries = await _context.Countries.ToListAsync();
             var result = await _mediator.Send(new AddCityCommand(request));
 
-            if(result.StatusCode != (int)HttpStatusCode.OK)
+
+            if (result.StatusCode != (int)HttpStatusCode.OK)
             {
                 foreach (var item in result.ErrorList)
                 {
@@ -59,13 +62,21 @@ namespace UniversityLifeApp.MVC.Controllers
                 return View(request);
             }
 
+            UploadRequest requestUpload = new UploadRequest
+            {
+                Folder = @"uploads/city",
+                ImageFile = request.ImageFile,
+                ImageName = result.Response.Image,
+            };
+            await _mediator.Send(new UploadCommand(requestUpload));
+
             return RedirectToAction("index", "cities");
         }
 
         public async Task<IActionResult> Update(int cityId)
         {
             ViewBag.Countries = await _context.Countries.ToListAsync();
-            
+
             var result = (await _mediator.Send(new GetCityByIdQuery(cityId))).Response;
 
             UpdateCityRequest request = new UpdateCityRequest
@@ -76,7 +87,7 @@ namespace UniversityLifeApp.MVC.Controllers
                 IsTop = result.IsTop,
                 Longitude = result.Longitude,
             };
-            
+
             TempData["cityId"] = cityId;
 
             return View(request);
@@ -88,9 +99,9 @@ namespace UniversityLifeApp.MVC.Controllers
             ViewBag.Countries = await _context.Countries.ToListAsync();
             int cityId = (int)TempData["cityId"];
 
-            var result = await _mediator.Send(new UpdateCityCommand(request,cityId));
+            var result = await _mediator.Send(new UpdateCityCommand(request, cityId));
 
-            if(result.StatusCode != (int)HttpStatusCode.OK)
+            if (result.StatusCode != (int)HttpStatusCode.OK)
             {
                 foreach (var item in result.ErrorList)
                 {
