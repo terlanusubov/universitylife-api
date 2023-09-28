@@ -74,14 +74,15 @@ namespace UniversityLifeApp.Infrastructure.Services
             return ApiResult<DeleteUniversityResponse>.OK(response);
         }
 
-        public async Task<ApiResult<List<GetUniversityResponse>>> Get()
+        public async Task<ApiResult<List<GetUniversityResponse>>> Get(GetUniversityRequest request)
         {
-            var universities = await _context.Universities.Where(x => x.UniversityStatusId == (int)UniversityStatusEnum.Active).Select(x => new GetUniversityResponse
+            var universities = await _context.Universities.Include(x => x.City).Where(x => x.UniversityStatusId == (int)UniversityStatusEnum.Active && (request.CityId != null ? x.CityId == request.CityId : true)).Select(x => new GetUniversityResponse
             {
                 Name = x.Name,
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
                 CityId = x.CityId,
+                CountryName = x.City.Country.Name,
                 City = x.City,
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,

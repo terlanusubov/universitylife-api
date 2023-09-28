@@ -240,7 +240,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
                 if (start != null)
                 {
-                    query = query.Skip(start.Value - 1).Take(end.Value);
+                    query = query.Skip(start.Value - 1).Take(request.Page % 2 == 0 ? end.Value - 2 : end.Value);
 
                 }
             }
@@ -249,7 +249,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
 
 
-            var bedRooms = await query.OrderByDescending(x => x.CreateAt).ToListAsync();
+            var bedRooms = await query.ToListAsync();
 
 
             response.BedRooms = bedRooms;

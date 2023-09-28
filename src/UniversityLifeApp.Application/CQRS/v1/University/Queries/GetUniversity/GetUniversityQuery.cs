@@ -11,6 +11,11 @@ namespace UniversityLifeApp.Application.CQRS.v1.University.Queries.GetUniversity
 {
     public class GetUniversityQuery:IRequest<ApiResult<List<GetUniversityResponse>>>
     {
+        public GetUniversityQuery(GetUniversityRequest request)
+        {
+            Request = request;
+        }
+        public GetUniversityRequest Request { get; set; }
         public int UniversityId { get; set; }
         public string Name { get; set; }
         public string Latitude { get; set; }

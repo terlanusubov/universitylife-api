@@ -6,6 +6,7 @@ using UniveristyLifeApp.Models.v1.Cities.AddCity;
 using UniveristyLifeApp.Models.v1.Cities.GetCity;
 using UniveristyLifeApp.Models.v1.Cities.UpdateCity;
 using UniveristyLifeApp.Models.v1.University.CreateUniversity;
+using UniveristyLifeApp.Models.v1.University.GetUniversity;
 using UniveristyLifeApp.Models.v1.University.UpdateUniversity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.AddCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.UpdateCity;
@@ -30,9 +31,9 @@ namespace UniversityLifeApp.MVC.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(GetUniversityRequest request)
         {
-            var result = (await _mediator.Send(new GetUniversityQuery())).Response;
+            var result = (await _mediator.Send(new GetUniversityQuery(request))).Response;
 
             return View(result);
         }
