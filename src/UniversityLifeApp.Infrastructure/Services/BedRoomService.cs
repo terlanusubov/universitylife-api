@@ -140,6 +140,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 BedRoomStatusId = x.BedRoomStatusId,
                 Description = x.Description,
                 DistanceToCenter = x.DistanceToCenter,
+                CityName = x.City.Name,
                 //CityId = x.CityId,
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
@@ -171,6 +172,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                     BedRoomStatusId = x.BedRoomStatusId,
                     Description = x.Description,
                     DistanceToCenter = x.DistanceToCenter,
+                    CityName = x.City.Name,
                     //CityId = x.CityId,
                     Latitude = x.Latitude,
                     Longitude = x.Longitude,
@@ -232,7 +234,6 @@ namespace UniversityLifeApp.Infrastructure.Services
             int? start;
             int? end;
 
-
             if (request.Page != null)
             {
                 start = (request.Page - 1) * 6 + 1;
@@ -240,7 +241,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
                 if (start != null)
                 {
-                    query = query.Skip(start.Value - 1).Take(request.Page % 2 == 0 ? end.Value - 2 : end.Value);
+                    query = query.Skip(start.Value - 1).Take(end.Value);
 
                 }
             }
