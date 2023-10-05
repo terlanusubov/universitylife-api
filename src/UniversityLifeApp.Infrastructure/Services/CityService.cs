@@ -1,9 +1,15 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.Cities.AddCity;
@@ -11,6 +17,7 @@ using UniveristyLifeApp.Models.v1.Cities.DeleteCity;
 using UniveristyLifeApp.Models.v1.Cities.GetCity;
 using UniveristyLifeApp.Models.v1.Cities.GetCityById;
 using UniveristyLifeApp.Models.v1.Cities.UpdateCity;
+using UniveristyLifeApp.Models.v1.Upload;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.AddCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.UpdateCity;
@@ -38,9 +45,57 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<AddCityResponse>> AddCity(AddCityCommand request)
         {
+
             string filename = request.Request.ImageFile.FileName;
             filename = filename.Length <= 64 ? filename : (filename.Substring(filename.Length - 64, 64));
             filename = Guid.NewGuid().ToString() + filename;
+
+            UploadDto dto = new UploadDto
+            {
+                File = request.Request.ImageFile,
+                FileName = filename,
+            };
+            List<UploadDto> uploadDtos = new List<UploadDto>();
+            uploadDtos.Add(dto);
+
+            UploadRequest uploadRequest = new UploadRequest
+            {
+                UploadDto = uploadDtos,
+                Folder = "uploads/city",
+            };
+
+
+            
+            
+
+
+            using (HttpClient client = new HttpClient())
+            {
+
+                var multipartContent = new MultipartFormDataContent();
+                client.BaseAddress = new Uri("http://localhost:5212/api/v1/");
+
+                foreach (var uploadDto in uploadRequest.UploadDto)
+                {
+                    string jsonContent = JsonConvert.SerializeObject(uploadRequest);
+
+                    var content = new StringContent(jsonContent, Encoding.UTF8, "multipart/form-data");
+                    content.Headers.ContentType = new MediaTypeHeaderValue("multipart/form-data");
+
+                    multipartContent.Add(content, "UploadDto", uploadDto.FileName); 
+                }
+
+                multipartContent.Add(new StringContent(uploadRequest.Folder), "Folder");
+
+                // HTTP POST isteği oluşturun
+                await client.PostAsync("file", multipartContent);
+
+      
+            }
+
+            //todo : call api with HTTPCLIENT
+
+
             City city = new City
             {
                 Name = request.Request.Name,
@@ -103,7 +158,7 @@ namespace UniversityLifeApp.Infrastructure.Services
         public async Task<ApiResult<List<GetCityResponse>>> GetCity(GetCityRequest request)
         {
 
-            
+
 
             var baseUrl = _configuration["BaseUrl"];
             var cities = await _context.Cities.Include(x => x.Country).Where(x => x.CityStatusId == (int)CityStatusEnum.Active && (request.IsTop != null ? x.IsTop == request.IsTop : true) && (request.CountryId != null ? x.CountryId == request.CountryId : true)).Select(x => new GetCityResponse

@@ -41,6 +41,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<CreateBedRoomResponse>> CreateBedRoom(CreateBedRoomCommand createBedRoom)
         {
+            
             BedRoom bedRoom = new BedRoom
             {
                 Description = createBedRoom.Request.Description,
@@ -259,7 +260,6 @@ namespace UniversityLifeApp.Infrastructure.Services
             response.TotalPage = totalPage;
             response.Dictance = responseList;
             return ApiResult<GetBedRoomResponse>.OK(response);
-
         }
 
         public async Task<ApiResult<GetBedRoomByIdResponse>> GetBedRoomById(int bedroomId)

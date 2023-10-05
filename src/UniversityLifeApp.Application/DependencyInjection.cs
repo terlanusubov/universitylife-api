@@ -15,7 +15,7 @@ namespace UniversityLifeApp.Application
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehaviour<,>));
-
+            services.AddHttpClient();
             return services;
         }
 

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Net.Http.Headers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,9 +43,18 @@ namespace UniversityLifeApp.Infrastructure
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IOurServiceService, OurServiceService>();
             services.AddTransient<ICounterService, CounterService>();
-            services.AddTransient<IUploadService, UploadService>();
 
+            services.AddHttpClient("Universitylife", httpClient =>
+            {
+                httpClient.BaseAddress = new Uri("http://api.universitylife.co.uk/");
 
+                // using Microsoft.Net.Http.Headers;
+                // The GitHub API requires two headers.
+                //httpClient.DefaultRequestHeaders.Add(
+                //    HeaderNames.Accept, "application/vnd.github.v3+json");
+                //httpClient.DefaultRequestHeaders.Add(
+                //    HeaderNames.UserAgent, "HttpRequestsSample");
+            });
             services.AddSession();
             services.AddHttpContextAccessor();
 

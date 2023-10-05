@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace UniveristyLifeApp.Models.v1.Upload
 {
-    public class UploadRequest
+    public class UploadDto
     {
-        public List<UploadDto> UploadDto { get; set; }
-        public string Folder { get; set; }
+        public byte[]? Data { get; set; }
+        public IFormFile File { get; set; }
+        public string FileName { get; set; }
     }
 }

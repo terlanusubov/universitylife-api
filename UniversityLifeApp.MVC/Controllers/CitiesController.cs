@@ -12,7 +12,6 @@ using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.DeleteCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.UpdateCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Queries.GetCity;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Queries.GetCityById;
-using UniversityLifeApp.Application.CQRS.v1.Upload;
 using UniversityLifeApp.Infrastructure.Data;
 using UniversityLifeApp.MVC.ViewModels;
 
@@ -62,13 +61,13 @@ namespace UniversityLifeApp.MVC.Controllers
                 return View(request);
             }
 
-            UploadRequest requestUpload = new UploadRequest
-            {
-                Folder = @"uploads/city",
-                ImageFile = request.ImageFile,
-                ImageName = result.Response.Image,
-            };
-            await _mediator.Send(new UploadCommand(requestUpload));
+            //UploadRequest requestUpload = new UploadRequest
+            //{
+            //    Folder = "uploads/city",
+            //    ImageFile = request.ImageFile,
+            //    ImageName = result.Response.Image,
+            //};
+            //await _mediator.Send(new UploadCommand(requestUpload));
 
             return RedirectToAction("index", "cities");
         }
