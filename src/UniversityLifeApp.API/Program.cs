@@ -133,11 +133,14 @@ var app = builder.Build();
 
 app.UseCors(MyAllowSpecificOrigins);
 
+app.UseHttpsRedirection();
+
+
 app.UseStaticFiles();
 
 app.UseDeveloperExceptionPage();
 
-app.UseHttpLogging();
+//app.UseHttpLogging();
 
 app.UseSwagger();
 
@@ -154,11 +157,10 @@ app.UseSwaggerUI(c =>
 
 
 app.UseSession();
-app.UseMiddleware<LoggingMiddleware>();
+//app.UseMiddleware<LoggingMiddleware>();
 
-app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllers();
 

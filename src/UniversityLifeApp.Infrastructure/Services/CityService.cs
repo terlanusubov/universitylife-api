@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
@@ -73,30 +74,33 @@ namespace UniversityLifeApp.Infrastructure.Services
             {
 
                 var multipartContent = new MultipartFormDataContent();
-                client.BaseAddress = new Uri("http://localhost:5212/api/v1/");
+                client.BaseAddress = new Uri("https://localhost:7255/");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
 
+                int index = 0;
                 foreach (var uploadDto in uploadRequest.UploadDto)
                 {
-                    string jsonContent = JsonConvert.SerializeObject(uploadRequest);
 
-                    var content = new StringContent(jsonContent, Encoding.UTF8, "multipart/form-data");
-                    content.Headers.ContentType = new MediaTypeHeaderValue("multipart/form-data");
+                    var fileContent = new StreamContent(uploadDto.File.OpenReadStream());
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue(uploadDto.File.ContentType);
+                    multipartContent.Add(fileContent, "UploadDto[" + index + "].File", uploadDto.File.FileName);
+                    multipartContent.Add(fileContent, "UploadDto[" + index + "].FileName", filename);
+                    index++;
 
-                    multipartContent.Add(content, "UploadDto", uploadDto.FileName); 
+                    
                 }
 
                 multipartContent.Add(new StringContent(uploadRequest.Folder), "Folder");
 
                 // HTTP POST isteği oluşturun
-                await client.PostAsync("file", multipartContent);
+                var res = await client.PostAsync("api/v1/file",multipartContent);
 
       
             }
 
-            //todo : call api with HTTPCLIENT
 
 
-            City city = new City
+                    City city = new City
             {
                 Name = request.Request.Name,
                 CityStatusId = (int)CityStatusEnum.Active,
