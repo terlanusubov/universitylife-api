@@ -66,8 +66,8 @@ namespace UniversityLifeApp.Infrastructure.Services
             };
 
 
-            
-            
+
+
 
 
             using (HttpClient client = new HttpClient())
@@ -87,20 +87,20 @@ namespace UniversityLifeApp.Infrastructure.Services
                     multipartContent.Add(fileContent, "UploadDto[" + index + "].FileName", filename);
                     index++;
 
-                    
+
                 }
 
                 multipartContent.Add(new StringContent(uploadRequest.Folder), "Folder");
 
                 // HTTP POST isteği oluşturun
-                var res = await client.PostAsync("api/v1/file",multipartContent);
+                await client.PostAsync("api/v1/file", multipartContent);
 
-      
+
             }
 
 
 
-                    City city = new City
+            City city = new City
             {
                 Name = request.Request.Name,
                 CityStatusId = (int)CityStatusEnum.Active,

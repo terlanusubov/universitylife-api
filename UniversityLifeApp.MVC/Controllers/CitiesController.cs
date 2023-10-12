@@ -50,7 +50,6 @@ namespace UniversityLifeApp.MVC.Controllers
             ViewBag.Countries = await _context.Countries.ToListAsync();
             var result = await _mediator.Send(new AddCityCommand(request));
 
-
             if (result.StatusCode != (int)HttpStatusCode.OK)
             {
                 foreach (var item in result.ErrorList)
