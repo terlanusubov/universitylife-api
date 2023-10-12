@@ -182,7 +182,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                     BedRoomRoomTypeIds = x.RoomTypes.Select(x => x.BedRoomRoomTypeId).ToList(),
                     BedRoomRoomTypes = x.RoomTypes.Select(c => c.BedRoomRoomType.Name).ToList(),
                     Price = x.Price,
-                    BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
+                    BedRoomImages = x.BedRoomPhotos.Select(c => baseUrl + "bedroomPhoto/" + c.Name).ToList(),
                 });
 
                 for (int i = 0; i < getBedroomByCity.Count; i++)
@@ -265,6 +265,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<GetBedRoomByIdResponse>> GetBedRoomById(int bedroomId)
         {
+            var baseUrl = _configuration["BaseUrl"];
             var bedroom = await _context.BedRooms.Where(x => x.Id == bedroomId).Select(x => new GetBedRoomByIdResponse
             {
 
@@ -283,7 +284,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 BedRoomRoomTypeIds = x.RoomTypes.Select(x => x.BedRoomRoomTypeId).ToList(),
                 BedRoomRoomTypes = x.RoomTypes.Select(c => c.BedRoomRoomType.Name).ToList(),
                 Price = x.Price,
-                BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
+                BedRoomImages = x.BedRoomPhotos.Select(c => baseUrl + "bedroomPhoto/" + c.Name).ToList(),
 
 
                 //Name = x.Name,
