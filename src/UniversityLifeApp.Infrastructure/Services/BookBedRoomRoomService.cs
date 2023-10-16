@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,10 +25,12 @@ namespace UniversityLifeApp.Infrastructure.Services
     {
         private readonly ApplicationContext _context;
         private readonly IEmailService _emailService;
-        public BookBedRoomRoomService(ApplicationContext context, IEmailService emailService)
+        private readonly IConfiguration _configuration;
+        public BookBedRoomRoomService(ApplicationContext context, IEmailService emailService, IConfiguration configuration)
         {
             _context = context;
             _emailService = emailService;
+            _configuration = configuration;
         }
 
         public async Task<ApiResult<AcceptBookResponse>> Accept(int id)
@@ -109,6 +112,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetBookBedRoomRoomResponse>>> GetBookBedRoomRoom(GetBookBedRoomRoomRequest request)
         {
+            var baseUrl = _configuration["BaseUrl"];
             var bookbed = await _context.BedRoomRoomApplies.Include(x => x.BedRoomRoom).Include(x => x.User).Where(x => request.UserId != null ? x.UserId == request.UserId : true).Select(x => new GetBookBedRoomRoomResponse
             {
                 Id = x.Id,
@@ -121,7 +125,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 BedRoomRoomType = x.BedRoomRoom.RoomType.BedRoomRoomType.Name,
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,
-                Image = x.BedRoomRoom.BedRoomRoomPhotos.Select(x => "http://highresultech-001-site1.ftempurl.com/uploads/bedRoomRoomPhotos/" + x.Name).FirstOrDefault(),
+                Image = x.BedRoomRoom.BedRoomRoomPhotos.Select(x => baseUrl + "bedroomPhoto/" + x.Name).FirstOrDefault(),
                 BedRoomRoomApplyStatusId = x.BedRoomRoomApplyStatusId,
             }).ToListAsync();
 

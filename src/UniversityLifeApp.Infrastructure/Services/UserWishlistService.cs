@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,11 @@ namespace UniversityLifeApp.Infrastructure.Services
     public class UserWishlistService : IUserWishlistService
     {
         private readonly ApplicationContext _context;
-        public UserWishlistService(ApplicationContext context)
+        private readonly IConfiguration _configuration;
+        public UserWishlistService(ApplicationContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         public async Task<ApiResult<CreateUserWishlistResponse>> CreateUserWishlist(CreateUserWishlistRequest request)
@@ -79,6 +82,7 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<List<GetUserWishlistResponse>>> GetUserWishlist(GetUserWishlistRequest request)
         {
+            var baseUrl = _configuration["BaseUrl"];
 
 
 
@@ -89,7 +93,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Id = x.BedRoom.Id,
                 BedRoomRoomTypes = x.BedRoom.RoomTypes.Select(x => x.BedRoomRoomType.Name).ToList(),
                 BedRoomStatusId = x.BedRoom.BedRoomStatusId,
-                BedRoomImages = x.BedRoom.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name).ToList(),
+                BedRoomImages = x.BedRoom.BedRoomPhotos.Select(c => baseUrl + "bedroomPhoto/" + c.Name).ToList(),
                 CityId = x.BedRoom.CityId,
                 Description = x.BedRoom.Description,
                 DistanceToCenter = x.BedRoom.DistanceToCenter,
