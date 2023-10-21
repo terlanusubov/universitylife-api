@@ -150,7 +150,9 @@ namespace UniversityLifeApp.Infrastructure.Services
                 BedRoomRoomTypeIds = x.RoomTypes.Select(x => x.BedRoomRoomTypeId).ToList(),
                 BedRoomRoomTypes = x.RoomTypes.Select(c => c.BedRoomRoomType.Name).ToList(),
                 Price = x.Price,
+
                 BedRoomImages = x.BedRoomPhotos.Select(c => baseUrl + "bedroomPhoto/" + c.Name).ToList(),
+
             });
             var response = new GetBedRoomResponse();
             List<double> distances = new List<double>();
