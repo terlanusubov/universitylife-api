@@ -24,5 +24,6 @@ namespace UniversityLifeApp.Application.CQRS.v1.BedRoom.Queries.GetBedRoom
         public string Longitude { get; set; }
         public int Rating { get; set; }
         public float DistanceToCenter { get; set; }
+        public double Distance { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace UniversityLifeApp.Application.CQRS.v1.University.Queries.GetUniversity
         }
         public async Task<ApiResult<List<GetUniversityResponse>>> Handle(GetUniversityQuery request, CancellationToken cancellationToken)
         {
-            var result = await _universityService.Get();
+            var result = await _universityService.Get(request.Request);
 
             return result;
         }

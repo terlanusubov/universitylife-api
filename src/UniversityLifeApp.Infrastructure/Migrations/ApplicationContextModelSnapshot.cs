@@ -113,9 +113,6 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.Property<int>("BedRoomRoomStatusId")
                         .HasColumnType("int");
 
-                    b.Property<int>("BedRoomRoomTypeId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime(6)");
 
@@ -130,6 +127,9 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.Property<float>("Price")
                         .HasColumnType("float");
 
+                    b.Property<int>("RoomTypeId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime(6)");
 
@@ -137,7 +137,7 @@ namespace UniversityLifeApp.Infrastructure.Migrations
 
                     b.HasIndex("BedRoomId");
 
-                    b.HasIndex("BedRoomRoomTypeId");
+                    b.HasIndex("RoomTypeId");
 
                     b.ToTable("BedRoomRooms");
                 });
@@ -210,7 +210,7 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("BedRoomId")
+                    b.Property<int>("BedRoomRoomTypeStatusId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateAt")
@@ -224,8 +224,6 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BedRoomId");
 
                     b.ToTable("BedRoomRoomTypes");
                 });
@@ -427,6 +425,33 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.ToTable("OurServices");
                 });
 
+            modelBuilder.Entity("UniversityLifeApp.Domain.Entities.RoomType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("BedRoomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BedRoomRoomTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BedRoomId");
+
+                    b.HasIndex("BedRoomRoomTypeId");
+
+                    b.ToTable("RoomTypes");
+                });
+
             modelBuilder.Entity("UniversityLifeApp.Domain.Entities.University", b =>
                 {
                     b.Property<int>("Id")
@@ -592,15 +617,15 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UniversityLifeApp.Domain.Entities.BedRoomRoomType", "BedRoomRoomType")
+                    b.HasOne("UniversityLifeApp.Domain.Entities.RoomType", "RoomType")
                         .WithMany("BedRoomRooms")
-                        .HasForeignKey("BedRoomRoomTypeId")
+                        .HasForeignKey("RoomTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("BedRoom");
 
-                    b.Navigation("BedRoomRoomType");
+                    b.Navigation("RoomType");
                 });
 
             modelBuilder.Entity("UniversityLifeApp.Domain.Entities.BedRoomRoomApply", b =>
@@ -633,17 +658,6 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                     b.Navigation("BedRoomRoom");
                 });
 
-            modelBuilder.Entity("UniversityLifeApp.Domain.Entities.BedRoomRoomType", b =>
-                {
-                    b.HasOne("UniversityLifeApp.Domain.Entities.BedRoom", "BedRoom")
-                        .WithMany("BedRoomRoomTypes")
-                        .HasForeignKey("BedRoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BedRoom");
-                });
-
             modelBuilder.Entity("UniversityLifeApp.Domain.Entities.City", b =>
                 {
                     b.HasOne("UniversityLifeApp.Domain.Entities.Country", "Country")
@@ -653,6 +667,25 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("UniversityLifeApp.Domain.Entities.RoomType", b =>
+                {
+                    b.HasOne("UniversityLifeApp.Domain.Entities.BedRoom", "BedRoom")
+                        .WithMany("RoomTypes")
+                        .HasForeignKey("BedRoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniversityLifeApp.Domain.Entities.BedRoomRoomType", "BedRoomRoomType")
+                        .WithMany("RoomTypes")
+                        .HasForeignKey("BedRoomRoomTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BedRoom");
+
+                    b.Navigation("BedRoomRoomType");
                 });
 
             modelBuilder.Entity("UniversityLifeApp.Domain.Entities.University", b =>
@@ -700,9 +733,9 @@ namespace UniversityLifeApp.Infrastructure.Migrations
                 {
                     b.Navigation("BedRoomPhotos");
 
-                    b.Navigation("BedRoomRoomTypes");
-
                     b.Navigation("BedRoomRooms");
+
+                    b.Navigation("RoomTypes");
 
                     b.Navigation("UserWishLists");
                 });
@@ -716,7 +749,7 @@ namespace UniversityLifeApp.Infrastructure.Migrations
 
             modelBuilder.Entity("UniversityLifeApp.Domain.Entities.BedRoomRoomType", b =>
                 {
-                    b.Navigation("BedRoomRooms");
+                    b.Navigation("RoomTypes");
                 });
 
             modelBuilder.Entity("UniversityLifeApp.Domain.Entities.City", b =>
@@ -729,6 +762,11 @@ namespace UniversityLifeApp.Infrastructure.Migrations
             modelBuilder.Entity("UniversityLifeApp.Domain.Entities.Country", b =>
                 {
                     b.Navigation("Cities");
+                });
+
+            modelBuilder.Entity("UniversityLifeApp.Domain.Entities.RoomType", b =>
+                {
+                    b.Navigation("BedRoomRooms");
                 });
 
             modelBuilder.Entity("UniversityLifeApp.Domain.Entities.User", b =>

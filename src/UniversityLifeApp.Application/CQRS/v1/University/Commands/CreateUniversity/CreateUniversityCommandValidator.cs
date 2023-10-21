@@ -13,7 +13,7 @@ namespace UniversityLifeApp.Application.CQRS.v1.University.Commands.CreateUniver
         {
             RuleFor(x => x.Request.Name)
                 //.MinimumLength(3).WithMessage("The name must contain at least 3 letters.")
-                .MaximumLength(30).WithMessage("The name can contain up to 30 characters.")
+                .MaximumLength(100).WithMessage("The name can contain up to 100 characters.")
                 .NotEmpty().WithMessage("The name cannot be empty.");
 
             RuleFor(x => x.Request.Longitude).NotEmpty();

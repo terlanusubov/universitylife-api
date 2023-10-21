@@ -37,7 +37,7 @@ namespace UniversityLifeApp.API.Controllers.v1
             => (await _mediator.Send(new GetCityByIdQuery(cityId))).Response;
 
         [HttpPut("{cityId}")]
-        public async Task<ApiResult<UpdateCityResponse>> UpdateCity(UpdateCityRequest request, int cityId)
+        public async Task<ApiResult<UpdateCityResponse>> UpdateCity([FromForm]UpdateCityRequest request, int cityId)
             => await _mediator.Send(new UpdateCityCommand(request, cityId));
 
         [HttpDelete("{cityId}")]

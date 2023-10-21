@@ -19,7 +19,7 @@ namespace UniversityLifeApp.Application.CQRS.v1.BedRoomRoom.Commands.UpdateBedRo
             RuleFor(x => x.Request.Description)
                 .NotEmpty().WithMessage("The description field cannot be empty.")
                 //.MinimumLength(10).WithMessage("The name must contain at least 10 letters.")
-                .MaximumLength(500).WithMessage("The name can contain up to 500 characters.");
+                .MaximumLength(5000).WithMessage("The name can contain up to 5000 characters.");
 
             RuleFor(x => x.Request.Price)
                 .NotNull().WithMessage("The price field cannot be empty.")

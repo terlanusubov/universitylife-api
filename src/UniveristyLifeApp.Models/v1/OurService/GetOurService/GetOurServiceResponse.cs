@@ -13,5 +13,7 @@ namespace UniveristyLifeApp.Models.v1.OurService.GetOurService
         public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime UpdateAt { get; set; }
     }
 }

@@ -8,10 +8,12 @@ using Microsoft.Extensions.Hosting;
 using UniversityLifeApp.Application;
 using UniversityLifeApp.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using UniversityLifeApp.Application.Middlewares;
+using UniversityLifeApp.API.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Reflection;
+
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,13 +56,13 @@ builder.Services.AddVersionedApiExplorer(setup =>
     setup.SubstituteApiVersionInUrl = true;
 });
 
-
-
+builder.Services.AddControllersWithViews();
 builder.Services.AddApplication();
 
 
 
-builder.Services.AddInfrastructure(builder.Configuration); 
+builder.Services.AddInfrastructure(builder.Configuration);
+
 
 builder.Services.AddHttpContextAccessor();
 
@@ -129,9 +131,11 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+app.UseCors(MyAllowSpecificOrigins);
+
 app.UseStaticFiles();
 
-app.UseCors(MyAllowSpecificOrigins);
+app.UseDeveloperExceptionPage();
 
 app.UseHttpLogging();
 
@@ -148,8 +152,9 @@ app.UseSwaggerUI(c =>
     }
 });
 
-app.UseMiddleware<LoggingMiddleware>();
 
+app.UseSession();
+app.UseMiddleware<LoggingMiddleware>();
 
 app.UseHttpsRedirection();
 

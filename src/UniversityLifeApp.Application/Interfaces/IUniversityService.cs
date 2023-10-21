@@ -18,7 +18,7 @@ namespace UniversityLifeApp.Application.Interfaces
     {
         Task<ApiResult<CreateUniversityResponse>> Create(CreateUniversityCommand request);
         Task<ApiResult<UpdateUniversityResponse>> Update(UpdateUniversityCommand request, int universityId);
-        Task<ApiResult<List<GetUniversityResponse>>> Get();
+        Task<ApiResult<List<GetUniversityResponse>>> Get(GetUniversityRequest request);
         Task<ApiResult<GetUniversityByIdResponse>> GetById(int universityId);
         Task<ApiResult<DeleteUniversityResponse>> Delete(int universityId);
     }

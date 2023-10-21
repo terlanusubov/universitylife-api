@@ -2,6 +2,7 @@
 using EEWF.Infrastructure.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using UniveristyLifeApp.Models.v1.BedRoom.DeleteBedRoom;
 using UniveristyLifeApp.Models.v1.BedRoom.GetBedRoom;
 using UniveristyLifeApp.Models.v1.BedRoom.GetBedRoomById;
 using UniveristyLifeApp.Models.v1.BedRoom.UpdateBedRoom;
+using UniveristyLifeApp.Models.v1.CloseBedRoom.GetCloseBedRoom;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.BedRoom.Commands.CreateBedRoom;
 using UniversityLifeApp.Application.CQRS.v1.BedRoom.Commands.UpdateBedRoom;
@@ -20,7 +22,6 @@ using UniversityLifeApp.Application.Interfaces;
 using UniversityLifeApp.Domain.Entities;
 using UniversityLifeApp.Domain.Enums;
 using UniversityLifeApp.Infrastructure.Data;
-using UniversityLifeApp.Infrastructure.Migrations;
 
 namespace UniversityLifeApp.Infrastructure.Services
 {
@@ -29,11 +30,13 @@ namespace UniversityLifeApp.Infrastructure.Services
         private readonly ApplicationContext _context;
         private readonly IWebHostEnvironment _env;
         private readonly IFileService _fileService;
-        public BedRoomService(ApplicationContext context, IWebHostEnvironment env, IFileService fileService)
+        private readonly IConfiguration _configuration;
+        public BedRoomService(ApplicationContext context, IWebHostEnvironment env, IFileService fileService, IConfiguration configuration)
         {
             _context = context;
             _env = env;
             _fileService = fileService;
+            _configuration = configuration;
         }
 
         public async Task<ApiResult<CreateBedRoomResponse>> CreateBedRoom(CreateBedRoomCommand createBedRoom)
@@ -55,7 +58,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             await _context.SaveChangesAsync();
             int count = 1;
 
-            if(createBedRoom.Request.ImageFile != null)
+            if (createBedRoom.Request.ImageFile != null)
             {
                 foreach (var item in createBedRoom.Request.ImageFile)
                 {
@@ -65,26 +68,26 @@ namespace UniversityLifeApp.Infrastructure.Services
                         IsActive = true,
                     };
 
-                    if(count == 1)
+                    if (count == 1)
                     {
                         photo.IsMain = true;
                     }
 
-                   
-                        if (_env.WebRootPath.Contains("MVC"))
-                        {
-                            var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
-                            var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
-                            photo.Name = await _fileService.SaveImage(path2, "uploads/bedroomPhoto", item);
-                        }
 
-                        else
-                        {
-                            photo.Name = await _fileService.SaveImage(_env.WebRootPath, "uploads/bedroomPhoto", item);
-                        }
-                        count++;
-                        await _context.BedRoomPhotos.AddAsync(photo);
-                        
+                    if (_env.WebRootPath.Contains("MVC"))
+                    {
+                        var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
+                        var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+                        photo.Name = await _fileService.SaveImage(path2, "uploads/bedroomPhoto", item);
+                    }
+
+                    else
+                    {
+                        photo.Name = await _fileService.SaveImage(_env.WebRootPath, "uploads/bedroomPhoto", item);
+                    }
+                    count++;
+                    await _context.BedRoomPhotos.AddAsync(photo);
+
                 }
             }
 
@@ -110,6 +113,9 @@ namespace UniversityLifeApp.Infrastructure.Services
         public async Task<ApiResult<DeleteBedRoomResponse>> DeleteBedRoom(int bedroomId)
         {
             var bedroom = await _context.BedRooms.Where(x => x.Id == bedroomId).FirstOrDefaultAsync();
+
+            
+
             bedroom.BedRoomStatusId = (int)BedRoomStatusEnum.Deactive;
 
             await _context.SaveChangesAsync();
@@ -121,14 +127,106 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             return ApiResult<DeleteBedRoomResponse>.OK(response);
 
-            throw new NotImplementedException();
         }
 
         public async Task<ApiResult<GetBedRoomResponse>> GetBedRoom(GetBedRoomRequest request)
         {
-            var bedRooms2 = await _context.BedRooms.ToListAsync();
+            //var bedRooms2 = await _context.BedRooms.Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && (request.CityId != null ? x.CityId == request.CityId : true)).ToListAsync();
+            var baseUrl = _configuration["BaseUrl"];
+            var query = _context.BedRooms.Include(x=>x.City).Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && (request.CityId != null ? x.CityId == request.CityId : true)).Select(x => new GetBedRoomsDto
+            {
+                Id = x.Id,
+                Name = x.Name,
+                BedRoomStatusId = x.BedRoomStatusId,
+                Description = x.Description,
+                DistanceToCenter = x.DistanceToCenter,
+                CityName = x.City.Name,
+                //CityId = x.CityId,
+                Latitude = x.Latitude,
+                Longitude = x.Longitude,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
+                Rating = x.Rating,
+                BedRoomRoomTypeIds = x.RoomTypes.Select(x => x.BedRoomRoomTypeId).ToList(),
+                BedRoomRoomTypes = x.RoomTypes.Select(c => c.BedRoomRoomType.Name).ToList(),
+                Price = x.Price,
 
-            var totalData = bedRooms2.Count();
+                BedRoomImages = x.BedRoomPhotos.Select(c => baseUrl + "bedroomPhoto/" + c.Name).ToList(),
+
+            });
+            var response = new GetBedRoomResponse();
+            List<double> distances = new List<double>();
+            List<IDictionary<int, double>> responseList = new();
+
+            if (request.UniversityId != null)
+            {
+                var geUniCityId = await _context.Universities.Where(x => x.Id == request.UniversityId).Select(x => x.CityId).FirstOrDefaultAsync();
+                int cityId = geUniCityId;
+                var uniLongitude = await _context.Universities.Where(x => x.Id == request.UniversityId).Select(x => x.Longitude).FirstOrDefaultAsync();
+                double lon = Convert.ToDouble(uniLongitude);
+                var uniLatitude = await _context.Universities.Where(x => x.Id == request.UniversityId).Select(x => x.Latitude).FirstOrDefaultAsync();
+                double lat = Convert.ToDouble(uniLatitude);
+                var getBedroomByCity = await _context.BedRooms.Where(x => x.CityId == cityId && x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && (request.CityId != null ? x.CityId == request.CityId : true)).ToListAsync();
+                query = _context.BedRooms.Include(x => x.City).Include(x => x.RoomTypes).Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && x.CityId == cityId && (request.CityId != null ? x.CityId == request.CityId : true)).Select(x => new GetBedRoomsDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    BedRoomStatusId = x.BedRoomStatusId,
+                    Description = x.Description,
+                    DistanceToCenter = x.DistanceToCenter,
+                    CityName = x.City.Name,
+                    //CityId = x.CityId,
+                    Latitude = x.Latitude,
+                    Longitude = x.Longitude,
+                    CreateAt = x.CreateAt,
+                    UpdateAt = x.UpdateAt,
+                    Rating = x.Rating,
+                    BedRoomRoomTypeIds = x.RoomTypes.Select(x => x.BedRoomRoomTypeId).ToList(),
+                    BedRoomRoomTypes = x.RoomTypes.Select(c => c.BedRoomRoomType.Name).ToList(),
+                    Price = x.Price,
+                    BedRoomImages = x.BedRoomPhotos.Select(c => baseUrl + "bedroomPhoto/" + c.Name).ToList(),
+                });
+
+                for (int i = 0; i < getBedroomByCity.Count; i++)
+                {
+                    const double radius = 6371;
+                    double lat2 = Convert.ToDouble(query.ToList()[i].Latitude);
+                    double lon2 = Convert.ToDouble(query.ToList()[i].Longitude);
+
+                    double radLat1 = ToRadians(lat);
+                    double radLon1 = ToRadians(lon);
+                    double radLat2 = ToRadians(lat2);
+                    double radLon2 = ToRadians(lon2);
+
+                    double dLon = radLon2 - radLon1;
+                    double dLat = radLat2 - radLat1;
+
+                    double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                               Math.Cos(radLat1) * Math.Cos(radLat2) *
+                               Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+
+                    double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+                    double distance = radius * c;
+                    distances.Add(distance);
+                    IDictionary<int, double> map = new Dictionary<int, double>();
+                    map.Add(query.ToList()[i].Id, distance);
+                    responseList.Add(map);
+                    response.Dictance = responseList;
+                }
+                static double ToRadians(double degree)
+                {
+                    return degree * (Math.PI / 180);
+                }
+
+                //bedRooms2 = query.ToList();
+            }
+
+
+
+
+
+            var totalData = query.ToList().Count();
 
             var pageSize = 6;
 
@@ -137,22 +235,6 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             int? start;
             int? end;
-
-            var query = _context.BedRooms.Where(x => x.BedRoomStatusId == (int)BedRoomStatusEnum.Active && request.CityId != null ? x.CityId == request.CityId : request.CityId == null).Select(x => new GetBedRoomsDto
-            {
-                Name = x.Name,
-                BedRoomStatusId = x.BedRoomStatusId,
-                Description = x.Description,
-                DistanceToCenter = x.DistanceToCenter,
-                CityId = x.CityId,
-                Latitude = x.Latitude,
-                Longitude = x.Longitude,
-                Rating = x.Rating,
-                BedRoomRoomTypes = x.BedRoomRoomTypes.Select(c => c.Name).ToList(),
-                Price = x.Price,
-                BedRoomImages = x.BedRoomPhotos.Select(c => @"http://highresultech-001-site1.ftempurl.com/uploads/bedroomPhoto/" + c.Name + c.IsMain).ToList(),
-
-            });
 
             if (request.Page != null)
             {
@@ -166,32 +248,56 @@ namespace UniversityLifeApp.Infrastructure.Services
                 }
             }
 
+
+
+
+
             var bedRooms = await query.ToListAsync();
 
-            var response = new GetBedRoomResponse();
 
             response.BedRooms = bedRooms;
 
             response.TotalData = totalData;
             response.PageSize = pageSize;
             response.TotalPage = totalPage;
+            response.Dictance = responseList;
             return ApiResult<GetBedRoomResponse>.OK(response);
 
         }
 
         public async Task<ApiResult<GetBedRoomByIdResponse>> GetBedRoomById(int bedroomId)
         {
+            var baseUrl = _configuration["BaseUrl"];
             var bedroom = await _context.BedRooms.Where(x => x.Id == bedroomId).Select(x => new GetBedRoomByIdResponse
             {
+
+
+                Id = x.Id,
                 Name = x.Name,
                 BedRoomStatusId = x.BedRoomStatusId,
                 Description = x.Description,
                 DistanceToCenter = x.DistanceToCenter,
-                CityId = x.CityId,
+                //CityId = x.CityId,
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
                 Rating = x.Rating,
+                BedRoomRoomTypeIds = x.RoomTypes.Select(x => x.BedRoomRoomTypeId).ToList(),
+                BedRoomRoomTypes = x.RoomTypes.Select(c => c.BedRoomRoomType.Name).ToList(),
                 Price = x.Price,
+                BedRoomImages = x.BedRoomPhotos.Select(c => baseUrl + "bedroomPhoto/" + c.Name).ToList(),
+
+
+                //Name = x.Name,
+                //BedRoomStatusId = x.BedRoomStatusId,
+                //Description = x.Description,
+                //DistanceToCenter = x.DistanceToCenter,
+                //CityId = x.CityId,
+                //Latitude = x.Latitude,
+                //Longitude = x.Longitude,
+                //Rating = x.Rating,
+                //Price = x.Price,
             }).FirstOrDefaultAsync();
 
 
@@ -213,7 +319,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             result.DistanceToCenter = updateBedRoom.Request.DistanceToCenter;
             result.Price = updateBedRoom.Request.Price;
 
-            if(updateBedRoom.Request.ImageFile != null)
+            if (updateBedRoom.Request.ImageFile != null)
             {
                 foreach (var item in bedRoomPhotos)
                 {

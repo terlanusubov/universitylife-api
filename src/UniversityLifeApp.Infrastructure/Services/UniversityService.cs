@@ -53,34 +53,42 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<DeleteUniversityResponse>> Delete(int universityId)
         {
-            var university = await _context.Universities.Select(x => new DeleteUniversityResponse
-            {
-                Name = x.Name,
-                Latitude = x.Latitude,
-                Longitude = x.Longitude,
-                CityId = x.CityId,
-                UniversityId = x.Id,
-                UniversityStatusId = x.UniversityStatusId,
-            }).FirstOrDefaultAsync();
+            var university = await _context.Universities.Where(x => x.Id == universityId).FirstOrDefaultAsync();
+
+           
 
             university.UniversityStatusId = (int)UniversityStatusEnum.Deactive;
 
             await _context.SaveChangesAsync();
 
-            return ApiResult<DeleteUniversityResponse>.OK(university);
+            DeleteUniversityResponse response = new DeleteUniversityResponse
+            {
+                Name = university.Name,
+                CityId=university.CityId,
+                Latitude=university.Latitude,
+                Longitude=university.Longitude,
+                UniversityId = university.Id,
+                UniversityStatusId = university.UniversityStatusId
+            };
+
+            return ApiResult<DeleteUniversityResponse>.OK(response);
         }
 
-        public async Task<ApiResult<List<GetUniversityResponse>>> Get()
+        public async Task<ApiResult<List<GetUniversityResponse>>> Get(GetUniversityRequest request)
         {
-            var universities = await _context.Universities.Select(x => new GetUniversityResponse
+            var universities = await _context.Universities.Include(x => x.City).Where(x => x.UniversityStatusId == (int)UniversityStatusEnum.Active && (request.CityId != null ? x.CityId == request.CityId : true)).Select(x => new GetUniversityResponse
             {
                 Name = x.Name,
                 Latitude = x.Latitude,
                 Longitude = x.Longitude,
                 CityId = x.CityId,
+                CountryName = x.City.Country.Name,
+                City = x.City,
+                CreateAt = x.CreateAt,
+                UpdateAt = x.UpdateAt,
                 UniversityId = x.Id,
                 UniversityStatusId = x.UniversityStatusId,
-            }).ToListAsync();
+            }).OrderByDescending(x=>x.CreateAt).ToListAsync();
 
             return ApiResult<List<GetUniversityResponse>>.OK(universities);
         }
