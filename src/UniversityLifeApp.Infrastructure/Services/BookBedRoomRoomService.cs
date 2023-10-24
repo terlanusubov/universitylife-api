@@ -125,7 +125,7 @@ namespace UniversityLifeApp.Infrastructure.Services
                 BedRoomRoomType = x.BedRoomRoom.RoomType.BedRoomRoomType.Name,
                 CreateAt = x.CreateAt,
                 UpdateAt = x.UpdateAt,
-                Image = x.BedRoomRoom.BedRoomRoomPhotos.Select(x => baseUrl + "bedroomPhoto/" + x.Name).FirstOrDefault(),
+                Image = x.BedRoomRoom.BedRoomRoomPhotos.Select(x => baseUrl + "bedRoomRoomPhotos/" + x.Name).FirstOrDefault(),
                 BedRoomRoomApplyStatusId = x.BedRoomRoomApplyStatusId,
             }).ToListAsync();
 
