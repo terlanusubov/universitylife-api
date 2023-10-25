@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using System.Text.Json.Serialization;
+using UniveristyLifeApp.Models.v1.DeleteFile;
 using UniveristyLifeApp.Models.v1.Upload;
 
 namespace UniversityLifeApp.API.Controllers.v1
@@ -18,7 +19,8 @@ namespace UniversityLifeApp.API.Controllers.v1
         {
             _env = env;
         }
-        [HttpPost]
+
+        [HttpPost("upload")]
         public async Task<ActionResult<string>> UploadFile([FromForm]UploadRequest request)
         {
             foreach (var item in request.UploadDto)
@@ -31,6 +33,28 @@ namespace UniversityLifeApp.API.Controllers.v1
             
             //todo : save to database
             return request.Folder;
+        }
+
+        [HttpPost("delete")]
+        public async Task<ActionResult<bool>> DeleteFile([FromForm] DeleteRequest request)
+        {
+            bool isDelete = true;
+
+            foreach (var item in request.DeleteDto)
+            {
+                string path = Path.Combine(_env.WebRootPath, request.Folder, item.FileName);
+
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                    isDelete = true;
+                }
+                isDelete = false;
+            }
+
+            return isDelete;
+
+
         }
     }
 }

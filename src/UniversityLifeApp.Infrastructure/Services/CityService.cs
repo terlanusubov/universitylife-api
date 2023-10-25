@@ -18,6 +18,7 @@ using UniveristyLifeApp.Models.v1.Cities.DeleteCity;
 using UniveristyLifeApp.Models.v1.Cities.GetCity;
 using UniveristyLifeApp.Models.v1.Cities.GetCityById;
 using UniveristyLifeApp.Models.v1.Cities.UpdateCity;
+using UniveristyLifeApp.Models.v1.DeleteFile;
 using UniveristyLifeApp.Models.v1.Upload;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.Cities.Commands.AddCity;
@@ -46,10 +47,19 @@ namespace UniversityLifeApp.Infrastructure.Services
 
         public async Task<ApiResult<AddCityResponse>> AddCity(AddCityCommand request)
         {
-
+            City city = new City
+            {
+                Name = request.Request.Name,
+                CityStatusId = (int)CityStatusEnum.Active,
+                CountryId = request.Request.CountryId,
+                Latitude = request.Request.Latitude,
+                Longitude = request.Request.Longitude,
+                IsTop = request.Request.IsTop,
+            };
             string filename = request.Request.ImageFile.FileName;
             filename = filename.Length <= 64 ? filename : (filename.Substring(filename.Length - 64, 64));
             filename = Guid.NewGuid().ToString() + filename;
+
 
             UploadDto dto = new UploadDto
             {
@@ -65,51 +75,41 @@ namespace UniversityLifeApp.Infrastructure.Services
                 Folder = "uploads/city",
             };
 
-
-
-
-
-
             using (HttpClient client = new HttpClient())
             {
 
-                var multipartContent = new MultipartFormDataContent();
-                client.BaseAddress = new Uri("https://localhost:7255/");
+                //var multipartContent = new MultipartFormDataContent();
+                client.BaseAddress = new Uri("http://localhost:5212/");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
 
                 int index = 0;
                 foreach (var uploadDto in uploadRequest.UploadDto)
                 {
+                    var multipartContent = new MultipartFormDataContent();
 
                     var fileContent = new StreamContent(uploadDto.File.OpenReadStream());
                     fileContent.Headers.ContentType = new MediaTypeHeaderValue(uploadDto.File.ContentType);
+
                     multipartContent.Add(fileContent, "UploadDto[" + index + "].File", uploadDto.File.FileName);
-                    multipartContent.Add(fileContent, "UploadDto[" + index + "].FileName", filename);
+
+                    var filenameContent = new StringContent(uploadDto.FileName);
+                    multipartContent.Add(filenameContent, "UploadDto[" + index + "].FileName");
+
+                    multipartContent.Add(new StringContent(uploadRequest.Folder), "Folder");
+
+                    var resultFile = await client.PostAsync("api/v1/file/upload", multipartContent);
+                    Console.WriteLine($"___________________________________{resultFile}_____________________");
+
                     index++;
-
-
                 }
-
-                multipartContent.Add(new StringContent(uploadRequest.Folder), "Folder");
-
-                // HTTP POST isteği oluşturun
-                await client.PostAsync("api/v1/file", multipartContent);
-
 
             }
 
+            city.Image = filename;
 
 
-            City city = new City
-            {
-                Name = request.Request.Name,
-                CityStatusId = (int)CityStatusEnum.Active,
-                CountryId = request.Request.CountryId,
-                Latitude = request.Request.Latitude,
-                Longitude = request.Request.Longitude,
-                IsTop = request.Request.IsTop,
-                Image = filename,
-            };
+
+
 
             //if (_env.WebRootPath.Contains("MVC"))
             //{
@@ -207,6 +207,100 @@ namespace UniversityLifeApp.Infrastructure.Services
             city.Longitude = request.Request.Longitude;
             city.CountryId = request.Request.CountryId;
             city.IsTop = request.Request.IsTop;
+
+            DeleteDto dto = new DeleteDto
+            {
+                FileName = city.Image,
+            };
+            List<DeleteDto> deleteDtos = new List<DeleteDto>();
+            deleteDtos.Add(dto);
+
+            DeleteRequest deleteRequest = new DeleteRequest
+            {
+                DeleteDto = deleteDtos,
+                Folder = "uploads/city",
+            };
+
+            using (HttpClient client = new HttpClient())
+            {
+
+                client.BaseAddress = new Uri("https://localhost:5212/");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
+
+                int index = 0;
+                foreach (var uploadDto in deleteRequest.DeleteDto)
+                {
+                    var multipartContent = new MultipartFormDataContent();
+
+                    //var fileContent = new StreamContent(uploadDto.File.OpenReadStream());
+                    //fileContent.Headers.ContentType = new MediaTypeHeaderValue(uploadDto.File.ContentType);
+
+                    //multipartContent.Add(fileContent, "UploadDto[" + index + "].File", uploadDto.File.FileName);
+
+                    var filenameContent = new StringContent(uploadDto.FileName);
+                    multipartContent.Add(filenameContent, "DeleteDto[" + index + "].FileName");
+
+                    multipartContent.Add(new StringContent(deleteRequest.Folder), "Folder");
+
+                    var resultFile = await client.PostAsync("api/v1/file/delete", multipartContent);
+
+                    index++;
+                }
+
+                
+
+            }
+
+            string filename = request.Request.ImageFile.FileName;
+            filename = filename.Length <= 64 ? filename : (filename.Substring(filename.Length - 64, 64));
+            filename = Guid.NewGuid().ToString() + filename;
+
+
+            UploadDto uDto = new UploadDto
+            {
+                File = request.Request.ImageFile,
+                FileName = filename,
+            };
+            List<UploadDto> uploadDtos = new List<UploadDto>();
+            uploadDtos.Add(uDto);
+
+            UploadRequest uploadRequest = new UploadRequest
+            {
+                UploadDto = uploadDtos,
+                Folder = "uploads/city",
+            };
+
+            using (HttpClient client = new HttpClient())
+            {
+
+                //var multipartContent = new MultipartFormDataContent();
+                client.BaseAddress = new Uri("http://localhost:5212/");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
+
+                int index = 0;
+                foreach (var uploadDto in uploadRequest.UploadDto)
+                {
+                    var multipartContent = new MultipartFormDataContent();
+
+                    var fileContent = new StreamContent(uploadDto.File.OpenReadStream());
+                    fileContent.Headers.ContentType = new MediaTypeHeaderValue(uploadDto.File.ContentType);
+
+                    multipartContent.Add(fileContent, "UploadDto[" + index + "].File", uploadDto.File.FileName);
+
+                    var filenameContent = new StringContent(uploadDto.FileName);
+                    multipartContent.Add(filenameContent, "UploadDto[" + index + "].FileName");
+
+                    multipartContent.Add(new StringContent(uploadRequest.Folder), "Folder");
+
+                    var resultFile = await client.PostAsync("api/v1/file/upload", multipartContent);
+                    Console.WriteLine($"___________________________________{resultFile}_____________________");
+
+                    index++;
+                }
+
+            }
+
+            city.Image = filename;
 
             //if (request.Request.ImageFile != null)
             //{
