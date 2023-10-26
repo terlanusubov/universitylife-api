@@ -224,31 +224,22 @@ namespace UniversityLifeApp.Infrastructure.Services
             using (HttpClient client = new HttpClient())
             {
 
+                var multipartContent = new MultipartFormDataContent();
                 client.BaseAddress = new Uri("https://localhost:5212/");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
 
                 int index = 0;
-                foreach (var uploadDto in deleteRequest.DeleteDto)
+                foreach (var deleteDto in deleteRequest.DeleteDto)
                 {
-                    var multipartContent = new MultipartFormDataContent();
-
-                    //var fileContent = new StreamContent(uploadDto.File.OpenReadStream());
-                    //fileContent.Headers.ContentType = new MediaTypeHeaderValue(uploadDto.File.ContentType);
-
-                    //multipartContent.Add(fileContent, "UploadDto[" + index + "].File", uploadDto.File.FileName);
-
-                    var filenameContent = new StringContent(uploadDto.FileName);
+                    var filenameContent = new StringContent(deleteDto.FileName);
                     multipartContent.Add(filenameContent, "DeleteDto[" + index + "].FileName");
-
-                    multipartContent.Add(new StringContent(deleteRequest.Folder), "Folder");
-
-                    var resultFile = await client.PostAsync("api/v1/file/delete", multipartContent);
 
                     index++;
                 }
 
-                
+                multipartContent.Add(new StringContent(deleteRequest.Folder), "Folder");
 
+                var resultFile = await client.PostAsync("api/v1/file/delete", multipartContent);
             }
 
             string filename = request.Request.ImageFile.FileName;
