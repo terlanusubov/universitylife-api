@@ -79,7 +79,7 @@ namespace UniversityLifeApp.Infrastructure.Services
             {
 
                 //var multipartContent = new MultipartFormDataContent();
-                client.BaseAddress = new Uri("http://localhost:5212/");
+                client.BaseAddress = new Uri("https://api.universitylife.co.uk/");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
 
                 int index = 0;
@@ -208,40 +208,52 @@ namespace UniversityLifeApp.Infrastructure.Services
             city.CountryId = request.Request.CountryId;
             city.IsTop = request.Request.IsTop;
 
-            DeleteDto dto = new DeleteDto
+            if(request.Request.ImageFile != null)
             {
-                FileName = city.Image,
-            };
-            List<DeleteDto> deleteDtos = new List<DeleteDto>();
-            deleteDtos.Add(dto);
-
-            DeleteRequest deleteRequest = new DeleteRequest
-            {
-                DeleteDto = deleteDtos,
-                Folder = "uploads/city",
-            };
-
-            using (HttpClient client = new HttpClient())
-            {
-
-                var multipartContent = new MultipartFormDataContent();
-                client.BaseAddress = new Uri("https://localhost:5212/");
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
-
-                int index = 0;
-                foreach (var deleteDto in deleteRequest.DeleteDto)
+                DeleteDto dto = new DeleteDto
                 {
-                    var filenameContent = new StringContent(deleteDto.FileName);
-                    multipartContent.Add(filenameContent, "DeleteDto[" + index + "].FileName");
+                    FileName = city.Image,
+                };
+                List<DeleteDto> deleteDtos = new List<DeleteDto>();
+                deleteDtos.Add(dto);
 
-                    index++;
+                DeleteRequest deleteRequest = new DeleteRequest
+                {
+                    DeleteDto = deleteDtos,
+                    Folder = "uploads/city",
+                };
+
+                using (HttpClient client = new HttpClient())
+                {
+
+                    client.BaseAddress = new Uri("https://api.universitylife.co.uk/");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
+
+                    int index = 0;
+                    foreach (var uploadDto in deleteRequest.DeleteDto)
+                    {
+                        var multipartContent = new MultipartFormDataContent();
+
+                        //var fileContent = new StreamContent(uploadDto.File.OpenReadStream());
+                        //fileContent.Headers.ContentType = new MediaTypeHeaderValue(uploadDto.File.ContentType);
+
+                        //multipartContent.Add(fileContent, "UploadDto[" + index + "].File", uploadDto.File.FileName);
+
+                        var filenameContent = new StringContent(uploadDto.FileName);
+                        multipartContent.Add(filenameContent, "DeleteDto[" + index + "].FileName");
+
+                        multipartContent.Add(new StringContent(deleteRequest.Folder), "Folder");
+
+                        var resultFile = await client.PostAsync("api/v1/file/delete", multipartContent);
+
+                        index++;
+                    }
+
+                   
+
                 }
-
-                multipartContent.Add(new StringContent(deleteRequest.Folder), "Folder");
-
-                var resultFile = await client.PostAsync("api/v1/file/delete", multipartContent);
             }
-
+            
             string filename = request.Request.ImageFile.FileName;
             filename = filename.Length <= 64 ? filename : (filename.Substring(filename.Length - 64, 64));
             filename = Guid.NewGuid().ToString() + filename;
