@@ -34,8 +34,8 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\logging\" />
-    <Folder Include="wwwroot\uploads\bedroomPhoto\" />
     <Folder Include="wwwroot\uploads\bedRoomRoomPhotos\" />
+    <Folder Include="wwwroot\uploads\bedroomPhoto\" />
 
     <Folder Include="wwwroot\uploads\services\" />
 
