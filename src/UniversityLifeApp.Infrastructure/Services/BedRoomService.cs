@@ -65,54 +65,54 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             foreach (var item in createBedRoom.Request.ImageFile)
             {
-                string filename = item.FileName;
-                filename = filename.Length <= 64 ? filename : (filename.Substring(filename.Length - 64, 64));
-                filename = Guid.NewGuid().ToString() + filename;
+                    string filename = item.FileName;
+                    filename = filename.Length <= 64 ? filename : (filename.Substring(filename.Length - 64, 64));
+                    filename = Guid.NewGuid().ToString() + filename;
 
 
-                UploadDto dto = new UploadDto
-                {
-                    File = item,
-                    FileName = filename,
-                };
-                List<UploadDto> uploadDtos = new List<UploadDto>();
-                uploadDtos.Add(dto);
-
-                UploadRequest uploadRequest = new UploadRequest
-                {
-                    UploadDto = uploadDtos,
-                    Folder = "uploads/bedroomPhoto",
-                };
-
-                using (HttpClient client = new HttpClient())
-                {
-
-                    //var multipartContent = new MultipartFormDataContent();
-                    client.BaseAddress = new Uri("https://api.universitylife.co.uk/");
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
-
-                    int index = 0;
-                    foreach (var uploadDto in uploadRequest.UploadDto)
+                    UploadDto dto = new UploadDto
                     {
-                        var multipartContent = new MultipartFormDataContent();
+                        File = item,
+                        FileName = filename,
+                    };
+                    List<UploadDto> uploadDtos = new List<UploadDto>();
+                    uploadDtos.Add(dto);
 
-                        var fileContent = new StreamContent(uploadDto.File.OpenReadStream());
-                        fileContent.Headers.ContentType = new MediaTypeHeaderValue(uploadDto.File.ContentType);
+                    UploadRequest uploadRequest = new UploadRequest
+                    {
+                        UploadDto = uploadDtos,
+                        Folder = "uploads/bedroomPhoto",
+                    };
 
-                        multipartContent.Add(fileContent, "UploadDto[" + index + "].File", uploadDto.File.FileName);
+                    using (HttpClient client = new HttpClient())
+                    {
 
-                        var filenameContent = new StringContent(uploadDto.FileName);
-                        multipartContent.Add(filenameContent, "UploadDto[" + index + "].FileName");
+                        //var multipartContent = new MultipartFormDataContent();
+                        client.BaseAddress = new Uri("https://api.universitylife.co.uk/");
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
 
-                        multipartContent.Add(new StringContent(uploadRequest.Folder), "Folder");
+                        int index = 0;
+                        foreach (var uploadDto in uploadRequest.UploadDto)
+                        {
+                            var multipartContent = new MultipartFormDataContent();
 
-                        var resultFile = await client.PostAsync("api/v1/file/upload", multipartContent);
-                        Console.WriteLine($"___________________________________{resultFile}_____________________");
+                            var fileContent = new StreamContent(uploadDto.File.OpenReadStream());
+                            fileContent.Headers.ContentType = new MediaTypeHeaderValue(uploadDto.File.ContentType);
 
-                        index++;
+                            multipartContent.Add(fileContent, "UploadDto[" + index + "].File", uploadDto.File.FileName);
+
+                            var filenameContent = new StringContent(uploadDto.FileName);
+                            multipartContent.Add(filenameContent, "UploadDto[" + index + "].FileName");
+
+                            multipartContent.Add(new StringContent(uploadRequest.Folder), "Folder");
+
+                            var resultFile = await client.PostAsync("api/v1/file/upload", multipartContent);
+                            Console.WriteLine($"___________________________________{resultFile}_____________________");
+
+                            index++;
+                        }
+
                     }
-
-                }
 
                 var photo = new BedRoomPhoto
                 {

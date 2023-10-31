@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using UniveristyLifeApp.Models.v1.BedRoomRoom.CreateCity;
@@ -12,6 +13,8 @@ using UniveristyLifeApp.Models.v1.BedRoomRoom.DeleteBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BedRoomRoom.GetBedRoomRoom;
 using UniveristyLifeApp.Models.v1.BedRoomRoom.GetBedRoomRoomById;
 using UniveristyLifeApp.Models.v1.BedRoomRoom.UpdateBedRoomRoom;
+using UniveristyLifeApp.Models.v1.DeleteFile;
+using UniveristyLifeApp.Models.v1.Upload;
 using UniversityLifeApp.Application.Core;
 using UniversityLifeApp.Application.CQRS.v1.BedRoomRoom.Commands.CreateBedRoomRoom;
 using UniversityLifeApp.Application.CQRS.v1.BedRoomRoom.Commands.UpdateBedRoomRoom;
@@ -63,39 +66,107 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             int count = 1;
 
-
-            if (request.Request.ImageFile != null)
+            foreach (var item in request.Request.ImageFile)
             {
-                foreach (var item in request.Request.ImageFile)
+                string filename = item.FileName;
+                filename = filename.Length <= 64 ? filename : (filename.Substring(filename.Length - 64, 64));
+                filename = Guid.NewGuid().ToString() + filename;
+
+
+                UploadDto dto = new UploadDto
                 {
-                    BedRoomRoomPhoto photos = new BedRoomRoomPhoto
-                    {
-                        BedRoomRoomId = bedRoomRoom.Id,
-                        IsActive = true,
-                    };
+                    File = item,
+                    FileName = filename,
+                };
+                List<UploadDto> uploadDtos = new List<UploadDto>();
+                uploadDtos.Add(dto);
 
-                    if(count == 1)
+                UploadRequest uploadRequest = new UploadRequest
+                {
+                    UploadDto = uploadDtos,
+                    Folder = "uploads/bedRoomRoomPhotos",
+                };
+
+                using (HttpClient client = new HttpClient())
+                {
+
+                    //var multipartContent = new MultipartFormDataContent();
+                    client.BaseAddress = new Uri("https://localhost:7255/");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
+
+                    int index = 0;
+                    foreach (var uploadDto in uploadRequest.UploadDto)
                     {
-                        photos.IsMain = true;
+                        var multipartContent = new MultipartFormDataContent();
+
+                        var fileContent = new StreamContent(uploadDto.File.OpenReadStream());
+                        fileContent.Headers.ContentType = new MediaTypeHeaderValue(uploadDto.File.ContentType);
+
+                        multipartContent.Add(fileContent, "UploadDto[" + index + "].File", uploadDto.File.FileName);
+
+                        var filenameContent = new StringContent(uploadDto.FileName);
+                        multipartContent.Add(filenameContent, "UploadDto[" + index + "].FileName");
+
+                        multipartContent.Add(new StringContent(uploadRequest.Folder), "Folder");
+
+                        var resultFile = await client.PostAsync("api/v1/file/upload", multipartContent);
+                        Console.WriteLine($"___________________________________{resultFile}_____________________");
+
+                        index++;
                     }
 
-                    if (_env.WebRootPath.Contains("MVC"))
-                    {
-                        var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
-                        var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
-                        photos.Name = await _fileService.SaveImage(path2, "uploads/bedRoomRoomPhotos", item);
-                    }
-
-                    else
-                    {
-                        photos.Name = await _fileService.SaveImage(_env.WebRootPath, "uploads/bedRoomRoomPhotos", item);
-                    }
-                    count++;
-                    await _context.BedRoomRoomPhotos.AddAsync(photos);
                 }
 
-                await _context.SaveChangesAsync();
+                var photo = new BedRoomRoomPhoto
+                {
+                    BedRoomRoomId = bedRoomRoom.Id,
+                    IsActive = true,
+                    Name = filename,
+                    
+                };
+
+                if (count == 1)
+                    photo.IsMain = true;
+                count++;
+
+                await _context.BedRoomRoomPhotos.AddAsync(photo);
             }
+
+            await _context.SaveChangesAsync();
+
+
+            //if (request.Request.ImageFile != null)
+            //{
+            //    foreach (var item in request.Request.ImageFile)
+            //    {
+            //        BedRoomRoomPhoto photos = new BedRoomRoomPhoto
+            //        {
+            //            BedRoomRoomId = bedRoomRoom.Id,
+            //            IsActive = true,
+            //        };
+
+            //        if(count == 1)
+            //        {
+            //            photos.IsMain = true;
+            //        }
+
+            //        if (_env.WebRootPath.Contains("MVC"))
+            //        {
+            //            var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
+            //            var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+            //            photos.Name = await _fileService.SaveImage(path2, "uploads/bedRoomRoomPhotos", item);
+            //        }
+
+            //        else
+            //        {
+            //            photos.Name = await _fileService.SaveImage(_env.WebRootPath, "uploads/bedRoomRoomPhotos", item);
+            //        }
+            //        count++;
+            //        await _context.BedRoomRoomPhotos.AddAsync(photos);
+            //    }
+
+            //    await _context.SaveChangesAsync();
+            //}
 
 
 
@@ -201,57 +272,182 @@ namespace UniversityLifeApp.Infrastructure.Services
 
             if(request.Request.ImageFile != null)
             {
-                foreach (var item in bedRoomRoomPhotos)
+                foreach (var image in bedRoomRoomPhotos)
                 {
-                    if (_env.WebRootPath.Contains("MVC"))
+                    DeleteDto dto = new DeleteDto
                     {
-                        var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
-                        var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
-                        _fileService.DeleteImage(path2, "uploads/bedRoomRoomPhotos", item.Name);
+                        FileName = image.Name,
+                    };
+                    List<DeleteDto> deleteDtos = new List<DeleteDto>();
+                    deleteDtos.Add(dto);
+
+                    DeleteRequest deleteRequest = new DeleteRequest
+                    {
+                        DeleteDto = deleteDtos,
+                        Folder = "uploads/bedRoomRoomPhotos",
+                    };
+
+                    using (HttpClient client = new HttpClient())
+                    {
+
+                        client.BaseAddress = new Uri("https://localhost:7255/");
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
+
+                        int index = 0;
+                        foreach (var uploadDto in deleteRequest.DeleteDto)
+                        {
+                            var multipartContent = new MultipartFormDataContent();
+
+                            //var fileContent = new StreamContent(uploadDto.File.OpenReadStream());
+                            //fileContent.Headers.ContentType = new MediaTypeHeaderValue(uploadDto.File.ContentType);
+
+                            //multipartContent.Add(fileContent, "UploadDto[" + index + "].File", uploadDto.File.FileName);
+
+                            var filenameContent = new StringContent(uploadDto.FileName);
+                            multipartContent.Add(filenameContent, "DeleteDto[" + index + "].FileName");
+
+                            multipartContent.Add(new StringContent(deleteRequest.Folder), "Folder");
+
+                            var resultFile = await client.PostAsync("api/v1/file/delete", multipartContent);
+
+                            index++;
+                        }
+
+
+
                     }
 
-                    else
-                    {
-                        _fileService.DeleteImage(_env.WebRootPath, "uploads/bedRoomRoomPhotos", item.Name);
-                    }
+                    _context.BedRoomRoomPhotos.Remove(image);
                 }
 
-                int count = 1;
+                await _context.SaveChangesAsync();
+
+                int count = 0;
 
                 foreach (var item in request.Request.ImageFile)
                 {
-                    BedRoomRoomPhoto photos = new BedRoomRoomPhoto
+                    string filename = item.FileName;
+                    filename = filename.Length <= 64 ? filename : (filename.Substring(filename.Length - 64, 64));
+                    filename = Guid.NewGuid().ToString() + filename;
+
+
+                    UploadDto dto = new UploadDto
                     {
-                        BedRoomRoomId = bedRoomRoom.Id,
-                        IsActive = true,
+                        File = item,
+                        FileName = filename,
+                    };
+                    List<UploadDto> uploadDtos = new List<UploadDto>();
+                    uploadDtos.Add(dto);
+
+                    UploadRequest uploadRequest = new UploadRequest
+                    {
+                        UploadDto = uploadDtos,
+                        Folder = "uploads/bedRoomRoomPhotos",
                     };
 
-                    if(count == 1)
+                    using (HttpClient client = new HttpClient())
                     {
-                        photos.IsMain = true;
+
+                        //var multipartContent = new MultipartFormDataContent();
+                        client.BaseAddress = new Uri("https://localhost:7255/");
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("multipart/form-data"));
+
+                        int index = 0;
+                        foreach (var uploadDto in uploadRequest.UploadDto)
+                        {
+                            var multipartContent = new MultipartFormDataContent();
+
+                            var fileContent = new StreamContent(uploadDto.File.OpenReadStream());
+                            fileContent.Headers.ContentType = new MediaTypeHeaderValue(uploadDto.File.ContentType);
+
+                            multipartContent.Add(fileContent, "UploadDto[" + index + "].File", uploadDto.File.FileName);
+
+                            var filenameContent = new StringContent(uploadDto.FileName);
+                            multipartContent.Add(filenameContent, "UploadDto[" + index + "].FileName");
+
+                            multipartContent.Add(new StringContent(uploadRequest.Folder), "Folder");
+
+                            var resultFile = await client.PostAsync("api/v1/file/upload", multipartContent);
+                            Console.WriteLine($"___________________________________{resultFile}_____________________");
+
+                            index++;
+                        }
+
                     }
 
-                    if (_env.WebRootPath.Contains("MVC"))
+                    var photo = new BedRoomRoomPhoto
                     {
-                        var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
-                        var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+                        Name = filename,
+                        IsMain = false,
+                        IsActive = true,
+                        BedRoomRoomId = bedRoomRoom.Id
+                    };
 
-                        photos.Name = await _fileService.SaveImage(path2, "uploads/bedRoomRoomPhotos", item);
-                    }
-
-                    else
-                    {
-                        photos.Name = await _fileService.SaveImage(_env.WebRootPath, "uploads/bedRoomRoomPhotos", item);
-                    }
+                    if (count == 1)
+                        photo.IsMain = true;
 
                     count++;
 
-                    await _context.BedRoomRoomPhotos.AddAsync(photos);
+                    await _context.BedRoomRoomPhotos.AddAsync(photo);
+
                 }
 
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
+            //if(request.Request.ImageFile != null)
+            //{
+            //    foreach (var item in bedRoomRoomPhotos)
+            //    {
+            //        if (_env.WebRootPath.Contains("MVC"))
+            //        {
+            //            var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
+            //            var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+            //            _fileService.DeleteImage(path2, "uploads/bedRoomRoomPhotos", item.Name);
+            //        }
+
+            //        else
+            //        {
+            //            _fileService.DeleteImage(_env.WebRootPath, "uploads/bedRoomRoomPhotos", item.Name);
+            //        }
+            //    }
+
+            //    int count = 1;
+
+            //    foreach (var item in request.Request.ImageFile)
+            //    {
+            //        BedRoomRoomPhoto photos = new BedRoomRoomPhoto
+            //        {
+            //            BedRoomRoomId = bedRoomRoom.Id,
+            //            IsActive = true,
+            //        };
+
+            //        if(count == 1)
+            //        {
+            //            photos.IsMain = true;
+            //        }
+
+            //        if (_env.WebRootPath.Contains("MVC"))
+            //        {
+            //            var path = _env.WebRootPath.Replace("UniversityLifeApp.MVC", "UniversityLifeApp.API");
+            //            var path2 = path.Replace("universitylife-api", @"universitylife-api\src");
+
+            //            photos.Name = await _fileService.SaveImage(path2, "uploads/bedRoomRoomPhotos", item);
+            //        }
+
+            //        else
+            //        {
+            //            photos.Name = await _fileService.SaveImage(_env.WebRootPath, "uploads/bedRoomRoomPhotos", item);
+            //        }
+
+            //        count++;
+
+            //        await _context.BedRoomRoomPhotos.AddAsync(photos);
+            //    }
+
+            //}
+
+            //await _context.SaveChangesAsync();
 
             var response = new UpdateBedRoomRoomResponse
             {
